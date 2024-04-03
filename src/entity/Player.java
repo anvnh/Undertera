@@ -25,20 +25,28 @@ public class Player extends Entity{
         worldX = gamepanel.tileSize * 16;
         worldY = gamepanel.tileSize * 11;
         speed = 3;
-        direction = "right";
+        direction = "down";
     }
     public void getPlayerImage()
     {
         try{
-            //standing = ImageIO.read(getClass().getResourceAsStream("/player/standing_front.png"));
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player_based/up1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player_based/up2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player_based/down1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player_based/down2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player_based/left1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player_based/left2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player_based/right1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player_based/right2.png"));
+            //standing_down = ImageIO.read(getClass().getResourceAsStream("/player/standing_down_1.png"));
+            /*
+            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player_based/up1.png")));
+            up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player_based/up2.png")));
+            down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player_based/down1.png")));
+            down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player_based/down2.png")));
+            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player_based/left1.png")));
+            left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player_based/left2.png")));
+            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player_based/right1.png")));
+            right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player_based/right2.png")));
+             */
+            standing_down_1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player_standing/test2.png")));
+            standing_down_2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player_standing/tile001.png")));
+            standing_down_3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player_standing/tile002.png")));
+            standing_down_4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player_standing/tile003.png")));
+            standing_down_5 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player_standing/tile004.png")));
+            standing_down_6 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player_standing/tile005.png")));
         } catch(IOException e) {
             e.printStackTrace();
         }
@@ -74,34 +82,10 @@ public class Player extends Entity{
         //g2.setColor(Color.white);
         //g2.fillRect(x, y, gamepanel.tileSize, gamepanel.tileSize);
         BufferedImage image = null;
+        /*
+        g2.drawImage(standing_down, screenX, screenY, gamepanel.tileSize, gamepanel.tileSize, null);
         switch(direction)
-        {
-            case "up":
-                if(spriteNum == 1)
-                    image = up1;
-                else if(spriteNum == 2)
-                    image = up2;
-                break;
-            case "down":
-                if(spriteNum == 1)
-                    image = down1;
-                else if(spriteNum == 2)
-                    image = down2;
-                break;
-            case "left":
-                if(spriteNum == 1)
-                    image = left1;
-                else if(spriteNum == 2)
-                    image = left2;
-                break;
-            case "right":
-                if(spriteNum == 1)
-                    image = right1;
-                else if(spriteNum == 2)
-                    image = right2;
-                break;
-
-        }
-        g2.drawImage(image, screenX, screenY, gamepanel.tileSize, gamepanel.tileSize , null);
+        */
+        g2.drawImage(standing_down_1, screenX, screenY, gamepanel.tileSize, gamepanel.tileSize, null);
     }
 }
