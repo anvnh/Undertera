@@ -18,7 +18,7 @@ public class TileManager {
         this.gamepanel = gp;
         tile = new Tile[50];
 
-        mapTileNum = new int[gamepanel.maxWorldCol][gamepanel.maxWorldRow];
+        mapTileNum = new int[60][50];
 
         getTileImage();
         loadmap("/maps/worldV4.txt");

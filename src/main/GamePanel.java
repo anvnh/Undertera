@@ -1,5 +1,6 @@
 package main;
 
+import entity.Entity;
 import entity.Player;
 import object.BasedObject;
 import object.KeyObject;
@@ -13,7 +14,8 @@ public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 16;
     final int scale = 3;
     public final int playerSize = originalTileSize * (scale + 3);
-    public final int objectSize = originalTileSize * (scale);
+    public final int npcSize = originalTileSize * (scale + 3);
+    public final int objectSize = originalTileSize * scale;
     public final int tileSize = originalTileSize * scale;
     public final int maxScreenCol = 30;
     public final int maxScreenRow = 15;
@@ -21,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenHeight = tileSize * maxScreenRow; //15 * 48 = 720
 
     //World Settings
-    public final int maxWorldCol = 50;
+    public final int maxWorldCol = 60;
     public final int maxWorldRow = 50;
     //public final int worldWidth = tileSize * maxWorldCol;
     //public final int worldHeight = tileSize * maxWorldRow;
@@ -34,14 +36,20 @@ public class GamePanel extends JPanel implements Runnable {
 
     //System
     TileManager tileM = new TileManager(this);
-    KeyboardHandler Key = new KeyboardHandler();
+    KeyboardHandler Key = new KeyboardHandler(this);
     Sound sound = new Sound();
     public UI ui = new UI(this);
     public CollisionCheck collisionCheck = new CollisionCheck(this);
     public AssetSetter assetSetter = new AssetSetter(this);
     public BasedObject[] basedObject = new BasedObject[10];
-    //Player
+    //Player + NPC
     public Player player = new Player(this, Key);
+    public Entity[] npc = new Entity[10];
+
+    //Game state
+    public int gameState;
+    public final int playState = 1;
+    public final int pauseState = 0;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -54,7 +62,11 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame()
     {
         assetSetter.setObject();
+        assetSetter.setNPC();
+
         playMusic(0);
+        gameState = playState;
+
     }
 
     public void startGameThread() {
@@ -94,7 +106,24 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        player.update();
+        if(gameState == playState)
+        {
+            //player
+            player.update();
+
+            //npc
+            for(int i = 0; i < npc.length; i++)
+            {
+                if(npc[i] != null)
+                {
+                    npc[i].update();
+                }
+            }
+        }
+        if(gameState == pauseState)
+        {
+
+        }
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -116,6 +145,14 @@ public class GamePanel extends JPanel implements Runnable {
 
         //player
         player.draw(g2);
+
+        //NPC
+        for (int i = 0; i < npc.length; i++) {
+            if (npc[i] != null) {
+                npc[i].draw_npc(g2);
+                //System.out.println(npc[i].direction);
+            }
+        }
 
         g2.dispose();
     }

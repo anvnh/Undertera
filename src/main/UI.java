@@ -7,21 +7,36 @@ import java.awt.image.BufferedImage;
 
 public class UI {
     GamePanel gamepanel;
-    Font arial_40;
-    BufferedImage keyImage;
+    Graphics2D g2;
+    Font arial_60;
     public UI(GamePanel gp)
     {
         this.gamepanel = gp;
-        arial_40 = new Font("Arial", Font.PLAIN, 30);
-        KeyObject key = new KeyObject(gamepanel);
-        keyImage = key.image;
+        arial_60 = new Font("Arial", Font.PLAIN, 60);
+    }
+    public void showMessage()
+    {
+
     }
 
     public void draw(Graphics2D g2)
     {
-        g2.setFont(arial_40);
+        this.g2 = g2;
+        g2.setFont(arial_60);
         g2.setColor(Color.WHITE);
-        g2.drawImage(keyImage, 5, 1, 90, 90, null);
-        g2.drawString("" + gamepanel.player.hasKey, 80, 55);
+        if(gamepanel.gameState == gamepanel.playState)
+        {
+        }
+        if(gamepanel.gameState == gamepanel.pauseState)
+        {
+            drawPauseScreen();
+        }
+    }
+    public void drawPauseScreen()
+    {
+        String text = "PAUSED";
+        int y = gamepanel.screenHeight / 2;
+        int x = gamepanel.screenWidth / 2 - g2.getFontMetrics().stringWidth(text) / 2;
+        g2.drawString(text, x, y);
     }
 }

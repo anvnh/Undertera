@@ -6,7 +6,12 @@ import java.awt.event.KeyListener;
 public class KeyboardHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed;
+    GamePanel gamepanel;
 
+    public KeyboardHandler(GamePanel gamePanel)
+    {
+        this.gamepanel = gamePanel;
+    }
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -30,6 +35,17 @@ public class KeyboardHandler implements KeyListener {
         if(code == KeyEvent.VK_D)
         {
             rightPressed = true;
+        }
+        if(code == KeyEvent.VK_ESCAPE)
+        {
+            if(gamepanel.gameState == gamepanel.playState)
+            {
+                gamepanel.gameState = gamepanel.pauseState;
+            }
+            else if(gamepanel.gameState == gamepanel.pauseState)
+            {
+                gamepanel.gameState = gamepanel.playState;
+            }
         }
     }
 
