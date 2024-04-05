@@ -1,55 +1,88 @@
 package tile;
 
 import main.GamePanel;
+import main.UtilityTools;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 public class TileManager {
     GamePanel gamepanel;
-    Tile[] tile;
-    int[][] mapTileNum;
+    public Tile[] tile;
+    public int[][] mapTileNum;
     public TileManager(GamePanel gp){
         this.gamepanel = gp;
-        tile = new Tile[10];
+        tile = new Tile[50];
 
         mapTileNum = new int[gamepanel.maxWorldCol][gamepanel.maxWorldRow];
 
         getTileImage();
-        loadmap("/maps/map02.txt");
+        loadmap("/maps/worldV4.txt");
     }
 
     public void getTileImage() {
-        try {
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass01.png"));
+        //placeholder
+        setup(0, "grass00", false);
+        setup(1, "grass00", false);
+        setup(2, "grass00", false);
+        setup(3, "grass00", false);
+        setup(4, "grass00", false);
+        setup(5, "grass00", false);
+        setup(6, "grass00", false);
+        setup(7, "grass00", false);
+        setup(8, "grass00", false);
+        setup(9, "grass00", false);
+        //
 
-            tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water01.png"));
-            tile[1].collision = true;
-
-            tile[2] = new Tile();
-            tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
-            tile[2].collision = true;
-
-            tile[3] = new Tile();
-            tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tree.png"));
-            tile[3].collision = true;
-
-            tile[4] = new Tile();
-            tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/road00.png"));
-
-            tile[5] = new Tile();
-            tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/road01.png"));
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+        setup(10, "grass00", false);
+        setup(11, "grass01", false);
+        setup(12, "water00", true);
+        setup(13, "water01", true);
+        setup(14, "water02", true);
+        setup(15, "water03", true);
+        setup(16, "water04", true);
+        setup(17, "water05", true);
+        setup(18, "water06", true);
+        setup(19, "water07", true);
+        setup(20, "water08", true);
+        setup(21, "water09", true);
+        setup(22, "water10", true);
+        setup(23, "water11", true);
+        setup(24, "water12", true);
+        setup(25, "water13", true);
+        setup(26, "road00", false);
+        setup(27, "road01", false);
+        setup(28, "road02", false);
+        setup(29, "road03", false);
+        setup(30, "road04", false);
+        setup(31, "road05", false);
+        setup(32, "road06", false);
+        setup(33, "road07", false);
+        setup(34, "road08", false);
+        setup(35, "road09", false);
+        setup(36, "road10", false);
+        setup(37, "road11", false);
+        setup(38, "road12", false);
+        setup(39, "earth", false);
+        setup(40, "wall", true);
+        setup(41, "tree", true);
 
     }
-
+    public void setup(int index, String imgPath, boolean collision) {
+        UtilityTools utilityTools = new UtilityTools();
+        try {
+            tile[index] = new Tile();
+            tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/" + imgPath + ".png")));
+            tile[index].image = utilityTools.scaleImage(tile[index].image, gamepanel.tileSize, gamepanel.tileSize);
+            tile[index].collision = collision;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void loadmap(String filePath) {
         try {
             InputStream is = getClass().getResourceAsStream(filePath);
@@ -96,7 +129,7 @@ public class TileManager {
             int screenX = worldX - gamepanel.player.worldX + gamepanel.player.screenX;
             int screenY = worldY - gamepanel.player.worldY + gamepanel.player.screenY;
 
-            g2.drawImage(tile[tileNum].image, screenX, screenY, gamepanel.tileSize, gamepanel.tileSize, null);
+            g2.drawImage(tile[tileNum].image, screenX, screenY, null);
             worldCol++;
 
             if(worldCol == gamepanel.maxWorldCol)

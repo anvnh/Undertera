@@ -1,6 +1,7 @@
 package entity;
 import main.GamePanel;
 import main.KeyboardHandler;
+import main.UtilityTools;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -13,6 +14,7 @@ public class Player extends Entity{
     KeyboardHandler Key;
     public final int screenX;
     public final int screenY;
+    public int hasKey = 0;
     BufferedImage[] stand_down = new BufferedImage[6];
     BufferedImage[] stand_up = new BufferedImage[6];
     BufferedImage[] stand_left = new BufferedImage[6];
@@ -25,8 +27,21 @@ public class Player extends Entity{
     public Player(GamePanel gp, KeyboardHandler kh){
         this.gamepanel = gp;
         this.Key = kh;
-        screenX = gamepanel.screenWidth / 2 - (gamepanel.imgSize / 2);
-        screenY = gamepanel.screenHeight / 2 - (gamepanel.imgSize / 2);
+        screenX = gamepanel.screenWidth / 2 - (gamepanel.playerSize / 2);
+        screenY = gamepanel.screenHeight / 2 - (gamepanel.playerSize / 2);
+
+        solidArea = new Rectangle();
+
+        solidArea.x = 40;
+        solidArea.y = 60;
+
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+
+
+        solidArea.width = 20;
+        solidArea.height = 20;
+
         setDefaultValues();
         getPlayerImage();
     }
@@ -38,90 +53,122 @@ public class Player extends Entity{
     }
     public void getPlayerImage()
     {
-        try{
-            //Standing right
-            stand_right[0] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_right_1.png")));
-            stand_right[1] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_right_2.png")));
-            stand_right[2] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_right_3.png")));
-            stand_right[3] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_right_4.png")));
-            stand_right[4] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_right_5.png")));
-            stand_right[5] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_right_6.png")));
+        //Standing position
+        setup(0, stand_right, "stand_right_1");
+        setup(1, stand_right, "stand_right_2");
+        setup(2, stand_right, "stand_right_3");
+        setup(3, stand_right, "stand_right_4");
+        setup(4, stand_right, "stand_right_5");
+        setup(5, stand_right, "stand_right_6");
 
-            //Standing down
-            stand_down[0] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_down_1.png")));
-            stand_down[1] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_down_2.png")));
-            stand_down[2] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_down_3.png")));
-            stand_down[3] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_down_4.png")));
-            stand_down[4] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_down_5.png")));
-            stand_down[5] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_down_6.png")));
+        setup(0, stand_down, "stand_down_1");
+        setup(1, stand_down, "stand_down_2");
+        setup(2, stand_down, "stand_down_3");
+        setup(3, stand_down, "stand_down_4");
+        setup(4, stand_down, "stand_down_5");
+        setup(5, stand_down, "stand_down_6");
 
-            //Standing up
-            stand_up[0] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_up_1.png")));
-            stand_up[1] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_up_2.png")));
-            stand_up[2] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_up_3.png")));
-            stand_up[3] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_up_4.png")));
-            stand_up[4] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_up_5.png")));
-            stand_up[5] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_up_6.png")));
+        setup(0, stand_left, "stand_left_1");
+        setup(1, stand_left, "stand_left_2");
+        setup(2, stand_left, "stand_left_3");
+        setup(3, stand_left, "stand_left_4");
+        setup(4, stand_left, "stand_left_5");
+        setup(5, stand_left, "stand_left_6");
 
-            //Standing left
-            stand_left[0] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_left_1.png")));
-            stand_left[1] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_left_2.png")));
-            stand_left[2] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_left_3.png")));
-            stand_left[3] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_left_4.png")));
-            stand_left[4] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_left_5.png")));
-            stand_left[5] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/stand_left_6.png")));
+        setup(0, stand_up, "stand_up_1");
+        setup(1, stand_up, "stand_up_2");
+        setup(2, stand_up, "stand_up_3");
+        setup(3, stand_up, "stand_up_4");
+        setup(4, stand_up, "stand_up_5");
+        setup(5, stand_up, "stand_up_6");
 
-            //Going down
-            go_down[0] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_down_1.png")));
-            go_down[1] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_down_2.png")));
-            go_down[2] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_down_3.png")));
-            go_down[3] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_down_4.png")));
-            go_down[4] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_down_5.png")));
-            go_down[5] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_down_6.png")));
+        //Movement
+        setup(0, go_right, "go_right_1");
+        setup(1, go_right, "go_right_2");
+        setup(2, go_right, "go_right_3");
+        setup(3, go_right, "go_right_4");
+        setup(4, go_right, "go_right_5");
+        setup(5, go_right, "go_right_6");
 
-            //Going right
-            go_right[0] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_right_1.png")));
-            go_right[1] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_right_2.png")));
-            go_right[2] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_right_3.png")));
-            go_right[3] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_right_4.png")));
-            go_right[4] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_right_5.png")));
-            go_right[5] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_right_6.png")));
+        setup(0, go_down, "go_down_1");
+        setup(1, go_down, "go_down_2");
+        setup(2, go_down, "go_down_3");
+        setup(3, go_down, "go_down_4");
+        setup(4, go_down, "go_down_5");
+        setup(5, go_down, "go_down_6");
 
-            //Going up
-            go_up[0] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_up_1.png")));
-            go_up[1] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_up_2.png")));
-            go_up[2] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_up_3.png")));
-            go_up[3] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_up_4.png")));
-            go_up[4] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_up_5.png")));
-            go_up[5] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_up_6.png")));
+        setup(0, go_left, "go_left_1");
+        setup(1, go_left, "go_left_2");
+        setup(2, go_left, "go_left_3");
+        setup(3, go_left, "go_left_4");
+        setup(4, go_left, "go_left_5");
+        setup(5, go_left, "go_left_6");
 
-            //Going left
-            go_left[0] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_left_1.png")));
-            go_left[1] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_left_2.png")));
-            go_left[2] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_left_3.png")));
-            go_left[3] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_left_4.png")));
-            go_left[4] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_left_5.png")));
-            go_left[5] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/go_left_6.png")));
-        } catch(IOException e) {
+        setup(0, go_up, "go_up_1");
+        setup(1, go_up, "go_up_2");
+        setup(2, go_up, "go_up_3");
+        setup(3, go_up, "go_up_4");
+        setup(4, go_up, "go_up_5");
+        setup(5, go_up, "go_up_6");
+
+    }
+    public BufferedImage setup(int index, BufferedImage[] animationType, String imgName)
+    {
+        UtilityTools utilityTools = new UtilityTools();
+        BufferedImage scaledImage = null;
+        try {
+            scaledImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/" + imgName + ".png")));
+            scaledImage = utilityTools.scaleImage(scaledImage, gamepanel.playerSize, gamepanel.playerSize);
+            animationType[index] = scaledImage;
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        return scaledImage;
     }
     public void update()
     {
         if(Key.upPressed || Key.downPressed || Key.leftPressed || Key.rightPressed) {
             if (Key.upPressed) {
                 direction = "up";
-                worldY -= speed;
+                //worldY -= speed;
             } else if (Key.downPressed) {
                 direction = "down";
-                worldY += speed;
+                //worldY += speed;
             } else if (Key.leftPressed) {
                 direction = "left";
-                worldX -= speed;
+                //worldX -= speed;
             } else {
                 direction = "right";
-                worldX += speed;
+                //worldX += speed;
             }
+
+            //Check tile collision
+            collisionOn = false;
+            gamepanel.collisionCheck.checkTile(this);
+            //if collision is false, player can move
+            if(!collisionOn)
+            {
+                switch (direction){
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
+            }
+
+            // Check object collision
+            int objectIndex = gamepanel.collisionCheck.checkObject(this, true);
+            pickUpObject(objectIndex);
+
+
             runCount++;
             if (runCount > 15) {
                 if (runAnimation == 1)
@@ -158,6 +205,29 @@ public class Player extends Entity{
             }
         }
     }
+    public void pickUpObject(int objectIndex) {
+        if(objectIndex != 999)
+        {
+            //gamepanel.basedObject[objectIndex] = null;
+            String objectName = gamepanel.basedObject[objectIndex].name;
+            switch(objectName)
+            {
+                case "Key":
+                    hasKey++;
+                    gamepanel.basedObject[objectIndex] = null;
+                    break;
+                case "Chest":
+                    break;
+                case "Door":
+                    if(hasKey > 0)
+                    {
+                        hasKey--;
+                        gamepanel.basedObject[objectIndex] = null;
+                    }
+                    break;
+            }
+        }
+    }
     public void draw(Graphics2D g2)
     {
         BufferedImage image = null;
@@ -179,9 +249,10 @@ public class Player extends Entity{
             {
                 image = getRunImage(image, stand_right);
             }
-            g2.drawImage(image, screenX, screenY, gamepanel.imgSize, gamepanel.imgSize, null);
+            g2.drawImage(image, screenX, screenY, gamepanel.playerSize, gamepanel.playerSize, null);
         }
-        else {
+        if(Key.upPressed || Key.downPressed || Key.leftPressed || Key.rightPressed)
+        {
             if(direction.equals("up"))
             {
                 image = getBufferedImage(image, go_up);
@@ -198,7 +269,7 @@ public class Player extends Entity{
             {
                 image = getBufferedImage(image, go_right);
             }
-            g2.drawImage(image, screenX, screenY, gamepanel.imgSize, gamepanel.imgSize, null);
+            g2.drawImage(image, screenX, screenY, gamepanel.playerSize, gamepanel.playerSize, null);
         }
     }
     private BufferedImage getRunImage(BufferedImage image, BufferedImage[] stand)
