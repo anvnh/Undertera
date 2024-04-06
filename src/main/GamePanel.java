@@ -48,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //Game state
     public int gameState;
+    public final int titleState = -1;
     public final int pauseState = 0;
     public final int playState = 1;
     public final int dialogueState = 2;
@@ -62,11 +63,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupGame()
     {
+        gameState = titleState;
         assetSetter.setObject();
         assetSetter.setNPC();
-
-        playMusic(0);
-        gameState = playState;
+        //playMusic(0);
 
     }
 
@@ -107,6 +107,9 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
+        if(gameState == titleState)
+        {
+        }
         if(gameState == playState)
         {
             //player
@@ -123,7 +126,6 @@ public class GamePanel extends JPanel implements Runnable {
         }
         if(gameState == pauseState)
         {
-
         }
     }
     public void paintComponent(Graphics g) {
@@ -131,36 +133,43 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
-        //tile
-        tileM.draw(g2);
-
-        //UI
-        ui.draw(g2);
-
-        //object
-        for (int i = 0; i < basedObject.length; i++) {
-            if (basedObject[i] != null) {
-                basedObject[i].draw(g2, this);
-            }
-        }
-
-        //player
-        player.draw(g2);
-
-        //NPC
-        for (int i = 0; i < npc.length; i++) {
-            if (npc[i] != null) {
-                npc[i].draw_npc(g2);
-                //System.out.println(npc[i].direction);
-            }
-        }
-
-
-        for(int i = 0; i < npc.length; i++)
+        //TITLE SCREEN
+        if(gameState == titleState)
         {
-            if(npc[i] != null)
+            ui.draw(g2);
+        }
+        else {
+            //tile
+            tileM.draw(g2);
+
+            //UI
+            ui.draw(g2);
+
+
+            //object
+            for (int i = 0; i < basedObject.length; i++) {
+                if (basedObject[i] != null) {
+                    basedObject[i].draw(g2, this);
+                }
+            }
+
+            //player
+            player.draw(g2);
+
+            //NPC
+            for (int i = 0; i < npc.length; i++) {
+                if (npc[i] != null) {
+                    npc[i].draw_npc(g2);
+                    //System.out.println(npc[i].direction);
+                }
+            }
+
+            for(int i = 0; i < npc.length; i++)
             {
-                npc[i].draw_npc(g2);
+                if(npc[i] != null)
+                {
+                    npc[i].draw_npc(g2);
+                }
             }
         }
 

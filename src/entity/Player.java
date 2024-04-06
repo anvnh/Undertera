@@ -221,11 +221,11 @@ public class Player extends Entity{
     public void interactNPC(int npcIndex) {
         if(npcIndex != 999)
         {
-            if(gamepanel.Key.enterPressed)
+            if(gamepanel.Key.communicateWithNPC)
             {
                 gamepanel.gameState = gamepanel.dialogueState;
                 gamepanel.npc[npcIndex].speak();
-                gamepanel.Key.enterPressed = false;
+                gamepanel.Key.communicateWithNPC = false;
             }
         }
     }

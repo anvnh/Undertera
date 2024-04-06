@@ -2,10 +2,12 @@ package main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class KeyboardHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, communicateWithNPC;
     GamePanel gamepanel;
 
     public KeyboardHandler(GamePanel gamePanel)
@@ -20,6 +22,40 @@ public class KeyboardHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
+        //Title State
+        if(gamepanel.gameState == gamepanel.titleState)
+        {
+            if(code == KeyEvent.VK_UP)
+            {
+                gamepanel.ui.commandNumber--;
+                if(gamepanel.ui.commandNumber < 0)
+                    gamepanel.ui.commandNumber = 3;
+            }
+            if(code == KeyEvent.VK_DOWN)
+            {
+                gamepanel.ui.commandNumber++;
+                if(gamepanel.ui.commandNumber > 3)
+                    gamepanel.ui.commandNumber = 0;
+            }
+            if(code == KeyEvent.VK_ENTER)
+            {
+                if(gamepanel.ui.commandNumber == 0)
+                {
+                    gamepanel.gameState = gamepanel.playState;
+                }
+                if(gamepanel.ui.commandNumber == 1)
+                {
+                }
+                if(gamepanel.ui.commandNumber == 2)
+                {
+                }
+                if(gamepanel.ui.commandNumber == 3)
+                {
+                    System.exit(0);
+                }
+            }
+        }
+        //play state
         if(gamepanel.gameState == gamepanel.playState)
         {
             if(code == KeyEvent.VK_W)
@@ -40,11 +76,11 @@ public class KeyboardHandler implements KeyListener {
             }
             if(code == KeyEvent.VK_ESCAPE)
             {
-                gamepanel.gameState = gamepanel.playState;
+                gamepanel.gameState = gamepanel.pauseState;
             }
-            if(code == KeyEvent.VK_ENTER)
+            if(code == KeyEvent.VK_E)
             {
-                enterPressed = true;
+                communicateWithNPC = true;
             }
         }
         //Pause State
