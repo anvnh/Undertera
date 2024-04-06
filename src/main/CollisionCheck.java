@@ -145,6 +145,7 @@ public class CollisionCheck {
         }
         return index;
     }
+    //NPC or Monster
     public int checkEntity(Entity entity, Entity[] target)
     {
         int index = 999;
@@ -156,7 +157,7 @@ public class CollisionCheck {
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
-                //Get the object's solid area
+                //Get the target's solid area
                 target[i].solidArea.x = target[i].worldX + target[i].solidArea.x;
                 target[i].solidArea.y = target[i].worldY + target[i].solidArea.y;
 

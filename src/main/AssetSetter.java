@@ -13,7 +13,7 @@ public class AssetSetter {
 
     public void setNPC() {
         gamepanel.npc[0] = new NPC_OldMan(gamepanel);
-        gamepanel.npc[0].worldX = gamepanel.tileSize * 21;
+        gamepanel.npc[0].worldX = gamepanel.tileSize * 22;
         gamepanel.npc[0].worldY = gamepanel.tileSize * 22;
     }
 

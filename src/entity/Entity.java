@@ -34,18 +34,37 @@ public class Entity {
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public int actionLockCounter = 0;
+    String[] dialogue = new String[20];
+    int dialogueIndex = 0;
     public Entity(GamePanel gamePanel)
     {
         this.gamepanel = gamePanel;
     }
 
     public void setAction(){}
+    public void speak() {
+        if(dialogueIndex == 11)
+            dialogueIndex = 0;
+        gamepanel.ui.currentDialogue = dialogue[dialogueIndex];
+        dialogueIndex++;
+        if(Objects.equals(gamepanel.player.direction, "up"))
+            direction = "down";
+        else if(Objects.equals(gamepanel.player.direction, "down"))
+            direction = "up";
+        else if(Objects.equals(gamepanel.player.direction, "left"))
+            direction = "right";
+        else if(Objects.equals(gamepanel.player.direction, "right"))
+            direction = "left";
+    }
     public void update(){
+
         setAction();
+
         collisionOn = false;
         gamepanel.collisionCheck.checkTile(this);
         gamepanel.collisionCheck.checkObject(this, false);
         gamepanel.collisionCheck.checkPlayer(this);
+
         //if collision is false, player can move
         if(!collisionOn)
         {
@@ -166,4 +185,5 @@ public class Entity {
 
         g2.drawImage(image, screenX, screenY, gamepanel.npcSize, gamepanel.npcSize, null);
     }
+
 }

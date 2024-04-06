@@ -13,8 +13,8 @@ public class GamePanel extends JPanel implements Runnable {
     //SCREEN
     final int originalTileSize = 16;
     final int scale = 3;
-    public final int playerSize = originalTileSize * (scale + 3);
-    public final int npcSize = originalTileSize * (scale + 3);
+    public final int playerSize = originalTileSize * (scale + 2);
+    public final int npcSize = originalTileSize * (scale);
     public final int objectSize = originalTileSize * scale;
     public final int tileSize = originalTileSize * scale;
     public final int maxScreenCol = 30;
@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //System
     TileManager tileM = new TileManager(this);
-    KeyboardHandler Key = new KeyboardHandler(this);
+    public KeyboardHandler Key = new KeyboardHandler(this);
     Sound sound = new Sound();
     public UI ui = new UI(this);
     public CollisionCheck collisionCheck = new CollisionCheck(this);
@@ -48,8 +48,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     //Game state
     public int gameState;
-    public final int playState = 1;
     public final int pauseState = 0;
+    public final int playState = 1;
+    public final int dialogueState = 2;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -151,6 +152,15 @@ public class GamePanel extends JPanel implements Runnable {
             if (npc[i] != null) {
                 npc[i].draw_npc(g2);
                 //System.out.println(npc[i].direction);
+            }
+        }
+
+
+        for(int i = 0; i < npc.length; i++)
+        {
+            if(npc[i] != null)
+            {
+                npc[i].draw_npc(g2);
             }
         }
 

@@ -25,15 +25,15 @@ public class Player extends Entity{
 
         solidArea = new Rectangle();
 
-        solidArea.x = 40;
-        solidArea.y = 60;
+        solidArea.x = 30;
+        solidArea.y = 35;
 
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
 
 
         solidArea.width = 20;
-        solidArea.height = 20;
+        solidArea.height = 25;
 
         setDefaultValues();
         getPlayerImage();
@@ -104,6 +104,17 @@ public class Player extends Entity{
         setup(4, go_up, "/player/go_up_5");
         setup(5, go_up, "/player/go_up_6");
 
+
+        /*
+        up_1 = setup_npc("/player/boy_up_1");
+        up_2 = setup_npc("/player/boy_up_2");
+        down_1 = setup_npc("/player/boy_down_1");
+        down_2 = setup_npc("/player/boy_down_2");
+        left_1 = setup_npc("/player/boy_left_1");
+        left_2 = setup_npc("/player/boy_left_2");
+        right_1 = setup_npc("/player/boy_right_1");
+        right_2 = setup_npc("/player/boy_right_2");
+         */
     }
     public void update()
     {
@@ -122,16 +133,17 @@ public class Player extends Entity{
                 //worldX += speed;
             }
 
+            collisionOn = false;
+
             // Check object collision
             int objectIndex = gamepanel.collisionCheck.checkObject(this, true);
             pickUpObject(objectIndex);
 
-            // Check NPC Collisoin
+            // Check NPC Collision
             int npcIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.npc);
             interactNPC(npcIndex);
 
             //Check tile collision
-            collisionOn = false;
             gamepanel.collisionCheck.checkTile(this);
 
             //if collision is false, player can move
@@ -153,7 +165,17 @@ public class Player extends Entity{
                 }
             }
 
-
+            /*
+            runCount++;
+            if (runCount > 15)
+            {
+                if (runAnimation == 1)
+                    runAnimation = 2;
+                else if (runAnimation == 2)
+                    runAnimation = 1;
+                runCount = 0;
+            }
+             */
             runCount++;
             if (runCount > 15) {
                 if (runAnimation == 1)
@@ -199,6 +221,12 @@ public class Player extends Entity{
     public void interactNPC(int npcIndex) {
         if(npcIndex != 999)
         {
+            if(gamepanel.Key.enterPressed)
+            {
+                gamepanel.gameState = gamepanel.dialogueState;
+                gamepanel.npc[npcIndex].speak();
+                gamepanel.Key.enterPressed = false;
+            }
         }
     }
 
@@ -210,38 +238,47 @@ public class Player extends Entity{
             if(direction.equals("down"))
             {
                 image = getRunImage(image, stand_down);
+                //image = runAnimation == 1 ? down_1 : down_2;
             }
             else if(direction.equals("up"))
             {
                 image = getRunImage(image, stand_up);
+                //image = runAnimation == 1 ? up_1 : up_2;
             }
             else if(direction.equals("left"))
             {
                 image = getRunImage(image, stand_left);
+                //image = runAnimation == 1 ? left_1 : left_2;
             }
             else if(direction.equals("right"))
             {
                 image = getRunImage(image, stand_right);
+                //image = runAnimation == 1 ? right_1 : right_2;
             }
             g2.drawImage(image, screenX, screenY, gamepanel.playerSize, gamepanel.playerSize, null);
         }
+
         if(Key.upPressed || Key.downPressed || Key.leftPressed || Key.rightPressed)
         {
             if(direction.equals("up"))
             {
                 image = getBufferedImage(image, go_up);
+                //image = runAnimation == 1 ? up_1 : up_2;
             }
             else if(direction.equals("down"))
             {
                 image = getBufferedImage(image, go_down);
+                //image = runAnimation == 0 ? down_1 : down_2;
             }
             else if(direction.equals("left"))
             {
                 image = getBufferedImage(image, go_left);
+                //image = runAnimation == 1 ? left_1 : left_2;
             }
             else if(direction.equals("right"))
             {
                 image = getBufferedImage(image, go_right);
+                //image = runAnimation == 1 ? right_1 : right_2;
             }
             g2.drawImage(image, screenX, screenY, gamepanel.playerSize, gamepanel.playerSize, null);
         }
