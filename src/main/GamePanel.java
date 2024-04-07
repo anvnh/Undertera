@@ -44,10 +44,11 @@ public class GamePanel extends JPanel implements Runnable {
     public EventHandler eventHandler = new EventHandler(this);
     public CollisionCheck collisionCheck = new CollisionCheck(this);
     public AssetSetter assetSetter = new AssetSetter(this);
-    public Entity[] objects = new Entity[10];
-    //Player + NPC
     public Player player = new Player(this, Key);
+
+    public Entity[] objects = new Entity[10];
     public Entity[] npc = new Entity[10];
+    public Entity[] monster = new Entity[20];
 
     ArrayList<Entity> entityArrayList = new ArrayList<>();
 
@@ -71,6 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
         gameState = titleState;
         assetSetter.setObject();
         assetSetter.setNPC();
+        assetSetter.setMonster();
         playMusic(0);
 
     }
@@ -128,6 +130,15 @@ public class GamePanel extends JPanel implements Runnable {
                     npc[i].update();
                 }
             }
+
+            //monster
+            for(int i = 0; i < monster.length; i++)
+            {
+                if(monster[i] != null)
+                {
+                    monster[i].update();
+                }
+            }
         }
         if(gameState == pauseState)
         {
@@ -153,6 +164,7 @@ public class GamePanel extends JPanel implements Runnable {
             entityArrayList.add(player);
             //player.draw_player(g2);
 
+            //adding npc's
             for(int i = 0; i < npc.length; i++)
             {
                 if(npc[i] != null)
@@ -160,11 +172,21 @@ public class GamePanel extends JPanel implements Runnable {
                     entityArrayList.add(npc[i]);
                 }
             }
+            //adding objects
             for(int i = 0; i < objects.length; i++)
             {
                 if(objects[i] != null)
                 {
                     entityArrayList.add(objects[i]);
+                }
+            }
+
+            //adding monster
+            for(int i = 0; i < monster.length; i++)
+            {
+                if(monster[i] != null)
+                {
+                    entityArrayList.add(monster[i]);
                 }
             }
 
@@ -190,6 +212,11 @@ public class GamePanel extends JPanel implements Runnable {
                 {
                     entityArrayList.get(i).draw_entity(g2);
                 }
+            }
+            //Remove entities
+            for(int i = 0; i < entityArrayList.size(); i++)
+            {
+                entityArrayList.remove(i);
             }
 
             //UI

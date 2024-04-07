@@ -16,14 +16,34 @@ public class NPC_OldMan extends Entity{
         setDialogue();
     }
     public void getNPC_IMG() {
-        up_1 = setup_entity("/npc/oldman/up_1");
-        up_2 = setup_entity("/npc/oldman/up_2");
-        down_1 = setup_entity("/npc/oldman/down_1");
-        down_2 = setup_entity("/npc/oldman/down_2");
-        left_1 = setup_entity("/npc/oldman/left_1");
-        left_2 = setup_entity("/npc/oldman/left_2");
-        right_1 = setup_entity("/npc/oldman/right_1");
-        right_2 = setup_entity("/npc/oldman/right_2");
+        go_up[0] = setup_entity("/npc/oldman/up_1");
+        go_up[1] = setup_entity("/npc/oldman/up_2");
+        go_up[2] = setup_entity("/npc/oldman/up_1");
+        go_up[3] = setup_entity("/npc/oldman/up_2");
+        go_up[4] = setup_entity("/npc/oldman/up_1");
+        go_up[5] = setup_entity("/npc/oldman/up_2");
+
+        go_down[0] = setup_entity("/npc/oldman/down_1");
+        go_down[1] = setup_entity("/npc/oldman/down_2");
+        go_down[2] = setup_entity("/npc/oldman/down_1");
+        go_down[3] = setup_entity("/npc/oldman/down_2");
+        go_down[4] = setup_entity("/npc/oldman/down_1");
+        go_down[5] = setup_entity("/npc/oldman/down_2");
+
+        go_left[0] = setup_entity("/npc/oldman/left_1");
+        go_left[1] = setup_entity("/npc/oldman/left_2");
+        go_left[2] = setup_entity("/npc/oldman/left_1");
+        go_left[3] = setup_entity("/npc/oldman/left_2");
+        go_left[4] = setup_entity("/npc/oldman/left_1");
+        go_left[5] = setup_entity("/npc/oldman/left_2");
+
+        go_right[0] = setup_entity("/npc/oldman/right_1");
+        go_right[1] = setup_entity("/npc/oldman/right_2");
+        go_right[2] = setup_entity("/npc/oldman/right_1");
+        go_right[3] = setup_entity("/npc/oldman/right_2");
+        go_right[4] = setup_entity("/npc/oldman/right_1");
+        go_right[5] = setup_entity("/npc/oldman/right_2");
+
     }
     public void setDialogue() {
         dialogue[0] = "I'm just an old man";

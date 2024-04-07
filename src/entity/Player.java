@@ -135,6 +135,11 @@ public class Player extends Entity{
             int npcIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.npc);
             interactNPC(npcIndex);
 
+            // Check Monster's Collision
+            int monsterIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.monster);
+            contactMonster(monsterIndex);
+
+
             // Check event
             gamepanel.eventHandler.checkEvent();
 
@@ -161,37 +166,24 @@ public class Player extends Entity{
             }
             runCount++;
             if (runCount > 15) {
-                if (runAnimation == 1)
-                    runAnimation = 2;
-                else if (runAnimation == 2)
-                    runAnimation = 3;
-                else if (runAnimation == 3)
-                    runAnimation = 4;
-                else if (runAnimation == 4)
-                    runAnimation = 5;
-                else if (runAnimation == 5)
-                    runAnimation = 6;
-                else if (runAnimation == 6)
-                    runAnimation = 1;
+                runAnimation = runAnimation == 6 ? 1 : runAnimation + 1;
                 runCount = 0;
             }
         }
         else {
             standCount++;
             if (standCount > 15) {
-                if (standAnimation == 1)
-                    standAnimation = 2;
-                else if (standAnimation == 2)
-                    standAnimation = 3;
-                else if (standAnimation == 3)
-                    standAnimation = 4;
-                else if (standAnimation == 4)
-                    standAnimation = 5;
-                else if (standAnimation == 5)
-                    standAnimation = 6;
-                else if (standAnimation == 6)
-                    standAnimation = 1;
+                standAnimation = standAnimation == 6 ? 1 : standAnimation + 1;
                 standCount = 0;
+            }
+        }
+
+        if(invincible == true)
+        {
+            invincibleCounter++;
+            if(invincibleCounter == 60) {
+                invincible = false;
+                invincibleCounter = 0;
             }
         }
     }
@@ -212,6 +204,18 @@ public class Player extends Entity{
             }
         }
     }
+
+    public void contactMonster(int monsterIndex) {
+        if(monsterIndex != 999)
+        {
+            if(!invincible)
+            {
+                life -= 5;
+                invincible = true;
+            }
+        }
+    }
+
     public void draw_player(Graphics2D g2)
     {
         BufferedImage image = null;
@@ -264,5 +268,11 @@ public class Player extends Entity{
             }
             g2.drawImage(image, screenX, screenY, gamepanel.playerSize, gamepanel.playerSize, null);
         }
+        if(invincible)
+        {
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+        }
+        g2.drawImage(image, screenX, screenY, null);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
     }
 }
