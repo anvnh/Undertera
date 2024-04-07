@@ -18,7 +18,7 @@ public class TileManager {
         this.gamepanel = gp;
         tile = new Tile[50];
 
-        mapTileNum = new int[60][50];
+        mapTileNum = new int[50][50];
 
         getTileImage();
         loadmap("/maps/worldV4.txt");

@@ -62,25 +62,25 @@ public class CollisionCheck {
     public int checkObject(Entity entity, boolean player)
     {
         int index = 999;
-        for(int i = 0; i < gamepanel.basedObject.length; i++)
+        for(int i = 0; i < gamepanel.objects.length; i++)
         {
-            if(gamepanel.basedObject[i] != null)
+            if(gamepanel.objects[i] != null)
             {
                 // Get entity's solid area
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
                 //Get the object's solid area
-                gamepanel.basedObject[i].solidArea.x = gamepanel.basedObject[i].worldX + gamepanel.basedObject[i].solidArea.x;
-                gamepanel.basedObject[i].solidArea.y = gamepanel.basedObject[i].worldY + gamepanel.basedObject[i].solidArea.y;
+                gamepanel.objects[i].solidArea.x = gamepanel.objects[i].worldX + gamepanel.objects[i].solidArea.x;
+                gamepanel.objects[i].solidArea.y = gamepanel.objects[i].worldY + gamepanel.objects[i].solidArea.y;
 
                 switch(entity.direction)
                 {
                     case "up":
                         entity.solidArea.y -= entity.speed;
-                        if(entity.solidArea.intersects(gamepanel.basedObject[i].solidArea))
+                        if(entity.solidArea.intersects(gamepanel.objects[i].solidArea))
                         {
-                            if(gamepanel.basedObject[i].collision)
+                            if(gamepanel.objects[i].collision)
                             {
                                 entity.collisionOn = true;
                                 index = i;
@@ -93,9 +93,9 @@ public class CollisionCheck {
                         break;
                     case "down":
                         entity.solidArea.y += entity.speed;
-                        if(entity.solidArea.intersects(gamepanel.basedObject[i].solidArea))
+                        if(entity.solidArea.intersects(gamepanel.objects[i].solidArea))
                         {
-                            if(gamepanel.basedObject[i].collision)
+                            if(gamepanel.objects[i].collision)
                             {
                                 entity.collisionOn = true;
                                 index = i;
@@ -108,9 +108,9 @@ public class CollisionCheck {
                         break;
                     case "left":
                         entity.solidArea.x -= entity.speed;
-                        if(entity.solidArea.intersects(gamepanel.basedObject[i].solidArea))
+                        if(entity.solidArea.intersects(gamepanel.objects[i].solidArea))
                         {
-                            if(gamepanel.basedObject[i].collision)
+                            if(gamepanel.objects[i].collision)
                             {
                                 entity.collisionOn = true;
                                 index = i;
@@ -123,9 +123,9 @@ public class CollisionCheck {
                         break;
                     case "right":
                         entity.solidArea.x += entity.speed;
-                        if(entity.solidArea.intersects(gamepanel.basedObject[i].solidArea))
+                        if(entity.solidArea.intersects(gamepanel.objects[i].solidArea))
                         {
-                            if(gamepanel.basedObject[i].collision)
+                            if(gamepanel.objects[i].collision)
                             {
                                 entity.collisionOn = true;
                                 index = i;
@@ -139,8 +139,8 @@ public class CollisionCheck {
                 }
                 entity.solidArea.x = entity.solidAreaDefaultX;
                 entity.solidArea.y = entity.solidAreaDefaultY;
-                gamepanel.basedObject[i].solidArea.x = gamepanel.basedObject[i].solidAreaDefaultX;
-                gamepanel.basedObject[i].solidArea.y = gamepanel.basedObject[i].solidAreaDefaultY;
+                gamepanel.objects[i].solidArea.x = gamepanel.objects[i].solidAreaDefaultX;
+                gamepanel.objects[i].solidArea.y = gamepanel.objects[i].solidAreaDefaultY;
             }
         }
         return index;

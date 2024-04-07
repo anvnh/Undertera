@@ -34,7 +34,7 @@ public class Player extends Entity{
 
         solidArea.width = 20;
         solidArea.height = 25;
-
+        name = "player";
         setDefaultValues();
         getPlayerImage();
     }
@@ -50,75 +50,63 @@ public class Player extends Entity{
     }
     public void getPlayerImage()
     {
-        //Standing position
-        setup(0, stand_right, "/player/stand_right_1");
-        setup(1, stand_right, "/player/stand_right_2");
-        setup(2, stand_right, "/player/stand_right_3");
-        setup(3, stand_right, "/player/stand_right_4");
-        setup(4, stand_right, "/player/stand_right_5");
-        setup(5, stand_right, "/player/stand_right_6");
+        //Stand and running position
+        stand_down[0] = setup_player("/player/stand_down_1");
+        stand_down[1] = setup_player("/player/stand_down_2");
+        stand_down[2] = setup_player("/player/stand_down_3");
+        stand_down[3] = setup_player("/player/stand_down_4");
+        stand_down[4] = setup_player("/player/stand_down_5");
+        stand_down[5] = setup_player("/player/stand_down_6");
 
-        setup(0, stand_down, "/player/stand_down_1");
-        setup(1, stand_down, "/player/stand_down_2");
-        setup(2, stand_down, "/player/stand_down_3");
-        setup(3, stand_down, "/player/stand_down_4");
-        setup(4, stand_down, "/player/stand_down_5");
-        setup(5, stand_down, "/player/stand_down_6");
+        stand_up[0] = setup_player("/player/stand_up_1");
+        stand_up[1] = setup_player("/player/stand_up_2");
+        stand_up[2] = setup_player("/player/stand_up_3");
+        stand_up[3] = setup_player("/player/stand_up_4");
+        stand_up[4] = setup_player("/player/stand_up_5");
+        stand_up[5] = setup_player("/player/stand_up_6");
 
-        setup(0, stand_left, "/player/stand_left_1");
-        setup(1, stand_left, "/player/stand_left_2");
-        setup(2, stand_left, "/player/stand_left_3");
-        setup(3, stand_left, "/player/stand_left_4");
-        setup(4, stand_left, "/player/stand_left_5");
-        setup(5, stand_left, "/player/stand_left_6");
+        stand_right[0] = setup_player("/player/stand_right_1");
+        stand_right[1] = setup_player("/player/stand_right_2");
+        stand_right[2] = setup_player("/player/stand_right_3");
+        stand_right[3] = setup_player("/player/stand_right_4");
+        stand_right[4] = setup_player("/player/stand_right_4");
+        stand_right[5] = setup_player("/player/stand_right_6");
 
-        setup(0, stand_up, "/player/stand_up_1");
-        setup(1, stand_up, "/player/stand_up_2");
-        setup(2, stand_up, "/player/stand_up_3");
-        setup(3, stand_up, "/player/stand_up_4");
-        setup(4, stand_up, "/player/stand_up_5");
-        setup(5, stand_up, "/player/stand_up_6");
+        stand_left[0] = setup_player("/player/stand_left_1");
+        stand_left[1] = setup_player("/player/stand_left_2");
+        stand_left[2] = setup_player("/player/stand_left_3");
+        stand_left[3] = setup_player("/player/stand_left_4");
+        stand_left[4] = setup_player("/player/stand_left_5");
+        stand_left[5] = setup_player("/player/stand_left_6");
 
-        //Movement
-        setup(0, go_right, "/player/go_right_1");
-        setup(1, go_right, "/player/go_right_2");
-        setup(2, go_right, "/player/go_right_3");
-        setup(3, go_right, "/player/go_right_4");
-        setup(4, go_right, "/player/go_right_5");
-        setup(5, go_right, "/player/go_right_6");
+        go_down[0] = setup_player("/player/go_down_1");
+        go_down[1] = setup_player("/player/go_down_2");
+        go_down[2] = setup_player("/player/go_down_3");
+        go_down[3] = setup_player("/player/go_down_4");
+        go_down[4] = setup_player("/player/go_down_5");
+        go_down[5] = setup_player("/player/go_down_6");
 
-        setup(0, go_down, "/player/go_down_1");
-        setup(1, go_down, "/player/go_down_2");
-        setup(2, go_down, "/player/go_down_3");
-        setup(3, go_down, "/player/go_down_4");
-        setup(4, go_down, "/player/go_down_5");
-        setup(5, go_down, "/player/go_down_6");
+        go_up[0] = setup_player("/player/go_up_1");
+        go_up[1] = setup_player("/player/go_up_2");
+        go_up[2] = setup_player("/player/go_up_3");
+        go_up[3] = setup_player("/player/go_up_4");
+        go_up[4] = setup_player("/player/go_up_5");
+        go_up[5] = setup_player("/player/go_up_6");
 
-        setup(0, go_left, "/player/go_left_1");
-        setup(1, go_left, "/player/go_left_2");
-        setup(2, go_left, "/player/go_left_3");
-        setup(3, go_left, "/player/go_left_4");
-        setup(4, go_left, "/player/go_left_5");
-        setup(5, go_left, "/player/go_left_6");
+        go_left[0] = setup_player("/player/go_left_1");
+        go_left[1] = setup_player("/player/go_left_2");
+        go_left[2] = setup_player("/player/go_left_3");
+        go_left[3] = setup_player("/player/go_left_4");
+        go_left[4] = setup_player("/player/go_left_5");
+        go_left[5] = setup_player("/player/go_left_6");
 
-        setup(0, go_up, "/player/go_up_1");
-        setup(1, go_up, "/player/go_up_2");
-        setup(2, go_up, "/player/go_up_3");
-        setup(3, go_up, "/player/go_up_4");
-        setup(4, go_up, "/player/go_up_5");
-        setup(5, go_up, "/player/go_up_6");
+        go_right[0] = setup_player("/player/go_right_1");
+        go_right[1] = setup_player("/player/go_right_2");
+        go_right[2] = setup_player("/player/go_right_3");
+        go_right[3] = setup_player("/player/go_right_4");
+        go_right[4] = setup_player("/player/go_right_5");
+        go_right[5] = setup_player("/player/go_right_6");
 
-
-        /*
-        up_1 = setup_npc("/player/boy_up_1");
-        up_2 = setup_npc("/player/boy_up_2");
-        down_1 = setup_npc("/player/boy_down_1");
-        down_2 = setup_npc("/player/boy_down_2");
-        left_1 = setup_npc("/player/boy_left_1");
-        left_2 = setup_npc("/player/boy_left_2");
-        right_1 = setup_npc("/player/boy_right_1");
-        right_2 = setup_npc("/player/boy_right_2");
-         */
     }
     public void update()
     {
@@ -147,6 +135,9 @@ public class Player extends Entity{
             int npcIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.npc);
             interactNPC(npcIndex);
 
+            // Check event
+            gamepanel.eventHandler.checkEvent();
+
             //Check tile collision
             gamepanel.collisionCheck.checkTile(this);
 
@@ -168,18 +159,6 @@ public class Player extends Entity{
                         break;
                 }
             }
-
-            /*
-            runCount++;
-            if (runCount > 15)
-            {
-                if (runAnimation == 1)
-                    runAnimation = 2;
-                else if (runAnimation == 2)
-                    runAnimation = 1;
-                runCount = 0;
-            }
-             */
             runCount++;
             if (runCount > 15) {
                 if (runAnimation == 1)
@@ -233,30 +212,29 @@ public class Player extends Entity{
             }
         }
     }
-
-    public void draw(Graphics2D g2)
+    public void draw_player(Graphics2D g2)
     {
         BufferedImage image = null;
         if(!Key.upPressed && !Key.downPressed && !Key.leftPressed && !Key.rightPressed)
         {
             if(direction.equals("down"))
             {
-                image = getRunImage(image, stand_down);
+                image = getStandAnimate(image, stand_down);
                 //image = runAnimation == 1 ? down_1 : down_2;
             }
             else if(direction.equals("up"))
             {
-                image = getRunImage(image, stand_up);
+                image = getStandAnimate(image, stand_up);
                 //image = runAnimation == 1 ? up_1 : up_2;
             }
             else if(direction.equals("left"))
             {
-                image = getRunImage(image, stand_left);
+                image = getStandAnimate(image, stand_left);
                 //image = runAnimation == 1 ? left_1 : left_2;
             }
             else if(direction.equals("right"))
             {
-                image = getRunImage(image, stand_right);
+                image = getStandAnimate(image, stand_right);
                 //image = runAnimation == 1 ? right_1 : right_2;
             }
             g2.drawImage(image, screenX, screenY, gamepanel.playerSize, gamepanel.playerSize, null);
@@ -266,22 +244,22 @@ public class Player extends Entity{
         {
             if(direction.equals("up"))
             {
-                image = getBufferedImage(image, go_up);
+                image = getRunAnimate(image, go_up);
                 //image = runAnimation == 1 ? up_1 : up_2;
             }
             else if(direction.equals("down"))
             {
-                image = getBufferedImage(image, go_down);
+                image = getRunAnimate(image, go_down);
                 //image = runAnimation == 0 ? down_1 : down_2;
             }
             else if(direction.equals("left"))
             {
-                image = getBufferedImage(image, go_left);
+                image = getRunAnimate(image, go_left);
                 //image = runAnimation == 1 ? left_1 : left_2;
             }
             else if(direction.equals("right"))
             {
-                image = getBufferedImage(image, go_right);
+                image = getRunAnimate(image, go_right);
                 //image = runAnimation == 1 ? right_1 : right_2;
             }
             g2.drawImage(image, screenX, screenY, gamepanel.playerSize, gamepanel.playerSize, null);

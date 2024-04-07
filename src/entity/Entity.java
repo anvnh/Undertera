@@ -1,6 +1,7 @@
 package entity;
 
 import main.GamePanel;
+import main.KeyboardHandler;
 import main.UtilityTools;
 
 import javax.imageio.ImageIO;
@@ -12,7 +13,7 @@ public class Entity {
     GamePanel gamepanel;
     public int worldX, worldY;
     public int speed;
-    public String direction;
+    public String direction = "down";
     public int runCount = 0;
     public int runAnimation = 1;
     public int standCount = 0;
@@ -29,16 +30,22 @@ public class Entity {
     BufferedImage[] go_right = new BufferedImage[6];
 
     //Buffered Image for NPC
-    BufferedImage up_1, up_2, down_1, down_2, left_1, left_2, right_1, right_2;
+    public BufferedImage up_1, up_2, down_1, down_2, left_1, left_2, right_1, right_2;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public int actionLockCounter = 0;
     String[] dialogue = new String[20];
     int dialogueIndex = 0;
+
+    public BufferedImage image, image1, image2, image3, image4, image5;
+    public String name;
+    public boolean collision = false;
+
     //Character status
-    public int maxLife;
+    public double maxLife;
     public double life;
+    KeyboardHandler Key;
     public Entity(GamePanel gamePanel)
     {
         this.gamepanel = gamePanel;
@@ -97,20 +104,19 @@ public class Entity {
         }
     }
 
-    public BufferedImage setup(int index, BufferedImage[] animationType, String imgName)
+    public BufferedImage setup_player(String imgName)
     {
         UtilityTools utilityTools = new UtilityTools();
         BufferedImage scaledImage = null;
         try {
             scaledImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(imgName + ".png")));
             scaledImage = utilityTools.scaleImage(scaledImage, gamepanel.playerSize, gamepanel.playerSize);
-            animationType[index] = scaledImage;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return scaledImage;
     }
-    public BufferedImage setup_npc(String imgName)
+    public BufferedImage setup_entity(String imgName)
     {
         UtilityTools utilityTools = new UtilityTools();
         BufferedImage scaledImage = null;
@@ -122,7 +128,7 @@ public class Entity {
         }
         return scaledImage;
     }
-    public BufferedImage getRunImage(BufferedImage image, BufferedImage[] stand)
+    public BufferedImage getStandAnimate(BufferedImage image, BufferedImage[] stand)
     {
         if(standAnimation == 1)
             image = stand[0];
@@ -138,7 +144,7 @@ public class Entity {
             image = stand[5];
         return image;
     }
-    public BufferedImage getBufferedImage(BufferedImage image, BufferedImage[] run) {
+    public BufferedImage getRunAnimate(BufferedImage image, BufferedImage[] run) {
         if(runAnimation == 1)
             image = run[0];
         else if(runAnimation == 2)
@@ -153,7 +159,7 @@ public class Entity {
             image = run[5];
         return image;
     }
-    public void draw_npc(Graphics2D g2)
+    public void draw_entity(Graphics2D g2)
     {
         BufferedImage image = null;
         int screenX = worldX - gamepanel.player.worldX + gamepanel.player.screenX;
@@ -188,5 +194,6 @@ public class Entity {
 
         g2.drawImage(image, screenX, screenY, gamepanel.npcSize, gamepanel.npcSize, null);
     }
+
 
 }

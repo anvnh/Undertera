@@ -2,12 +2,14 @@ package main;
 
 import entity.Entity;
 import entity.Player;
-import object.BasedObject;
-import object.KeyObject;
 import tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.Inet4Address;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class GamePanel extends JPanel implements Runnable {
     //SCREEN
@@ -23,7 +25,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenHeight = tileSize * maxScreenRow; //15 * 48 = 720
 
     //World Settings
-    public final int maxWorldCol = 60;
+    public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
     //public final int worldWidth = tileSize * maxWorldCol;
     //public final int worldHeight = tileSize * maxWorldRow;
@@ -39,12 +41,15 @@ public class GamePanel extends JPanel implements Runnable {
     public KeyboardHandler Key = new KeyboardHandler(this);
     Sound sound = new Sound();
     public UI ui = new UI(this);
+    public EventHandler eventHandler = new EventHandler(this);
     public CollisionCheck collisionCheck = new CollisionCheck(this);
     public AssetSetter assetSetter = new AssetSetter(this);
-    public BasedObject[] basedObject = new BasedObject[10];
+    public Entity[] objects = new Entity[10];
     //Player + NPC
     public Player player = new Player(this, Key);
     public Entity[] npc = new Entity[10];
+
+    ArrayList<Entity> entityArrayList = new ArrayList<>();
 
     //Game state
     public int gameState;
@@ -139,38 +144,56 @@ public class GamePanel extends JPanel implements Runnable {
             ui.draw(g2);
         }
         else {
-            //tile
+
+            //Tile
             tileM.draw(g2);
 
-            //UI
-            ui.draw(g2);
+            //Add entity to the array
 
-
-            //object
-            for (int i = 0; i < basedObject.length; i++) {
-                if (basedObject[i] != null) {
-                    basedObject[i].draw(g2, this);
-                }
-            }
-
-            //player
-            player.draw(g2);
-
-            //NPC
-            for (int i = 0; i < npc.length; i++) {
-                if (npc[i] != null) {
-                    npc[i].draw_npc(g2);
-                    //System.out.println(npc[i].direction);
-                }
-            }
+            entityArrayList.add(player);
+            //player.draw_player(g2);
 
             for(int i = 0; i < npc.length; i++)
             {
                 if(npc[i] != null)
                 {
-                    npc[i].draw_npc(g2);
+                    entityArrayList.add(npc[i]);
                 }
             }
+            for(int i = 0; i < objects.length; i++)
+            {
+                if(objects[i] != null)
+                {
+                    entityArrayList.add(objects[i]);
+                }
+            }
+
+            // Sort
+            Collections.sort(entityArrayList, new Comparator<Entity>() {
+                        @Override
+                        public int compare(Entity e1, Entity e2) {
+                            int result = Integer.compare(e1.worldY, e2.worldY);
+                            return result;
+                        }
+            });
+
+            // Draw entities
+            for(int i = 0; i < entityArrayList.size(); i++)
+            {
+                //entityArrayList.get(i).draw_entity(g2);
+                //System.out.println(entityArrayList.get(i).name);
+                if(entityArrayList.get(i).name.equals("player"))
+                {
+                    player.draw_player(g2);
+                }
+                else
+                {
+                    entityArrayList.get(i).draw_entity(g2);
+                }
+            }
+
+            //UI
+            ui.draw(g2);
         }
 
         g2.dispose();

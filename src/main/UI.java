@@ -1,11 +1,9 @@
 package main;
 
-import object.BasedObject;
+import entity.Entity;
 import object.HeartObject;
-import object.KeyObject;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -33,7 +31,7 @@ public class UI {
         }
 
         //create HUD object
-        BasedObject heart = new HeartObject(gamepanel);
+        HeartObject heart = new HeartObject(gamepanel);
         heart_full = heart.image1;
         heart_quarter = heart.image2;
         heart_half = heart.image3;
@@ -63,6 +61,7 @@ public class UI {
         if(gamepanel.gameState == gamepanel.playState)
         {
             drawPlayerLife();
+            //System.out.println("ASD");
         }
 
         //Pause state
@@ -100,6 +99,7 @@ public class UI {
         currentLife /= 10;
         int solidLife = (int) currentLife;
         double remainder = currentLife - solidLife;
+        //System.out.println(solidLife + " " + remainder);
         for(int i = 0; i < solidLife; i++)
         {
             g2.drawImage(heart_full, x, y, null);

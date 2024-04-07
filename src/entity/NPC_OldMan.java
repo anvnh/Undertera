@@ -11,18 +11,19 @@ public class NPC_OldMan extends Entity{
         super(gamepanel);
         direction = "down";
         speed = 1;
+        name = "old_man";
         getNPC_IMG();
         setDialogue();
     }
     public void getNPC_IMG() {
-        up_1 = setup_npc("/npc/oldman/up_1");
-        up_2 = setup_npc("/npc/oldman/up_2");
-        down_1 = setup_npc("/npc/oldman/down_1");
-        down_2 = setup_npc("/npc/oldman/down_2");
-        left_1 = setup_npc("/npc/oldman/left_1");
-        left_2 = setup_npc("/npc/oldman/left_2");
-        right_1 = setup_npc("/npc/oldman/right_1");
-        right_2 = setup_npc("/npc/oldman/right_2");
+        up_1 = setup_entity("/npc/oldman/up_1");
+        up_2 = setup_entity("/npc/oldman/up_2");
+        down_1 = setup_entity("/npc/oldman/down_1");
+        down_2 = setup_entity("/npc/oldman/down_2");
+        left_1 = setup_entity("/npc/oldman/left_1");
+        left_2 = setup_entity("/npc/oldman/left_2");
+        right_1 = setup_entity("/npc/oldman/right_1");
+        right_2 = setup_entity("/npc/oldman/right_2");
     }
     public void setDialogue() {
         dialogue[0] = "I'm just an old man";

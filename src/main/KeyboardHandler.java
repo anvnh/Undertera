@@ -7,7 +7,7 @@ import java.awt.event.MouseListener;
 
 public class KeyboardHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, communicateWithNPC;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, communicateWithNPC, F_Pressed;
     GamePanel gamepanel;
 
     public KeyboardHandler(GamePanel gamePanel)
@@ -81,6 +81,10 @@ public class KeyboardHandler implements KeyListener {
             if(code == KeyEvent.VK_E)
             {
                 communicateWithNPC = true;
+            }
+            if(code == KeyEvent.VK_F)
+            {
+                F_Pressed = true;
             }
         }
         //Pause State
