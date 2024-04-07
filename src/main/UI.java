@@ -1,5 +1,7 @@
 package main;
 
+import object.BasedObject;
+import object.HeartObject;
 import object.KeyObject;
 
 import javax.imageio.ImageIO;
@@ -16,6 +18,7 @@ public class UI {
     public String currentDialogue;
     Font CCRedAlert;
     public int commandNumber = 0;
+    BufferedImage heart_full, heart_quarter, heart_half, heart_threequarter, heart_empty;
     public UI(GamePanel gp)
     {
         this.gamepanel = gp;
@@ -28,6 +31,15 @@ public class UI {
         } catch (FontFormatException e) {
             throw new RuntimeException(e);
         }
+
+        //create HUD object
+        BasedObject heart = new HeartObject(gamepanel);
+        heart_full = heart.image1;
+        heart_quarter = heart.image2;
+        heart_half = heart.image3;
+        heart_threequarter = heart.image4;
+        heart_empty = heart.image5;
+
     }
     public void showMessage()
     {
@@ -50,21 +62,63 @@ public class UI {
         //Play state
         if(gamepanel.gameState == gamepanel.playState)
         {
+            drawPlayerLife();
         }
 
         //Pause state
         if(gamepanel.gameState == gamepanel.pauseState)
         {
+            drawPlayerLife();
             drawPauseScreen();
         }
 
         //Dialogue State
         if(gamepanel.gameState == gamepanel.dialogueState)
         {
+            drawPlayerLife();
             drawDialogueScreen();
         }
 
     }
+    public void drawPlayerLife()
+    {
+        int x = gamepanel.screenWidth - (gamepanel.tileSize * 7) - 24;
+        int y = (gamepanel.tileSize + 2) / 4;
+        //Blank life
+        for(int i = 0; i < 10; i++)
+        {
+            g2.drawImage(heart_empty, x, y, null);
+            x += 35;
+        }
+
+        // Reset
+        x = gamepanel.screenWidth - (gamepanel.tileSize * 7) - 24;
+        y = (gamepanel.tileSize + 2) / 4;
+
+        //Draw current life
+        double currentLife = gamepanel.player.life;
+        currentLife /= 10;
+        int solidLife = (int) currentLife;
+        double remainder = currentLife - solidLife;
+        for(int i = 0; i < solidLife; i++)
+        {
+            g2.drawImage(heart_full, x, y, null);
+            x += 35;
+        }
+        if(remainder == 0.25)
+        {
+            g2.drawImage(heart_threequarter, x, y, null);
+        }
+        else if(remainder == 0.5)
+        {
+            g2.drawImage(heart_half, x, y, null);
+        }
+        else if(remainder == 0.75)
+        {
+            g2.drawImage(heart_quarter, x, y, null);
+        }
+    }
+
     public void drawTitleScreen()
     {
         //DRAW BACKGROUND
@@ -163,7 +217,7 @@ public class UI {
     }
     public void drawDialogueScreen()
     {
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30f));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
         int x = gamepanel.tileSize * 2;
         int y = gamepanel.tileSize / 2;
         int width = gamepanel.screenWidth - gamepanel.tileSize * 4;

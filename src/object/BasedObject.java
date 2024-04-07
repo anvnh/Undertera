@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class BasedObject {
-    public BufferedImage image;
+    public BufferedImage image, image1, image2, image3, image4, image5;
     public String name;
     public boolean collision = false;
     public int worldX, worldY;

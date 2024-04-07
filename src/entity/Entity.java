@@ -36,6 +36,9 @@ public class Entity {
     public int actionLockCounter = 0;
     String[] dialogue = new String[20];
     int dialogueIndex = 0;
+    //Character status
+    public int maxLife;
+    public double life;
     public Entity(GamePanel gamePanel)
     {
         this.gamepanel = gamePanel;
