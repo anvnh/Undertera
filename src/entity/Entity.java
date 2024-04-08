@@ -57,6 +57,8 @@ public class Entity {
     public int invincibleCounter = 0;
     public int dyingCounter = 0;
     public int dyingAnimation = 1;
+    boolean HPBarOn = false;
+    int HPBarCounter = 0;
     String[] dialogue = new String[20];
     int dialogueIndex = 0;
 
@@ -74,6 +76,7 @@ public class Entity {
     }
 
     public void setAction(){}
+    public void damageReaction(){}
     public void speak() {
         if(dialogueIndex == 11)
             dialogueIndex = 0;
@@ -134,6 +137,7 @@ public class Entity {
             runAnimation = runAnimation == 8 ? 1 : runAnimation + 1;
             runCount = 0;
         }
+
 
         if(invincible)
         {
@@ -239,17 +243,40 @@ public class Entity {
         {
             image = getRunAnimate(image, go_right);
         }
-        if(invincible)
+
+        //HP Bar of the monster
+        if(type == 2 && HPBarOn)
         {
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+            double scale = (double) gamepanel.tileSize/ maxLife;
+            double HPBar = life * scale;
+
+            g2.setColor(new Color(35, 35, 35));
+            g2.fillRect(screenX - 1, screenY - 10, gamepanel.tileSize + 2, 7);
+
+            g2.setColor(new Color(255, 0, 30));
+            g2.fillRect(screenX, screenY - 10, (int)HPBar, 5);
+
+            HPBarCounter++;
+            if(HPBarCounter == 600)
+            {
+                HPBarOn = false;
+                HPBarCounter = 0;
+            }
         }
 
-        if(dying)
-        {
+
+
+        if(invincible) {
+            HPBarOn = true;
+            HPBarCounter = 0;
+            changeAlpha(g2, 0.4f);
+        }
+
+        if(dying) {
             drawDying(g2);
         }
 
         g2.drawImage(image, screenX, screenY, null);
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+        changeAlpha(g2, 1f);
     }
 }

@@ -7,13 +7,15 @@ import java.awt.*;
 import java.util.Random;
 
 public class BlueSlime extends Entity {
-    public BlueSlime(GamePanel gamepanel) {
-        super(gamepanel);
+    GamePanel gamepanel;
+    public BlueSlime(GamePanel gamePanel) {
+        super(gamePanel);
+        this.gamepanel = gamePanel;
 
         type = 2;
         name = "blue_slime";
         speed = 1;
-        maxLife = 4;
+        maxLife = 20;
         life = maxLife;
 
         /*
@@ -86,5 +88,11 @@ public class BlueSlime extends Entity {
             actionLockCounter = 0;
         }
     }
+    public void damageReaction()
+    {
+        actionLockCounter = 0;
+        direction = gamepanel.player.direction;
+    }
+
 
 }

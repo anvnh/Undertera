@@ -36,8 +36,8 @@ public class Player extends Entity{
         solidArea.height = 25;
         name = "player";
 
-        attackArea.width = 35;
-        attackArea.height = 35;
+        attackArea.width = 45;
+        attackArea.height = 55;
 
         setDefaultValues();
         getPlayerImage();
@@ -301,7 +301,9 @@ public class Player extends Entity{
             {
                 gamepanel.monster[monsterIndex].life -= 1;
                 gamepanel.monster[monsterIndex].invincible = true;
+                gamepanel.monster[monsterIndex].damageReaction();
                 gamepanel.playSoundEffect(3);
+
 
                 if(gamepanel.monster[monsterIndex].life <= 0)
                 {
