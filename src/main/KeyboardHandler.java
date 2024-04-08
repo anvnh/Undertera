@@ -95,9 +95,9 @@ public class KeyboardHandler implements KeyListener {
             {
                 F_Pressed = true;
             }
-            if(code == KeyEvent.VK_J)
+            if(code == KeyEvent.VK_K)
             {
-                J_Pressed = true;
+                K_Pressed = true;
             }
         }
         //Pause State
@@ -108,7 +108,7 @@ public class KeyboardHandler implements KeyListener {
         //Dialogue State
         if(gamepanel.gameState == gamepanel.dialogueState)
         {
-            if(code == KeyEvent.VK_E)
+            if(code == KeyEvent.VK_ENTER)
             {
                 gamepanel.gameState = gamepanel.playState;
             }

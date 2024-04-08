@@ -135,6 +135,15 @@ public class Entity {
             runAnimation = runAnimation == 6 ? 1 : runAnimation + 1;
             runCount = 0;
         }
+
+        if(invincible)
+        {
+            invincibleCounter++;
+            if(invincibleCounter == 30) {
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
     }
 
     public BufferedImage setup_player(String imgName)
@@ -161,20 +170,6 @@ public class Entity {
         }
         return image;
     }
-    /*
-    public BufferedImage setup_entity_1(String imgPath)
-    {
-        UtilityTools utilityTools = new UtilityTools();
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read((Objects.requireNonNull(getClass().getResourceAsStream(imgPath + ".png"))));
-            image = utilityTools.scaleImage(image, gamepanel.testSize, gamepanel.testSize);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return image;
-    }
-    */
     public BufferedImage getStandAnimate(BufferedImage image, BufferedImage[] stand)
     {
         image = stand[standAnimation - 1];
@@ -188,43 +183,6 @@ public class Entity {
         image = attack[attackAnimation - 1];
         return image;
     }
-    /*
-    public void draw_entity(Graphics2D g2)
-    {
-        BufferedImage image = null;
-        int screenX = worldX - gamepanel.player.worldX + gamepanel.player.screenX;
-        int screenY = worldY - gamepanel.player.worldY + gamepanel.player.screenY;
-        switch (direction)
-        {
-            case "up":
-                if(runAnimation == 1)
-                    image = up_1;
-                else if(runAnimation == 2)
-                    image = up_2;
-                break;
-            case "down":
-                if(runAnimation == 1)
-                    image = down_1;
-                else if(runAnimation == 2)
-                    image = down_2;
-                break;
-            case "left":
-                if(runAnimation == 1)
-                    image = left_1;
-                else if(runAnimation == 2)
-                    image = left_2;
-                break;
-            case "right":
-                if(runAnimation == 1)
-                    image = right_1;
-                else if(runAnimation == 2)
-                    image = right_2;
-                break;
-        }
-
-        g2.drawImage(image, screenX, screenY, gamepanel.npcSize, gamepanel.npcSize, null);
-    }
-     */
     public void draw_entity(Graphics2D g2)
     {
         BufferedImage image = null;
@@ -250,6 +208,11 @@ public class Entity {
             image = getRunAnimate(image, go_right);
             //image = runAnimation == 1 ? right_1 : right_2;
         }
+        if(invincible)
+        {
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+        }
         g2.drawImage(image, screenX, screenY, null);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
     }
 }

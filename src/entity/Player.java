@@ -36,7 +36,8 @@ public class Player extends Entity{
         solidArea.height = 25;
         name = "player";
 
-        
+        attackArea.width = 35;
+        attackArea.height = 35;
 
         setDefaultValues();
         getPlayerImage();
@@ -154,7 +155,7 @@ public class Player extends Entity{
             gamepanel.collisionCheck.checkTile(this);
 
             // Check attacking
-            if(gamepanel.Key.J_Pressed)
+            if(gamepanel.Key.K_Pressed)
             {
                 attacking = true;
             }
@@ -200,21 +201,55 @@ public class Player extends Entity{
     }
     public void check_attack()
     {
-        if(gamepanel.Key.J_Pressed)
+        if(gamepanel.Key.K_Pressed)
         {
             attacking = true;
-            gamepanel.Key.J_Pressed = false;
+            gamepanel.Key.K_Pressed = false;
         }
     }
 
     public void attack()
     {
         attackCount++;
-        if(attackCount <= 5)
-        {
-            attackAnimation = 1;
+        if(attackCount <= 5) attackAnimation = 1;
+        if(attackCount > 5 && attackCount <= 25) {
+            attackAnimation = 2;
+
+            //Current world x, world y, solid area
+            int currentWorldX = worldX;
+            int currentWorldY = worldY;
+            int solidAreaWidth = solidArea.width;
+            int solidAreaHeight = solidArea.height;
+
+            if(direction.equals("up"))
+            {
+                worldY -= attackArea.height;
+            }
+            if(direction.equals("down"))
+            {
+                worldY += attackArea.height;
+            }
+            if(direction.equals("left"))
+            {
+                worldX -= attackArea.width;
+            }
+            if(direction.equals("right"))
+            {
+                worldX += attackArea.width;
+            }
+
+            solidArea.width = attackArea.width;
+            solidArea.height = attackArea.height;
+
+            int monsterIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.monster);
+            damageMonster(monsterIndex);
+
+            worldX = currentWorldX;
+            worldY = currentWorldY;
+            solidArea.width = solidAreaWidth;
+            solidArea.height = solidAreaHeight;
+
         }
-        if(attackCount > 5 && attackCount <= 25) attackAnimation = 2;
         if(attackCount > 25 && attackCount <= 45) attackAnimation = 3;
         if(attackCount > 45 && attackCount <= 65) attackAnimation = 4;
         if(attackCount > 65)
@@ -250,6 +285,23 @@ public class Player extends Entity{
             {
                 life -= 5;
                 invincible = true;
+            }
+        }
+    }
+
+    public void damageMonster(int monsterIndex)
+    {
+        if(monsterIndex != 999)
+        {
+            if(!gamepanel.monster[monsterIndex].invincible)
+            {
+                gamepanel.monster[monsterIndex].life -= 1;
+                gamepanel.monster[monsterIndex].invincible = true;
+
+                if(gamepanel.monster[monsterIndex].life <= 0)
+                {
+                    gamepanel.monster[monsterIndex] = null;
+                }
             }
         }
     }
