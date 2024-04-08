@@ -61,14 +61,13 @@ public class UI {
         if(gamepanel.gameState == gamepanel.playState)
         {
             drawPlayerLife();
-            //System.out.println("ASD");
         }
 
         //Pause state
         if(gamepanel.gameState == gamepanel.pauseState)
         {
+            drawPauseScreen(g2);
             drawPlayerLife();
-            drawPauseScreen();
         }
 
         //Dialogue State
@@ -208,16 +207,17 @@ public class UI {
         }
 
     }
-    public void drawPauseScreen()
+    public void drawPauseScreen(Graphics2D g2)
     {
         String text = "PAUSED";
-        int y = gamepanel.screenHeight / 2;
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 100f));
         int x = gamepanel.screenWidth / 2 - g2.getFontMetrics().stringWidth(text) / 2;
+        int y = gamepanel.screenHeight / 2 - 190;
         g2.drawString(text, x, y);
     }
     public void drawDialogueScreen()
     {
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30f));
         int x = gamepanel.tileSize * 2;
         int y = gamepanel.tileSize / 2;
         int width = gamepanel.screenWidth - gamepanel.tileSize * 4;

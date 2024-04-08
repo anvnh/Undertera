@@ -18,6 +18,10 @@ public class Entity {
     public int runAnimation = 1;
     public int standCount = 0;
     public int standAnimation = 1;
+    public int attackCount = 0;
+    public int attackAnimation = 1;
+    //Attack
+    boolean attacking = false;
 
     //Buffered Image for Player
     public BufferedImage[] stand_down = new BufferedImage[6];
@@ -29,6 +33,14 @@ public class Entity {
     public BufferedImage[] go_left = new BufferedImage[6];
     public BufferedImage[] go_right = new BufferedImage[6];
 
+    // Buffered attack
+    public BufferedImage[] attack_right = new BufferedImage[4];
+    public BufferedImage[] attack_left = new BufferedImage[4];
+    public BufferedImage[] attack_up = new BufferedImage[4];
+    public BufferedImage[] attack_down = new BufferedImage[4];
+
+
+    // No usages found, could be deleted soon!
     public BufferedImage[] stand_down_entity = new BufferedImage[20];
     public BufferedImage[] stand_up_entity = new BufferedImage[20];
     public BufferedImage[] stand_left_entity = new BufferedImage[20];
@@ -37,9 +49,11 @@ public class Entity {
     public BufferedImage[] go_up_entity = new BufferedImage[20];
     public BufferedImage[] go_left_entity = new BufferedImage[20];
     public BufferedImage[] go_right_entity = new BufferedImage[20];
-    //Buffered Image for NPC
     public BufferedImage up_1, up_2, down_1, down_2, left_1, left_2, right_1, right_2;
+    //
+
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
+    public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public int type;
@@ -168,6 +182,10 @@ public class Entity {
     }
     public BufferedImage getRunAnimate(BufferedImage image, BufferedImage[] run) {
         image = run[runAnimation - 1];
+        return image;
+    }
+    public BufferedImage getAttackAnimate(BufferedImage image, BufferedImage[] attack) {
+        image = attack[attackAnimation - 1];
         return image;
     }
     /*

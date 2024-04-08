@@ -7,7 +7,8 @@ import java.awt.event.MouseListener;
 
 public class KeyboardHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, communicateWithNPC, F_Pressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, communicateWithNPC, F_Pressed,
+            escapePressed, J_Pressed, K_Pressed, L_Pressed, I_Pressed, O_Pressed, U_Pressed, Y_Pressed;
     GamePanel gamepanel;
 
     public KeyboardHandler(GamePanel gamePanel)
@@ -23,6 +24,17 @@ public class KeyboardHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
         //Title State
+        if(code == KeyEvent.VK_ESCAPE)
+        {
+            if(gamepanel.gameState == gamepanel.playState)
+            {
+                gamepanel.gameState = gamepanel.pauseState;
+            }
+            else if(gamepanel.gameState == gamepanel.pauseState)
+            {
+                gamepanel.gameState = gamepanel.playState;
+            }
+        }
         if(gamepanel.gameState == gamepanel.titleState)
         {
             if(code == KeyEvent.VK_UP)
@@ -74,10 +86,7 @@ public class KeyboardHandler implements KeyListener {
             {
                 rightPressed = true;
             }
-            if(code == KeyEvent.VK_ESCAPE)
-            {
-                gamepanel.gameState = gamepanel.pauseState;
-            }
+
             if(code == KeyEvent.VK_E)
             {
                 communicateWithNPC = true;
@@ -86,19 +95,20 @@ public class KeyboardHandler implements KeyListener {
             {
                 F_Pressed = true;
             }
+            if(code == KeyEvent.VK_J)
+            {
+                J_Pressed = true;
+            }
         }
         //Pause State
         if(gamepanel.gameState == gamepanel.pauseState)
         {
-            if(code == KeyEvent.VK_ESCAPE)
-            {
-                gamepanel.gameState = gamepanel.playState;
-            }
+
         }
         //Dialogue State
         if(gamepanel.gameState == gamepanel.dialogueState)
         {
-            if(code == KeyEvent.VK_ENTER)
+            if(code == KeyEvent.VK_E)
             {
                 gamepanel.gameState = gamepanel.playState;
             }

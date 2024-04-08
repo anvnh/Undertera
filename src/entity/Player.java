@@ -35,82 +35,87 @@ public class Player extends Entity{
         solidArea.width = 20;
         solidArea.height = 25;
         name = "player";
+
+        
+
         setDefaultValues();
         getPlayerImage();
+        getPlayerAttackImage();
     }
     public void setDefaultValues(){
         worldX = gamepanel.tileSize * 22;
         worldY = gamepanel.tileSize * 20;
         speed = 3;
         direction = "down";
-
         //Status
         maxLife = 100;
         life = 100;
     }
     public void getPlayerImage()
     {
-        //Stand and running position
-        stand_down[0] = setup_player("/player/stand_down_1");
-        stand_down[1] = setup_player("/player/stand_down_2");
-        stand_down[2] = setup_player("/player/stand_down_3");
-        stand_down[3] = setup_player("/player/stand_down_4");
-        stand_down[4] = setup_player("/player/stand_down_5");
-        stand_down[5] = setup_player("/player/stand_down_6");
+        //Standing position
+        for(int i = 0; i < 6; i++)
+        {
+            stand_down[i] = setup_player("/player/stand_down_" + (i + 1));
+        }
+        for(int i = 0; i < 6; i++)
+        {
+            stand_up[i] = setup_player("/player/stand_up_" + (i + 1));
+        }
+        for(int i = 0; i < 6; i++)
+        {
+            stand_right[i] = setup_player("/player/stand_right_" + (i + 1));
+        }
+        for(int i = 0; i < 6; i++)
+        {
+            stand_left[i] = setup_player("/player/stand_left_" + (i + 1));
+        }
 
-        stand_up[0] = setup_player("/player/stand_up_1");
-        stand_up[1] = setup_player("/player/stand_up_2");
-        stand_up[2] = setup_player("/player/stand_up_3");
-        stand_up[3] = setup_player("/player/stand_up_4");
-        stand_up[4] = setup_player("/player/stand_up_5");
-        stand_up[5] = setup_player("/player/stand_up_6");
-
-        stand_right[0] = setup_player("/player/stand_right_1");
-        stand_right[1] = setup_player("/player/stand_right_2");
-        stand_right[2] = setup_player("/player/stand_right_3");
-        stand_right[3] = setup_player("/player/stand_right_4");
-        stand_right[4] = setup_player("/player/stand_right_4");
-        stand_right[5] = setup_player("/player/stand_right_6");
-
-        stand_left[0] = setup_player("/player/stand_left_1");
-        stand_left[1] = setup_player("/player/stand_left_2");
-        stand_left[2] = setup_player("/player/stand_left_3");
-        stand_left[3] = setup_player("/player/stand_left_4");
-        stand_left[4] = setup_player("/player/stand_left_5");
-        stand_left[5] = setup_player("/player/stand_left_6");
-
-        go_down[0] = setup_player("/player/go_down_1");
-        go_down[1] = setup_player("/player/go_down_2");
-        go_down[2] = setup_player("/player/go_down_3");
-        go_down[3] = setup_player("/player/go_down_4");
-        go_down[4] = setup_player("/player/go_down_5");
-        go_down[5] = setup_player("/player/go_down_6");
-
-        go_up[0] = setup_player("/player/go_up_1");
-        go_up[1] = setup_player("/player/go_up_2");
-        go_up[2] = setup_player("/player/go_up_3");
-        go_up[3] = setup_player("/player/go_up_4");
-        go_up[4] = setup_player("/player/go_up_5");
-        go_up[5] = setup_player("/player/go_up_6");
-
-        go_left[0] = setup_player("/player/go_left_1");
-        go_left[1] = setup_player("/player/go_left_2");
-        go_left[2] = setup_player("/player/go_left_3");
-        go_left[3] = setup_player("/player/go_left_4");
-        go_left[4] = setup_player("/player/go_left_5");
-        go_left[5] = setup_player("/player/go_left_6");
-
-        go_right[0] = setup_player("/player/go_right_1");
-        go_right[1] = setup_player("/player/go_right_2");
-        go_right[2] = setup_player("/player/go_right_3");
-        go_right[3] = setup_player("/player/go_right_4");
-        go_right[4] = setup_player("/player/go_right_5");
-        go_right[5] = setup_player("/player/go_right_6");
-
+        //Running position
+        for(int i = 0; i < 6; i++)
+        {
+            go_down[i] = setup_player("/player/go_down_" + (i + 1));
+        }
+         for(int i = 0; i < 6; i++)
+        {
+            go_up[i] = setup_player("/player/go_up_" + (i + 1));
+        }
+        for(int i = 0; i < 6; i++)
+        {
+            go_left[i] = setup_player("/player/go_left_" + (i + 1));
+        }
+           for(int i = 0; i < 6; i++)
+        {
+            go_right[i] = setup_player("/player/go_right_" + (i + 1));
+        }
+    }
+    public void getPlayerAttackImage()
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            attack_down[i] = setup_player("/player/attack/attack_down_" + (i));
+        }
+        for(int i = 0; i < 4; i++)
+        {
+            attack_up[i] = setup_player("/player/attack/attack_up_" + (i));
+        }
+        for(int i = 0; i < 4; i++)
+        {
+            attack_right[i] = setup_player("/player/attack/attack_right_" + (i));
+        }
+        for(int i = 0; i < 4; i++)
+        {
+            attack_left[i] = setup_player("/player/attack/attack_left_" + (i));
+        }
     }
     public void update()
     {
-        if(Key.upPressed || Key.downPressed || Key.leftPressed || Key.rightPressed) {
+        if(attacking)
+        {
+            attack();
+        }
+        if(Key.upPressed || Key.downPressed || Key.leftPressed || Key.rightPressed || Key.communicateWithNPC)
+        {
             if (Key.upPressed) {
                 direction = "up";
                 //worldY -= speed;
@@ -120,7 +125,7 @@ public class Player extends Entity{
             } else if (Key.leftPressed) {
                 direction = "left";
                 //worldX -= speed;
-            } else {
+            } else if (Key.rightPressed){
                 direction = "right";
                 //worldX += speed;
             }
@@ -139,6 +144,8 @@ public class Player extends Entity{
             int monsterIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.monster);
             contactMonster(monsterIndex);
 
+            //Attack
+            check_attack();
 
             // Check event
             gamepanel.eventHandler.checkEvent();
@@ -146,24 +153,27 @@ public class Player extends Entity{
             //Check tile collision
             gamepanel.collisionCheck.checkTile(this);
 
-            //if collision is false, player can move
-            if(!collisionOn)
+            // Check attacking
+            if(gamepanel.Key.J_Pressed)
             {
-                switch (direction){
-                    case "up":
-                        worldY -= speed;
-                        break;
-                    case "down":
-                        worldY += speed;
-                        break;
-                    case "left":
-                        worldX -= speed;
-                        break;
-                    case "right":
-                        worldX += speed;
-                        break;
+                attacking = true;
+            }
+
+
+            //if collision is false, player can move
+            if(!collisionOn && !Key.communicateWithNPC)
+            {
+                switch (direction)
+                {
+                    case "up": worldY -= speed; break;
+                    case "down": worldY += speed; break;
+                    case "left": worldX -= speed; break;
+                    case "right": worldX += speed; break;
                 }
             }
+
+            gamepanel.Key.communicateWithNPC = false;
+
             runCount++;
             if (runCount > 15) {
                 runAnimation = runAnimation == 6 ? 1 : runAnimation + 1;
@@ -178,7 +188,7 @@ public class Player extends Entity{
             }
         }
 
-        if(invincible == true)
+        if(invincible)
         {
             invincibleCounter++;
             if(invincibleCounter == 60) {
@@ -186,7 +196,35 @@ public class Player extends Entity{
                 invincibleCounter = 0;
             }
         }
+
     }
+    public void check_attack()
+    {
+        if(gamepanel.Key.J_Pressed)
+        {
+            attacking = true;
+            gamepanel.Key.J_Pressed = false;
+        }
+    }
+
+    public void attack()
+    {
+        attackCount++;
+        if(attackCount <= 5)
+        {
+            attackAnimation = 1;
+        }
+        if(attackCount > 5 && attackCount <= 25) attackAnimation = 2;
+        if(attackCount > 25 && attackCount <= 45) attackAnimation = 3;
+        if(attackCount > 45 && attackCount <= 65) attackAnimation = 4;
+        if(attackCount > 65)
+        {
+            attackCount = 0;
+            attackAnimation = 1;
+            attacking = false;
+        }
+    }
+
     public void pickUpObject(int objectIndex) {
         if(objectIndex != 999)
         {
@@ -200,7 +238,7 @@ public class Player extends Entity{
             {
                 gamepanel.gameState = gamepanel.dialogueState;
                 gamepanel.npc[npcIndex].speak();
-                gamepanel.Key.communicateWithNPC = false;
+                //gamepanel.Key.communicateWithNPC = false;
             }
         }
     }
@@ -221,25 +259,46 @@ public class Player extends Entity{
         BufferedImage image = null;
         if(!Key.upPressed && !Key.downPressed && !Key.leftPressed && !Key.rightPressed)
         {
+            check_attack();
             if(direction.equals("down"))
             {
-                image = getStandAnimate(image, stand_down);
-                //image = runAnimation == 1 ? down_1 : down_2;
+                if(!attacking)
+                {
+                    image = getStandAnimate(image, stand_down);
+                }
+                else {
+                    image = getAttackAnimate(image, attack_down);
+                }
             }
             else if(direction.equals("up"))
             {
-                image = getStandAnimate(image, stand_up);
-                //image = runAnimation == 1 ? up_1 : up_2;
+                if(!attacking)
+                {
+                    image = getStandAnimate(image, stand_up);
+                }
+                else {
+                    image = getAttackAnimate(image, attack_up);
+                }
             }
             else if(direction.equals("left"))
             {
-                image = getStandAnimate(image, stand_left);
-                //image = runAnimation == 1 ? left_1 : left_2;
+                if(!attacking)
+                {
+                    image = getStandAnimate(image, stand_left);
+                }
+                else {
+                    image = getAttackAnimate(image, attack_left);
+                }
             }
             else if(direction.equals("right"))
             {
-                image = getStandAnimate(image, stand_right);
-                //image = runAnimation == 1 ? right_1 : right_2;
+                if(!attacking)
+                {
+                    image = getStandAnimate(image, stand_right);
+                }
+                else {
+                    image = getAttackAnimate(image, attack_right);
+                }
             }
             g2.drawImage(image, screenX, screenY, gamepanel.playerSize, gamepanel.playerSize, null);
         }
@@ -248,31 +307,54 @@ public class Player extends Entity{
         {
             if(direction.equals("up"))
             {
-                image = getRunAnimate(image, go_up);
-                //image = runAnimation == 1 ? up_1 : up_2;
+                if(!attacking)
+                {
+                    image = getRunAnimate(image, go_up);
+                }
+                else {
+                    image = getAttackAnimate(image, attack_up);
+                }
             }
             else if(direction.equals("down"))
             {
-                image = getRunAnimate(image, go_down);
-                //image = runAnimation == 0 ? down_1 : down_2;
+                if(!attacking)
+                {
+                    image = getRunAnimate(image, go_down);
+                }
+                else {
+                    image = getAttackAnimate(image, attack_down);
+                }
             }
             else if(direction.equals("left"))
             {
-                image = getRunAnimate(image, go_left);
-                //image = runAnimation == 1 ? left_1 : left_2;
+                if(!attacking)
+                {
+                    image = getRunAnimate(image, go_left);
+                }
+                else {
+                    image = getAttackAnimate(image, attack_left);
+                }
             }
             else if(direction.equals("right"))
             {
-                image = getRunAnimate(image, go_right);
-                //image = runAnimation == 1 ? right_1 : right_2;
+                if(!attacking)
+                {
+                    image = getRunAnimate(image, go_right);
+                }
+                else {
+                    image = getAttackAnimate(image, attack_right);
+                }
             }
-            g2.drawImage(image, screenX, screenY, gamepanel.playerSize, gamepanel.playerSize, null);
+            if(invincible)
+            {
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+            }
+            //
+            g2.drawImage(image, screenX, screenY, null);
+
+            //Reset alpha
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+            //g2.drawImage(image, screenX, screenY, gamepanel.playerSize, gamepanel.playerSize, null);
         }
-        if(invincible)
-        {
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
-        }
-        g2.drawImage(image, screenX, screenY, null);
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
     }
 }

@@ -147,18 +147,10 @@ public class CollisionCheck {
 
         switch(entity.direction)
         {
-            case "up":
-                entity.solidArea.y -= entity.speed;
-                break;
-            case "down":
-                entity.solidArea.y += entity.speed;
-                break;
-            case "left":
-                entity.solidArea.x -= entity.speed;
-                break;
-            case "right":
-                entity.solidArea.x += entity.speed;
-                break;
+            case "up": entity.solidArea.y -= entity.speed; break;
+            case "down": entity.solidArea.y += entity.speed; break;
+            case "left": entity.solidArea.x -= entity.speed; break;
+            case "right": entity.solidArea.x += entity.speed; break;
         }
         if(entity.solidArea.intersects(gamepanel.player.solidArea))
         {
