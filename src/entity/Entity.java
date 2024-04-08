@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
+import monster.*;
 
 public class Entity {
     GamePanel gamepanel;
@@ -22,16 +23,18 @@ public class Entity {
     public int attackAnimation = 1;
     //Attack
     boolean attacking = false;
+    public boolean alive = true;
+    public boolean dying = false;
 
     //Buffered Image for Player
     public BufferedImage[] stand_down = new BufferedImage[6];
     public BufferedImage[] stand_up = new BufferedImage[6];
     public BufferedImage[] stand_left = new BufferedImage[6];
     public BufferedImage[] stand_right = new BufferedImage[6];
-    public BufferedImage[] go_down = new BufferedImage[6];
-    public BufferedImage[] go_up = new BufferedImage[6];
-    public BufferedImage[] go_left = new BufferedImage[6];
-    public BufferedImage[] go_right = new BufferedImage[6];
+    public BufferedImage[] go_down = new BufferedImage[10];
+    public BufferedImage[] go_up = new BufferedImage[10];
+    public BufferedImage[] go_left = new BufferedImage[10];
+    public BufferedImage[] go_right = new BufferedImage[10];
 
     // Buffered attack
     public BufferedImage[] attack_right = new BufferedImage[4];
@@ -39,27 +42,21 @@ public class Entity {
     public BufferedImage[] attack_up = new BufferedImage[4];
     public BufferedImage[] attack_down = new BufferedImage[4];
 
+    public BufferedImage[] dying_animate = new BufferedImage[10];
 
-    // No usages found, could be deleted soon!
-    public BufferedImage[] stand_down_entity = new BufferedImage[20];
-    public BufferedImage[] stand_up_entity = new BufferedImage[20];
-    public BufferedImage[] stand_left_entity = new BufferedImage[20];
-    public BufferedImage[] stand_right_entity = new BufferedImage[20];
-    public BufferedImage[] go_down_entity = new BufferedImage[20];
-    public BufferedImage[] go_up_entity = new BufferedImage[20];
-    public BufferedImage[] go_left_entity = new BufferedImage[20];
-    public BufferedImage[] go_right_entity = new BufferedImage[20];
-    public BufferedImage up_1, up_2, down_1, down_2, left_1, left_2, right_1, right_2;
-    //
+    public BufferedImage down_1;
 
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
     public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
-    public int type;
-    public int actionLockCounter = 0;
     public boolean invincible = false;
+    public int type;
+    // Counter
+    public int actionLockCounter = 0;
     public int invincibleCounter = 0;
+    public int dyingCounter = 0;
+    public int dyingAnimation = 1;
     String[] dialogue = new String[20];
     int dialogueIndex = 0;
 
@@ -106,8 +103,10 @@ public class Entity {
         {
             if(!gamepanel.player.invincible)
             {
+                gamepanel.playSoundEffect(4);
                 gamepanel.player.life -= 5;
                 gamepanel.player.invincible = true;
+
             }
 
         }
@@ -132,7 +131,7 @@ public class Entity {
         }
         runCount++;
         if (runCount > 15) {
-            runAnimation = runAnimation == 6 ? 1 : runAnimation + 1;
+            runAnimation = runAnimation == 8 ? 1 : runAnimation + 1;
             runCount = 0;
         }
 
@@ -176,13 +175,49 @@ public class Entity {
         return image;
     }
     public BufferedImage getRunAnimate(BufferedImage image, BufferedImage[] run) {
-        image = run[runAnimation - 1];
+        if(run[runAnimation - 1] != null)
+        {
+            image = run[runAnimation - 1];
+        }
+        else {
+            image = run[0];
+        }
         return image;
     }
     public BufferedImage getAttackAnimate(BufferedImage image, BufferedImage[] attack) {
         image = attack[attackAnimation - 1];
         return image;
     }
+    public void setDyingAnimate() {
+        for(int i = 0; i < 8; i++)
+        {
+            dying_animate[i] = setup_entity("/monster/blue_slime/dying/blue_slime_dead" + i);
+        }
+    }
+    public void drawDying(Graphics2D g2)
+    {
+        dyingCounter++;
+        int i = 5;
+        if(dyingCounter <= i) changeAlpha(g2, 0f);
+        if(dyingCounter > i && dyingCounter <= i * 2) changeAlpha(g2, 1f);
+        if(dyingCounter > i * 2 && dyingCounter <= i * 3) changeAlpha(g2, 0f);
+        if(dyingCounter > i * 3 && dyingCounter <= i * 4) changeAlpha(g2, 1f);
+        if(dyingCounter > i * 4 && dyingCounter <= i * 5) changeAlpha(g2, 0f);
+        if(dyingCounter > i * 5 && dyingCounter <= i * 6) changeAlpha(g2, 1f);
+        if(dyingCounter > i * 6 && dyingCounter <= i * 7) changeAlpha(g2, 0f);
+        if(dyingCounter > i * 7 && dyingCounter <= i * 8) changeAlpha(g2, 1f);
+        if(dyingCounter > i * 8)
+        {
+            dying = false;
+            dyingCounter = 0;
+            alive = false;
+        }
+    }
+    public void changeAlpha(Graphics2D g2, float alpha)
+    {
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+    }
+
     public void draw_entity(Graphics2D g2)
     {
         BufferedImage image = null;
@@ -191,27 +226,29 @@ public class Entity {
         if(direction.equals("up"))
         {
             image = getRunAnimate(image, go_up);
-            //image = runAnimation == 1 ? up_1 : up_2;
         }
         else if(direction.equals("down"))
         {
             image = getRunAnimate(image, go_down);
-            //image = runAnimation == 0 ? down_1 : down_2;
         }
         else if(direction.equals("left"))
         {
             image = getRunAnimate(image, go_left);
-            //image = runAnimation == 1 ? left_1 : left_2;
         }
         else if(direction.equals("right"))
         {
             image = getRunAnimate(image, go_right);
-            //image = runAnimation == 1 ? right_1 : right_2;
         }
         if(invincible)
         {
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
         }
+
+        if(dying)
+        {
+            drawDying(g2);
+        }
+
         g2.drawImage(image, screenX, screenY, null);
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
     }

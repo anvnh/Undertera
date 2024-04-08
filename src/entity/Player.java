@@ -205,13 +205,16 @@ public class Player extends Entity{
         {
             attacking = true;
             gamepanel.Key.K_Pressed = false;
+            gamepanel.playSoundEffect(1);
         }
     }
 
     public void attack()
     {
         attackCount++;
-        if(attackCount <= 5) attackAnimation = 1;
+        if(attackCount <= 5) {
+            attackAnimation = 1;
+        }
         if(attackCount > 5 && attackCount <= 25) {
             attackAnimation = 2;
 
@@ -285,6 +288,7 @@ public class Player extends Entity{
             {
                 life -= 5;
                 invincible = true;
+                gamepanel.playSoundEffect(4);
             }
         }
     }
@@ -297,10 +301,11 @@ public class Player extends Entity{
             {
                 gamepanel.monster[monsterIndex].life -= 1;
                 gamepanel.monster[monsterIndex].invincible = true;
+                gamepanel.playSoundEffect(3);
 
                 if(gamepanel.monster[monsterIndex].life <= 0)
                 {
-                    gamepanel.monster[monsterIndex] = null;
+                    gamepanel.monster[monsterIndex].dying = true;
                 }
             }
         }
@@ -352,7 +357,16 @@ public class Player extends Entity{
                     image = getAttackAnimate(image, attack_right);
                 }
             }
-            g2.drawImage(image, screenX, screenY, gamepanel.playerSize, gamepanel.playerSize, null);
+            if(invincible)
+            {
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+            }
+            //
+            g2.drawImage(image, screenX, screenY, null);
+
+            //Reset alpha
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+            //g2.drawImage(image, screenX, screenY, gamepanel.playerSize, gamepanel.playerSize, null);
         }
 
         if(Key.upPressed || Key.downPressed || Key.leftPressed || Key.rightPressed)
