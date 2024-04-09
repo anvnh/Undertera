@@ -13,12 +13,13 @@ public class BlueSlime extends Entity {
         this.gamepanel = gamePanel;
 
         type = 2;
-        name = "blue_slime";
+        name = "Blue Slime";
         speed = 1;
         maxLife = 50;
         life = maxLife;
         attack = 5;
         defense = 50;
+        exp = 10;
 
         solidArea.x = 10;
         solidArea.y = 10;

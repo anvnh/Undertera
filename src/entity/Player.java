@@ -226,18 +226,16 @@ public class Player extends Entity{
             gamepanel.playSoundEffect(1);
         }
     }
-    public void calculateDamageDeal(Entity entity)
+    public double calculateDamageDeal(Entity entity)
     {
         attack = getAttack();
-        double DMG = attack * ((double) 110 / (110 + entity.defense));
+        return attack * ((double) 110 / (110 + entity.defense));
         // 110 is defense constant, defined as C, but I personally like to write it all down than use variables
-        entity.life -= DMG;
     }
     public double calculateDamageReceive(Entity entity)
     {
         return entity.attack * ((double) 110 / (110 + defense));
     }
-
     public void attack()
     {
         attackCount++;
@@ -331,7 +329,8 @@ public class Player extends Entity{
                 gamepanel.playSoundEffect(3);
 
 
-                calculateDamageDeal(gamepanel.monster[monsterIndex]);
+                gamepanel.monster[monsterIndex].life -= calculateDamageDeal(gamepanel.monster[monsterIndex]);
+                gamepanel.ui.addMessage(calculateDamageDeal(gamepanel.monster[monsterIndex]) + " damage");
                 //System.out.println(gamepanel.monster[monsterIndex].life);
 
                 gamepanel.monster[monsterIndex].invincible = true;
@@ -341,11 +340,29 @@ public class Player extends Entity{
                 if(gamepanel.monster[monsterIndex].life <= 0)
                 {
                     gamepanel.monster[monsterIndex].dying = true;
+                    gamepanel.ui.addMessage("Killed " + gamepanel.monster[monsterIndex].name);
+                    gamepanel.ui.addMessage("Received " + gamepanel.monster[monsterIndex].exp + " exp");
+                    exp += gamepanel.monster[monsterIndex].exp;
+                    checkLevelUp();
                 }
             }
         }
     }
-
+    public void checkLevelUp()
+    {
+        if(exp >= nextLevelExp)
+        {
+            gamepanel.playSoundEffect(5);
+            level++;
+            exp = 0;
+            nextLevelExp = (int) (nextLevelExp * 1.5);
+            //maxLife += 10;
+            life = maxLife;
+            strength += 2;
+            dexterity += 2;
+            gamepanel.ui.addMessage("Level Up!");
+        }
+    }
     public void draw_player(Graphics2D g2)
     {
         BufferedImage image = null;

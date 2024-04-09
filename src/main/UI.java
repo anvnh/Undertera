@@ -8,7 +8,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.zip.InflaterInputStream;
 
 public class UI {
     GamePanel gamepanel;
@@ -17,6 +19,8 @@ public class UI {
     Font CCRedAlert;
     public int commandNumber = 0;
     BufferedImage heart_full, heart_quarter, heart_half, heart_threequarter, heart_empty;
+    ArrayList<String> messages = new ArrayList<>();
+    ArrayList<Integer> messageCounter = new ArrayList<>();
     public UI(GamePanel gp)
     {
         this.gamepanel = gp;
@@ -39,9 +43,10 @@ public class UI {
         heart_empty = heart.image5;
 
     }
-    public void showMessage()
+    public void addMessage(String text)
     {
-
+        messages.add(text);
+        messageCounter.add(0);
     }
 
     public void draw(Graphics2D g2)
@@ -61,6 +66,7 @@ public class UI {
         if(gamepanel.gameState == gamepanel.playState)
         {
             drawPlayerLife();
+            drawMessage();
         }
 
         //Pause state
@@ -109,8 +115,7 @@ public class UI {
             g2.drawImage(heart_full, x, y, null);
             x += 35;
         }
-        //System.out.println(remainder);
-        if(remainder < 0.25)
+        if(remainder < 0.25 && (gamepanel.player.life < 100 ? remainder >= 0 : remainder > 0))
         {
             g2.drawImage(heart_quarter, x, y, null);
         }
@@ -123,7 +128,29 @@ public class UI {
             g2.drawImage(heart_threequarter, x, y, null);
         }
     }
+    public void drawMessage(){
+        int messageX = gamepanel.tileSize;
+        int messageY = gamepanel.screenHeight - gamepanel.tileSize * 2;
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30f));
+        for(int i = 0; i < messages.size(); i++)
+        {
+            g2.setColor(new Color(0, 0, 0 ));
+            g2.drawString(messages.get(i), messageX + 2, messageY);
 
+            g2.setColor(new Color(225, 225, 225 ));
+            g2.drawString(messages.get(i), messageX, messageY);
+            int counter = messageCounter.get(i) + 1;
+            messageCounter.set(i, counter);
+            messageY -= 40;
+
+            if(messageCounter.get(i) > 240)
+            {
+                messages.remove(i);
+                messageCounter.remove(i);
+            }
+
+        }
+    }
     public void drawTitleScreen()
     {
         //DRAW BACKGROUND
@@ -287,7 +314,7 @@ public class UI {
         textX = getXforAlignRight(value, tailX);
         g2.drawString(value, textX, textY);
 
-        value = String.valueOf(gamepanel.player.life);
+        value = String.valueOf(Math.round(gamepanel.player.life));
         textY += lineHeight;
         textX = getXforAlignRight(value, tailX);
         g2.drawString(value, textX, textY);
@@ -312,7 +339,7 @@ public class UI {
         textX = getXforAlignRight(value, tailX);
         g2.drawString(value, textX, textY);
 
-        value = String.valueOf(gamepanel.player.exp);
+        value = String.valueOf(gamepanel.player.exp) + "/" + gamepanel.player.nextLevelExp;
         textY += lineHeight;
         textX = getXforAlignRight(value, tailX);
         g2.drawString(value, textX, textY);

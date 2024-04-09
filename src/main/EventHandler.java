@@ -92,6 +92,7 @@ public class EventHandler {
             gamepanel.gameState = gameState;
             gamepanel.ui.currentDialogue = "The healing pool's gentle embrace replenishes your vitality, restoring \nyour health with each passing moment.";
             gamepanel.player.life = gamepanel.player.maxLife;
+            gamepanel.assetSetter.setMonster();
         }
         gamepanel.Key.F_Pressed = false;
     }
