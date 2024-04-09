@@ -93,6 +93,4 @@ public class BlueSlime extends Entity {
         actionLockCounter = 0;
         direction = gamepanel.player.direction;
     }
-
-
 }

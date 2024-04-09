@@ -4,11 +4,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.security.Key;
 
 public class KeyboardHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, communicateWithNPC, F_Pressed,
-            escapePressed, J_Pressed, K_Pressed, L_Pressed, I_Pressed, O_Pressed, U_Pressed, Y_Pressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, communicateWithNPC, F_Pressed, C_Pressed,
+            J_Pressed, K_Pressed, L_Pressed, I_Pressed, O_Pressed, U_Pressed, Y_Pressed, pausePress, characterScreenPressed;
     GamePanel gamepanel;
 
     public KeyboardHandler(GamePanel gamePanel)
@@ -26,96 +27,122 @@ public class KeyboardHandler implements KeyListener {
         //Title State
         if(code == KeyEvent.VK_ESCAPE)
         {
-            if(gamepanel.gameState == gamepanel.playState)
-            {
-                gamepanel.gameState = gamepanel.pauseState;
-            }
-            else if(gamepanel.gameState == gamepanel.pauseState)
-            {
-                gamepanel.gameState = gamepanel.playState;
-            }
+
         }
         if(gamepanel.gameState == gamepanel.titleState)
         {
-            if(code == KeyEvent.VK_UP)
-            {
-                gamepanel.ui.commandNumber--;
-                if(gamepanel.ui.commandNumber < 0)
-                    gamepanel.ui.commandNumber = 3;
-            }
-            if(code == KeyEvent.VK_DOWN)
-            {
-                gamepanel.ui.commandNumber++;
-                if(gamepanel.ui.commandNumber > 3)
-                    gamepanel.ui.commandNumber = 0;
-            }
-            if(code == KeyEvent.VK_ENTER)
-            {
-                if(gamepanel.ui.commandNumber == 0)
-                {
-                    gamepanel.gameState = gamepanel.playState;
-                }
-                if(gamepanel.ui.commandNumber == 1)
-                {
-                }
-                if(gamepanel.ui.commandNumber == 2)
-                {
-                }
-                if(gamepanel.ui.commandNumber == 3)
-                {
-                    System.exit(0);
-                }
-            }
+            titleState(code);
         }
         //play state
         if(gamepanel.gameState == gamepanel.playState)
         {
-            if(code == KeyEvent.VK_W)
-            {
-                upPressed = true;
-            }
-            if(code == KeyEvent.VK_S)
-            {
-                downPressed = true;
-            }
-            if(code == KeyEvent.VK_A)
-            {
-                leftPressed = true;
-            }
-            if(code == KeyEvent.VK_D)
-            {
-                rightPressed = true;
-            }
-
-            if(code == KeyEvent.VK_E)
-            {
-                communicateWithNPC = true;
-            }
-            if(code == KeyEvent.VK_F)
-            {
-                F_Pressed = true;
-            }
-            if(code == KeyEvent.VK_K)
-            {
-                K_Pressed = true;
-            }
+            playState(code);
         }
         //Pause State
         if(gamepanel.gameState == gamepanel.pauseState)
         {
-
+            pauseState(code);
         }
         //Dialogue State
         if(gamepanel.gameState == gamepanel.dialogueState)
         {
-            if(code == KeyEvent.VK_ENTER)
+            dialogueState(code);
+        }
+        //Character State
+        if(gamepanel.gameState == gamepanel.characterState)
+        {
+            characterState(code);
+        }
+    }
+    public void titleState(int code) {
+        if(code == KeyEvent.VK_UP)
+        {
+            gamepanel.ui.commandNumber--;
+            if(gamepanel.ui.commandNumber < 0)
+                gamepanel.ui.commandNumber = 3;
+        }
+        if(code == KeyEvent.VK_DOWN)
+        {
+            gamepanel.ui.commandNumber++;
+            if(gamepanel.ui.commandNumber > 3)
+                gamepanel.ui.commandNumber = 0;
+        }
+        if(code == KeyEvent.VK_ENTER)
+        {
+            if(gamepanel.ui.commandNumber == 0)
             {
                 gamepanel.gameState = gamepanel.playState;
             }
+            if(gamepanel.ui.commandNumber == 1)
+            {
+            }
+            if(gamepanel.ui.commandNumber == 2)
+            {
+            }
+            if(gamepanel.ui.commandNumber == 3)
+            {
+                System.exit(0);
+            }
         }
     }
+    public void playState(int code) {
+        if(code == KeyEvent.VK_W)
+        {
+            upPressed = true;
+        }
+        if(code == KeyEvent.VK_S)
+        {
+            downPressed = true;
+        }
+        if(code == KeyEvent.VK_A)
+        {
+            leftPressed = true;
+        }
+        if(code == KeyEvent.VK_D)
+        {
+            rightPressed = true;
+        }
+        if(code == KeyEvent.VK_C)
+        {
+            gamepanel.gameState = gamepanel.characterState;
+            characterScreenPressed = true;
+        }
+        if(code == KeyEvent.VK_E)
+        {
+            communicateWithNPC = true;
+        }
+        if(code == KeyEvent.VK_F)
+        {
+            F_Pressed = true;
+        }
+        if(code == KeyEvent.VK_K)
+        {
+            K_Pressed = true;
+        }
+        if(code == KeyEvent.VK_ESCAPE)
+        {
+            gamepanel.gameState = gamepanel.pauseState;
+            pausePress = true;
+        }
 
-
+    }
+    public void pauseState(int code) {
+        if(code == KeyEvent.VK_ESCAPE && !pausePress)
+        {
+            gamepanel.gameState = gamepanel.playState;
+        }
+    }
+    public void dialogueState(int code) {
+        if(code == KeyEvent.VK_ENTER){
+            gamepanel.gameState = gamepanel.playState;
+        }
+    }
+    public void characterState(int code) {
+        if(code == KeyEvent.VK_C && !characterScreenPressed)
+        {
+            gamepanel.gameState = gamepanel.playState;
+        }
+    }
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
@@ -134,6 +161,14 @@ public class KeyboardHandler implements KeyListener {
         if(code == KeyEvent.VK_D)
         {
             rightPressed = false;
+        }
+        if(code == KeyEvent.VK_ESCAPE)
+        {
+            pausePress = false;
+        }
+        if(code == KeyEvent.VK_C)
+        {
+            characterScreenPressed = false;
         }
     }
 }

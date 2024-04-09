@@ -58,6 +58,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int pauseState = 0;
     public final int playState = 1;
     public final int dialogueState = 2;
+    public final int characterState = 3;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -198,12 +199,11 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             // Sort
-            Collections.sort(entityArrayList, new Comparator<Entity>() {
-                        @Override
-                        public int compare(Entity e1, Entity e2) {
-                            int result = Integer.compare(e1.worldY, e2.worldY);
-                            return result;
-                        }
+            entityArrayList.sort(new Comparator<Entity>() {
+                @Override
+                public int compare(Entity e1, Entity e2) {
+                    return Integer.compare(e1.worldY, e2.worldY);
+                }
             });
 
             // Draw entities

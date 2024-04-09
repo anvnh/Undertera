@@ -24,9 +24,10 @@ public class Entity {
     //Attack
     boolean attacking = false;
     public boolean alive = true;
+    //Dying
     public boolean dying = false;
 
-    //Buffered Image for Player
+    //Buffered image standing
     public BufferedImage[] stand_down = new BufferedImage[6];
     public BufferedImage[] stand_up = new BufferedImage[6];
     public BufferedImage[] stand_left = new BufferedImage[6];
@@ -42,10 +43,13 @@ public class Entity {
     public BufferedImage[] attack_up = new BufferedImage[4];
     public BufferedImage[] attack_down = new BufferedImage[4];
 
+    // Buffered dying
     public BufferedImage[] dying_animate = new BufferedImage[10];
 
+    // I have no idea what this does
     public BufferedImage down_1;
 
+    //Solid area
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
     public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
     public int solidAreaDefaultX, solidAreaDefaultY;
@@ -57,13 +61,35 @@ public class Entity {
     public int invincibleCounter = 0;
     public int dyingCounter = 0;
     public int dyingAnimation = 1;
+    //HP Bar
     boolean HPBarOn = false;
     int HPBarCounter = 0;
+    // Dialogue
     String[] dialogue = new String[20];
     int dialogueIndex = 0;
 
-    public BufferedImage image, image1, image2, image3, image4, image5;
+
+    //
+    public int level;
+    public int strength;
+    public int dexterity;
+    public int attack;
+    public int defense;
+    public int exp;
+    public int nextLevelExp;
+    public int coin;
+    public Entity currentWeapon;
+    public Entity currentArmor;
+
+    //Item attributes
+    public int attackValue;
+    public int defenseValue;
+
+
+    public BufferedImage image1, image2, image3, image4, image5;
     public String name;
+
+    //Collision
     public boolean collision = false;
 
     //Character status
