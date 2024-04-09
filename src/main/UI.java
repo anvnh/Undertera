@@ -33,9 +33,9 @@ public class UI {
         //create HUD object
         HeartObject heart = new HeartObject(gamepanel);
         heart_full = heart.image1;
-        heart_quarter = heart.image2;
+        heart_quarter = heart.image4;
         heart_half = heart.image3;
-        heart_threequarter = heart.image4;
+        heart_threequarter = heart.image2;
         heart_empty = heart.image5;
 
     }
@@ -109,17 +109,18 @@ public class UI {
             g2.drawImage(heart_full, x, y, null);
             x += 35;
         }
-        if(remainder == 0.25)
+        //System.out.println(remainder);
+        if(remainder < 0.25)
         {
-            g2.drawImage(heart_threequarter, x, y, null);
+            g2.drawImage(heart_quarter, x, y, null);
         }
-        else if(remainder == 0.5)
+        else if(remainder >= 0.25 && remainder <= 0.75)
         {
             g2.drawImage(heart_half, x, y, null);
         }
-        else if(remainder == 0.75)
+        else if(remainder > 0.75)
         {
-            g2.drawImage(heart_quarter, x, y, null);
+            g2.drawImage(heart_threequarter, x, y, null);
         }
     }
 

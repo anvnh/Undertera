@@ -82,7 +82,7 @@ public class EventHandler {
     {
         gamepanel.gameState = gameState;
         gamepanel.ui.currentDialogue = "Ouch! I fell into a pit!";
-        gamepanel.player.life -= 2.5;
+        gamepanel.player.life -= 2.1;
         canTouchEvent = false;
     }
     public void healingPool(int gameState)

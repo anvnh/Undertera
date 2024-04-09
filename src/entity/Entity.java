@@ -92,7 +92,7 @@ public class Entity {
     //Collision
     public boolean collision = false;
 
-    //Character status
+    // MAX HP
     public double maxLife;
     public double life;
     KeyboardHandler Key;
@@ -117,6 +117,10 @@ public class Entity {
         else if(Objects.equals(gamepanel.player.direction, "right"))
             direction = "left";
     }
+    public void playerReceivedDamage()
+    {
+
+    }
     public void update(){
 
         setAction();
@@ -133,9 +137,8 @@ public class Entity {
             if(!gamepanel.player.invincible)
             {
                 gamepanel.playSoundEffect(4);
-                gamepanel.player.life -= 5;
+                gamepanel.player.life -= ((double) (this.attack * 110) / (110 + gamepanel.player.defense));
                 gamepanel.player.invincible = true;
-
             }
 
         }

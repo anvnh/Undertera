@@ -9,6 +9,6 @@ public class ArmorObject extends Entity {
         super(gamePanel);
         name = "armor";
         down_1 = setup_entity("/objects/shield_wood");
-        defenseValue = 0;
+        defenseValue = 10;
     }
 }

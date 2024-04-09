@@ -15,15 +15,11 @@ public class BlueSlime extends Entity {
         type = 2;
         name = "blue_slime";
         speed = 1;
-        maxLife = 20;
+        maxLife = 50;
         life = maxLife;
+        attack = 5;
+        defense = 50;
 
-        /*
-        solidArea.x = 3;
-        solidArea.y = 4;
-        solidArea.width = 10;
-        solidArea.height = 9;
-        */
         solidArea.x = 10;
         solidArea.y = 10;
         solidArea.width = 20;

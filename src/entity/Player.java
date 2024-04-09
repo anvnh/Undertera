@@ -226,6 +226,17 @@ public class Player extends Entity{
             gamepanel.playSoundEffect(1);
         }
     }
+    public void calculateDamageDeal(Entity entity)
+    {
+        attack = getAttack();
+        double DMG = attack * ((double) 110 / (110 + entity.defense));
+        // 110 is defense constant, defined as C, but I personally like to write it all down than use variables
+        entity.life -= DMG;
+    }
+    public double calculateDamageReceive(Entity entity)
+    {
+        return entity.attack * ((double) 110 / (110 + defense));
+    }
 
     public void attack()
     {
@@ -304,7 +315,7 @@ public class Player extends Entity{
         {
             if(!invincible)
             {
-                life -= 5;
+                life -= calculateDamageReceive(gamepanel.monster[monsterIndex]);
                 invincible = true;
                 gamepanel.playSoundEffect(4);
             }
@@ -317,10 +328,14 @@ public class Player extends Entity{
         {
             if(!gamepanel.monster[monsterIndex].invincible)
             {
-                gamepanel.monster[monsterIndex].life -= 1;
+                gamepanel.playSoundEffect(3);
+
+
+                calculateDamageDeal(gamepanel.monster[monsterIndex]);
+                //System.out.println(gamepanel.monster[monsterIndex].life);
+
                 gamepanel.monster[monsterIndex].invincible = true;
                 gamepanel.monster[monsterIndex].damageReaction();
-                gamepanel.playSoundEffect(3);
 
 
                 if(gamepanel.monster[monsterIndex].life <= 0)
