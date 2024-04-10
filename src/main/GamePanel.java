@@ -226,6 +226,28 @@ public class GamePanel extends JPanel implements Runnable {
             //UI
             ui.draw(g2);
         }
+        //DEBUG
+        if(Key.checkDrawTime == true)
+        {
+            g2.setFont(new Font("Arial", Font.PLAIN, 20));
+            int x, y;
+            x = 10;
+            y = 400;
+            int lineHeight = 20;
+
+            g2.setColor(Color.BLACK);
+            g2.drawString("World X: " + player.worldX, x + 1, y + 1);
+            g2.drawString("World Y: " + player.worldY, x + 1, y + lineHeight + 1);
+            g2.drawString("X: " + (player.worldX + player.solidArea.x) / tileSize, x + 1, y + lineHeight * 2 + 1);
+            g2.drawString("Y: " + (player.worldY + player.solidArea.y) / tileSize, x + 1, y + lineHeight * 3 + 1);
+
+            g2.setColor(Color.WHITE);
+            g2.drawString("World X: " + player.worldX, x, y);
+            g2.drawString("World Y: " + player.worldY, x, y + lineHeight);
+            g2.drawString("X: " + (player.worldX + player.solidArea.x) / tileSize, x, y + lineHeight * 2);
+            g2.drawString("Y: " + (player.worldY + player.solidArea.y) / tileSize, x, y + lineHeight * 3);
+
+        }
 
         g2.dispose();
     }

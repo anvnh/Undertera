@@ -23,8 +23,8 @@ public class BlueSlime extends Entity {
 
         solidArea.x = 10;
         solidArea.y = 10;
-        solidArea.width = 20;
-        solidArea.height = 20;
+        solidArea.width = 40;
+        solidArea.height = 40;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         getImage();

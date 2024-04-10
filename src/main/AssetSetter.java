@@ -37,6 +37,13 @@ public class AssetSetter {
         gamepanel.monster[i] = new BlueSlime(gamepanel);
         gamepanel.monster[i].worldX = gamepanel.tileSize * 28;
         gamepanel.monster[i].worldY = gamepanel.tileSize * 22;
+
+        /*
+        i++;
+        gamepanel.monster[i] = new BlueSlime(gamepanel);
+        gamepanel.monster[i].worldX = gamepanel.tileSize * 31;
+        gamepanel.monster[i].worldY = gamepanel.tileSize * 22;
+         */
     }
 
 }
