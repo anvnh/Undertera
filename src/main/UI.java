@@ -21,6 +21,7 @@ public class UI {
     BufferedImage heart_full, heart_quarter, heart_half, heart_threequarter, heart_empty;
     ArrayList<String> messages = new ArrayList<>();
     ArrayList<Integer> messageCounter = new ArrayList<>();
+    public int slotCol = 0, slotRow = 0;
     public UI(GamePanel gp)
     {
         this.gamepanel = gp;
@@ -87,6 +88,7 @@ public class UI {
         if(gamepanel.gameState == gamepanel.characterState)
         {
             drawCharacterScreen();
+            drawInventory();
         }
     }
     public void drawPlayerLife()
@@ -268,15 +270,15 @@ public class UI {
     public void drawCharacterScreen() {
         final int frameX = gamepanel.tileSize;
         final int frameY = gamepanel.tileSize / 2;
-        final int frameWidth = gamepanel.tileSize * 9;
+        final int frameWidth = gamepanel.tileSize * 8;
         final int frameHeight = gamepanel.screenHeight - frameY * 2;
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);
 
         //Text
         g2.setColor(Color.WHITE);
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35f));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30f));
 
-        int textX = frameX + gamepanel.tileSize;
+        int textX = frameX + gamepanel.tileSize / 2 + 10 ;
         int textY = frameY + gamepanel.tileSize + gamepanel.tileSize / 2;
         final int lineHeight = 45;
 
@@ -365,6 +367,79 @@ public class UI {
         g2.drawString(value, textX, textY);
 
     }
+    public void drawInventory()
+    {
+        //Inventory
+        final int frameX = gamepanel.tileSize * 10;
+        final int frameY = gamepanel.tileSize / 2;
+        final int frameWidth = gamepanel.screenWidth - frameX - gamepanel.tileSize - 8;
+        final int frameHeight = gamepanel.screenHeight - frameY * 12;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        // SLOT
+        final int slotXStart = frameX + 20;
+        final int slotYStart = frameY + 20;
+        int slotX = slotXStart;
+        int slotY = slotYStart;
+
+        //CURSOR
+        final int cursorX = slotXStart + (gamepanel.tileSize * slotCol);
+        final int cursorY = slotYStart + (gamepanel.tileSize * slotRow);
+        int cursorWidth = gamepanel.tileSize;
+        int cursorHeight = gamepanel.tileSize;
+
+        //Draw player's items
+        for(int i = 0; i < gamepanel.player.inventory.size(); i++)
+        {
+            g2.drawImage(gamepanel.player.inventory.get(i).image, slotX, slotY, null);
+            slotX += gamepanel.tileSize;
+            if(i % 17 == 0 && i != 0)
+            {
+                slotX = slotXStart;
+                slotY += gamepanel.tileSize;
+
+            }
+        }
+
+        // Draw cursor
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(3));
+        g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
+
+
+        //Description of the item
+        final int descriptionX = frameX;
+        final int descriptionY = frameY + frameHeight + 20;
+        final int descriptionWidth = (frameWidth - 20) / 2;
+        final int descriptionHeight = gamepanel.screenHeight - frameY * 2 - 20 - frameHeight;
+        drawSubWindow(descriptionX, descriptionY, descriptionWidth, descriptionHeight);
+
+        //Draw description text
+        int textDescX = descriptionX + 20;
+        int textDescY = descriptionY + gamepanel.tileSize;
+        g2.setFont(g2.getFont().deriveFont(30f));
+        int itemIndex = getItemIndexOnSlot();
+        if(itemIndex < gamepanel.player.inventory.size())
+        {
+            for(String line : gamepanel.player.inventory.get(itemIndex).description.split("\n"))
+            {
+                g2.drawString(line, textDescX, textDescY);
+                textDescY += 30;
+            }
+        }
+
+
+        // Stats of the item
+        final int statsX = descriptionX + descriptionWidth + 20;
+        final int statsY = descriptionY;
+        final int statsWidth = descriptionWidth;
+        final int statsHeight = descriptionHeight;
+        drawSubWindow(statsX, statsY, statsWidth, statsHeight);
+    }
+    public int getItemIndexOnSlot() {
+        //System.out.println(17 * (slotRow + 1) + slotRow - (17 - slotCol));
+        return 17 * (slotRow + 1) + slotRow - (17 - slotCol);
+    }
     public void drawSubWindow(int x, int y, int width, int height)
     {
         Color c = new Color(0, 0, 0, 205);
@@ -380,7 +455,7 @@ public class UI {
     public int getXforAlignRight(String text, int tailX)
     {
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-        int x = tailX - length + 130;
+        int x = tailX - length + 110;
         return x;
     }
 }

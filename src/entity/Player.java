@@ -3,12 +3,14 @@ import main.GamePanel;
 import main.KeyboardHandler;
 import main.UtilityTools;
 import object.ArmorObject;
+import object.KeyObject;
 import object.SwordObject;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Player extends Entity{
@@ -17,6 +19,8 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
     public int hasKey = 0;
+    public ArrayList<Entity> inventory = new ArrayList<>();
+    public final int inventorySize = 126;
 
     public Player(GamePanel gp, KeyboardHandler kh){
         super(gp);
@@ -44,6 +48,7 @@ public class Player extends Entity{
         setDefaultValues();
         getPlayerImage();
         getPlayerAttackImage();
+        setItems();
     }
     public void setDefaultValues(){
         worldX = gamepanel.tileSize * 22;
@@ -62,6 +67,35 @@ public class Player extends Entity{
         currentArmor = new ArmorObject(gamepanel);
         attack = getAttack(); // total attack
         defense = getDefense(); // total defense
+    }
+    public void setItems(){
+        inventory.add(currentWeapon);
+        inventory.add(currentWeapon);
+        inventory.add(currentWeapon);
+        inventory.add(currentWeapon);
+        inventory.add(currentWeapon);
+        inventory.add(currentWeapon);
+        inventory.add(currentWeapon);
+        inventory.add(currentWeapon);
+        inventory.add(currentWeapon);
+        inventory.add(currentArmor);
+        inventory.add(currentArmor);
+        inventory.add(currentArmor);
+        inventory.add(currentArmor);
+        inventory.add(currentArmor);
+        inventory.add(currentArmor);
+        inventory.add(currentArmor);
+        inventory.add(currentArmor);
+        inventory.add(currentArmor);
+        inventory.add(currentArmor);
+        inventory.add(new KeyObject(gamepanel));
+        inventory.add(new KeyObject(gamepanel));
+        inventory.add(new KeyObject(gamepanel));
+        inventory.add(new KeyObject(gamepanel));
+        inventory.add(new KeyObject(gamepanel));
+        inventory.add(new KeyObject(gamepanel));
+        inventory.add(new KeyObject(gamepanel));
+        inventory.add(new KeyObject(gamepanel));
     }
     public int getAttack(){
         return attack = strength * currentWeapon.attackValue;
@@ -173,7 +207,7 @@ public class Player extends Entity{
             gamepanel.collisionCheck.checkTile(this);
 
             // Check attacking
-            if(gamepanel.Key.K_Pressed)
+            if(gamepanel.Key.J_Pressed)
             {
                 attacking = true;
             }
@@ -219,10 +253,10 @@ public class Player extends Entity{
     }
     public void check_attack()
     {
-        if(gamepanel.Key.K_Pressed)
+        if(gamepanel.Key.J_Pressed)
         {
             attacking = true;
-            gamepanel.Key.K_Pressed = false;
+            gamepanel.Key.J_Pressed = false;
             gamepanel.playSoundEffect(1);
         }
     }

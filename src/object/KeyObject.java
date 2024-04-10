@@ -12,7 +12,7 @@ public class KeyObject extends Entity {
         super(gamepanel);
 
         name = "Key";
-        down_1 = setup_entity("/objects/key.png");
-
+        image = setup_entity("/objects/key");
+        description = "[" + name + "]" + " A key to unlock the door.";
     }
 }

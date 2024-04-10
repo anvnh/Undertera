@@ -10,12 +10,16 @@ public class AssetSetter {
         this.gamepanel = gp;
     }
     public void setObject() {
+        gamepanel.objects[0] = new KeyObject(gamepanel);
+        gamepanel.objects[0].worldX = gamepanel.tileSize * 26;
+        gamepanel.objects[0].worldY = gamepanel.tileSize * 16;
+
     }
 
     public void setNPC() {
         gamepanel.npc[0] = new NPC_OldMan(gamepanel);
         gamepanel.npc[0].worldX = gamepanel.tileSize * 22;
-        gamepanel.npc[0].worldY = gamepanel.tileSize * 23;
+        gamepanel.npc[0].worldY = gamepanel.tileSize * 26;
 
         gamepanel.npc[2] = new NPC_OldMan(gamepanel);
         gamepanel.npc[2].worldX = gamepanel.tileSize * 27;

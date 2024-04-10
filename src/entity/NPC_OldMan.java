@@ -12,6 +12,8 @@ public class NPC_OldMan extends Entity{
         direction = "down";
         speed = 1;
         name = "old_man";
+        solidArea.width = 40;
+        solidArea.height = 40;
         getNPC_IMG();
         setDialogue();
     }

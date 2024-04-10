@@ -46,7 +46,7 @@ public class EventHandler {
             {
                 damagePit(gamepanel.dialogueState);
             }
-            if(hit(23, 12, "up"))
+            if(hit(23, 12, "any"))
             {
                 healingPool(gamepanel.dialogueState);
             }

@@ -15,7 +15,7 @@ public class DoorObject extends Entity
         down_1 = setup_entity("/objects/door.png");
          */
         try {
-            down_1 = ImageIO.read(getClass().getResourceAsStream("/objects/door.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/objects/door.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

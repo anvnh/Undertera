@@ -7,8 +7,9 @@ public class ArmorObject extends Entity {
 
     public ArmorObject(GamePanel gamePanel) {
         super(gamePanel);
-        name = "armor";
-        down_1 = setup_entity("/objects/shield_wood");
+        name = "Armor";
+        image = setup_entity("/objects/shield_wood");
         defenseValue = 10;
+        description = "[" + name + "] \nBasic shield that can be used to \nblock enemy attacks.";
     }
 }

@@ -7,8 +7,9 @@ public class SwordObject extends Entity {
 
     public SwordObject(GamePanel gamePanel) {
         super(gamePanel);
-        name = "sword";
-        down_1 = setup_entity("/objects/sword_normal");
+        name = "Sword";
+        image = setup_entity("/objects/sword_normal");
         attackValue = 1;
+        description = "[" + name + "] \nBasic sword that can be used to \nattack enemies.";
     }
 }

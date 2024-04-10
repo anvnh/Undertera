@@ -47,7 +47,7 @@ public class Entity {
     public BufferedImage[] dying_animate = new BufferedImage[10];
 
     // I have no idea what this does
-    public BufferedImage down_1;
+    public BufferedImage image;
 
     //Solid area
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
@@ -84,6 +84,7 @@ public class Entity {
     //Item attributes
     public int attackValue;
     public int defenseValue;
+    public String description;
 
 
     public BufferedImage image1, image2, image3, image4, image5;
@@ -95,6 +96,7 @@ public class Entity {
     // MAX HP
     public double maxLife;
     public double life;
+    //
     KeyboardHandler Key;
     public Entity(GamePanel gamePanel)
     {

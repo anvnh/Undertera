@@ -1,5 +1,6 @@
 package main;
 
+import javax.security.auth.kerberos.KeyTab;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -25,6 +26,17 @@ public class KeyboardHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
+        if(code == KeyEvent.VK_EQUALS)
+        {
+            if(!checkDrawTime)
+            {
+                checkDrawTime = true;
+            }
+            else
+            {
+                checkDrawTime = false;
+            }
+        }
         //Title State
         if(code == KeyEvent.VK_ESCAPE)
         {
@@ -116,26 +128,16 @@ public class KeyboardHandler implements KeyListener {
         {
             F_Pressed = true;
         }
-        if(code == KeyEvent.VK_K)
+        if(code == KeyEvent.VK_J)
         {
-            K_Pressed = true;
+            J_Pressed = true;
         }
         if(code == KeyEvent.VK_ESCAPE)
         {
             gamepanel.gameState = gamepanel.pauseState;
             pausePress = true;
         }
-        if(code == KeyEvent.VK_EQUALS)
-        {
-            if(!checkDrawTime)
-            {
-                checkDrawTime = true;
-            }
-            else
-            {
-                checkDrawTime = false;
-            }
-        }
+
         if(code == KeyEvent.VK_BACK_SLASH)
         {
             gamepanel.tileM.loadmap("/maps/worldV4.txt");
@@ -158,6 +160,45 @@ public class KeyboardHandler implements KeyListener {
         {
             gamepanel.gameState = gamepanel.playState;
         }
+        if(code == KeyEvent.VK_J || code == KeyEvent.VK_DOWN)
+        {
+            gamepanel.playSoundEffect(6);
+            if(gamepanel.ui.slotRow < 7)
+                gamepanel.ui.slotRow++;
+        }
+        if(code == KeyEvent.VK_K || code == KeyEvent.VK_UP)
+        {
+            gamepanel.playSoundEffect(6);
+            if(gamepanel.ui.slotRow > 0)
+                gamepanel.ui.slotRow--;
+        }
+        if(code == KeyEvent.VK_L || code == KeyEvent.VK_RIGHT)
+        {
+            gamepanel.playSoundEffect(6);
+            if(gamepanel.ui.slotCol <= 17){
+                gamepanel.ui.slotCol++;
+                if(gamepanel.ui.slotCol == 18) {
+                    gamepanel.ui.slotCol = 0;
+                    if(gamepanel.ui.slotRow < 7)
+                        gamepanel.ui.slotRow++;
+                    else gamepanel.ui.slotRow = 0;
+                }
+            }
+        }
+        if(code == KeyEvent.VK_H || code == KeyEvent.VK_LEFT)
+        {
+            gamepanel.playSoundEffect(6);
+            if(gamepanel.ui.slotCol >= 0){
+                gamepanel.ui.slotCol--;
+                if(gamepanel.ui.slotCol == -1) {
+                    gamepanel.ui.slotCol = 17;
+                    if(gamepanel.ui.slotRow > 0)
+                        gamepanel.ui.slotRow--;
+                    else gamepanel.ui.slotRow = 7;
+                }
+            }
+        }
+
     }
     @Override
     public void keyReleased(KeyEvent e) {
