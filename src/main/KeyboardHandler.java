@@ -198,7 +198,10 @@ public class KeyboardHandler implements KeyListener {
                 }
             }
         }
-
+        if(code == KeyEvent.VK_ENTER)
+        {
+            gamepanel.player.selectItem();
+        }
     }
     @Override
     public void keyReleased(KeyEvent e) {

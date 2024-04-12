@@ -20,7 +20,7 @@ public class Player extends Entity{
     public final int screenY;
     public int hasKey = 0;
     public ArrayList<Entity> inventory = new ArrayList<>();
-    public final int inventorySize = 126;
+    public final int maxInventorySize = 144;
 
     public Player(GamePanel gp, KeyboardHandler kh){
         super(gp);
@@ -42,8 +42,11 @@ public class Player extends Entity{
         solidArea.height = 25;
         name = "player";
 
+        /*
+        //Attack area of player
         attackArea.width = 45;
-        attackArea.height = 55;
+        attackArea.height = 45;
+         */
 
         setDefaultValues();
         getPlayerImage();
@@ -70,34 +73,10 @@ public class Player extends Entity{
     }
     public void setItems(){
         inventory.add(currentWeapon);
-        inventory.add(currentWeapon);
-        inventory.add(currentWeapon);
-        inventory.add(currentWeapon);
-        inventory.add(currentWeapon);
-        inventory.add(currentWeapon);
-        inventory.add(currentWeapon);
-        inventory.add(currentWeapon);
-        inventory.add(currentWeapon);
         inventory.add(currentArmor);
-        inventory.add(currentArmor);
-        inventory.add(currentArmor);
-        inventory.add(currentArmor);
-        inventory.add(currentArmor);
-        inventory.add(currentArmor);
-        inventory.add(currentArmor);
-        inventory.add(currentArmor);
-        inventory.add(currentArmor);
-        inventory.add(currentArmor);
-        inventory.add(new KeyObject(gamepanel));
-        inventory.add(new KeyObject(gamepanel));
-        inventory.add(new KeyObject(gamepanel));
-        inventory.add(new KeyObject(gamepanel));
-        inventory.add(new KeyObject(gamepanel));
-        inventory.add(new KeyObject(gamepanel));
-        inventory.add(new KeyObject(gamepanel));
-        inventory.add(new KeyObject(gamepanel));
     }
     public int getAttack(){
+        attackArea = currentWeapon.attackArea;
         return attack = strength * currentWeapon.attackValue;
     }
     public int getDefense() {
@@ -327,6 +306,15 @@ public class Player extends Entity{
     public void pickUpObject(int objectIndex) {
         if(objectIndex != 999)
         {
+            String text;
+            if(inventory.size() != maxInventorySize)
+            {
+                inventory.add(gamepanel.objects[objectIndex]);
+                gamepanel.playSoundEffect(7);
+                text = "Picked up " + gamepanel.objects[objectIndex].name;
+                gamepanel.ui.addMessage(text);
+                gamepanel.objects[objectIndex] = null;
+            }
         }
     }
 
@@ -397,6 +385,31 @@ public class Player extends Entity{
             gamepanel.ui.addMessage("Level Up!");
         }
     }
+
+    public void selectItem(){
+        int itemIndex = gamepanel.ui.getItemIndexOnSlot();
+
+        if(itemIndex < inventory.size())
+        {
+            Entity selectedItem = inventory.get(itemIndex);
+
+            if(selectedItem.type == type_sword || selectedItem.type == type_axe)
+            {
+                currentWeapon = selectedItem;
+                attack = getAttack();
+            }
+            if(selectedItem.type == type_armor)
+            {
+                currentArmor = selectedItem;
+                defense = getDefense();
+            }
+            if(selectedItem.type == type_consumable)
+            {
+                //Later
+            }
+        }
+    }
+
     public void draw_player(Graphics2D g2)
     {
         BufferedImage image = null;

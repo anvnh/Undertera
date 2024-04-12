@@ -12,7 +12,14 @@ public class KeyObject extends Entity {
         super(gamepanel);
 
         name = "Key";
-        image = setup_entity("/objects/key");
+        direction = "down";
+        objectType = "object";
+        //collision = false;
+        try {
+            image = ImageIO.read(getClass().getResourceAsStream("/objects/key.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         description = "[" + name + "]" + " A key to unlock the door.";
     }
 }

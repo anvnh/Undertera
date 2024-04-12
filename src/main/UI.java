@@ -150,7 +150,6 @@ public class UI {
                 messages.remove(i);
                 messageCounter.remove(i);
             }
-
         }
     }
     public void drawTitleScreen()
@@ -311,6 +310,7 @@ public class UI {
         // Reset textY
         textY = frameY + gamepanel.tileSize + gamepanel.tileSize / 2;
         String value;
+        BufferedImage imageEquip;
 
         value = String.valueOf(gamepanel.player.level);
         textX = getXforAlignRight(value, tailX);
@@ -356,6 +356,7 @@ public class UI {
         textX = getXforAlignRight(value, tailX);
         g2.drawString(value, textX, textY);
 
+        /*
         value = gamepanel.player.currentWeapon.name;
         textY += lineHeight;
         textX = getXforAlignRight(value, tailX);
@@ -365,6 +366,14 @@ public class UI {
         textY += lineHeight;
         textX = getXforAlignRight(value, tailX);
         g2.drawString(value, textX, textY);
+         */
+
+        imageEquip = gamepanel.player.currentWeapon.image;
+        g2.drawImage(imageEquip, tailX + 70, textY + 10, null);
+        textY += lineHeight + 10;
+
+        imageEquip = gamepanel.player.currentArmor.image;
+        g2.drawImage(imageEquip, tailX + 70, textY, null);
 
     }
     public void drawInventory()
@@ -391,13 +400,20 @@ public class UI {
         //Draw player's items
         for(int i = 0; i < gamepanel.player.inventory.size(); i++)
         {
+            //Equipped cursor color
+            if(gamepanel.player.inventory.get(i) == gamepanel.player.currentWeapon
+             || gamepanel.player.inventory.get(i) == gamepanel.player.currentArmor )
+            {
+                g2.setColor(new Color(61, 162, 242));
+                g2.fillRoundRect(slotX, slotY, gamepanel.tileSize, gamepanel.tileSize, 10, 10);
+            }
+
             g2.drawImage(gamepanel.player.inventory.get(i).image, slotX, slotY, null);
             slotX += gamepanel.tileSize;
             if(i % 17 == 0 && i != 0)
             {
                 slotX = slotXStart;
                 slotY += gamepanel.tileSize;
-
             }
         }
 
@@ -412,7 +428,6 @@ public class UI {
         final int descriptionY = frameY + frameHeight + 20;
         final int descriptionWidth = (frameWidth - 20) / 2;
         final int descriptionHeight = gamepanel.screenHeight - frameY * 2 - 20 - frameHeight;
-        drawSubWindow(descriptionX, descriptionY, descriptionWidth, descriptionHeight);
 
         //Draw description text
         int textDescX = descriptionX + 20;
@@ -421,20 +436,31 @@ public class UI {
         int itemIndex = getItemIndexOnSlot();
         if(itemIndex < gamepanel.player.inventory.size())
         {
+            drawSubWindow(descriptionX, descriptionY, descriptionWidth, descriptionHeight);
+
+            // Stats of the item
+            final int statsX = descriptionX + descriptionWidth + 20;
+            final int statsY = descriptionY;
+            final int statsWidth = descriptionWidth;
+            final int statsHeight = descriptionHeight;
+            drawSubWindow(statsX, statsY, statsWidth, statsHeight);
+
+            //Draw stats text
+            int textStatsX = statsX + 20;
+            int textStatsY = statsY + gamepanel.tileSize;
+            if(itemIndex < gamepanel.player.inventory.size())
+            {
+                g2.drawString("Attack: " + gamepanel.player.inventory.get(itemIndex).attackValue, textStatsX, textStatsY);
+                textStatsY += 30;
+                g2.drawString("Defense: " + gamepanel.player.inventory.get(itemIndex).defenseValue, textStatsX, textStatsY);
+            }
+            
             for(String line : gamepanel.player.inventory.get(itemIndex).description.split("\n"))
             {
                 g2.drawString(line, textDescX, textDescY);
                 textDescY += 30;
             }
         }
-
-
-        // Stats of the item
-        final int statsX = descriptionX + descriptionWidth + 20;
-        final int statsY = descriptionY;
-        final int statsWidth = descriptionWidth;
-        final int statsHeight = descriptionHeight;
-        drawSubWindow(statsX, statsY, statsWidth, statsHeight);
     }
     public int getItemIndexOnSlot() {
         //System.out.println(17 * (slotRow + 1) + slotRow - (17 - slotCol));

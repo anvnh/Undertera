@@ -46,8 +46,6 @@ public class Entity {
     // Buffered dying
     public BufferedImage[] dying_animate = new BufferedImage[10];
 
-    // I have no idea what this does
-    public BufferedImage image;
 
     //Solid area
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
@@ -55,7 +53,20 @@ public class Entity {
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public boolean invincible = false;
-    public int type;
+
+    // Type
+    public int type; // 0 = player, 1 = npc, 2 = monster
+    public final int type_player = 0;
+    public final int type_npc = 1;
+    public final int type_monster = 2;
+    public final int type_sword = 3;
+    public final int type_axe = 4;
+    public final int type_armor = 5;
+    public final int type_consumable = 6;
+
+
+    public String objectType = "";
+
     // Counter
     public int actionLockCounter = 0;
     public int invincibleCounter = 0;
@@ -87,6 +98,8 @@ public class Entity {
     public String description;
 
 
+    // I have no idea what this does
+    public BufferedImage image;
     public BufferedImage image1, image2, image3, image4, image5;
     public String name;
 
@@ -134,7 +147,7 @@ public class Entity {
         gamepanel.collisionCheck.checkEntity(this, gamepanel.monster);
         boolean contactPlayer = gamepanel.collisionCheck.checkPlayer(this);
 
-        if(this.type == 2 && contactPlayer)
+        if(this.type == type_monster && contactPlayer)
         {
             if(!gamepanel.player.invincible)
             {
@@ -252,7 +265,10 @@ public class Entity {
     {
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
     }
-
+    public void draw_object(Graphics2D g2)
+    {
+        g2.drawImage(image, worldX - gamepanel.player.worldX + gamepanel.player.screenX, worldY - gamepanel.player.worldY + gamepanel.player.screenY, null);
+    }
     public void draw_entity(Graphics2D g2)
     {
         BufferedImage image = null;
@@ -281,11 +297,11 @@ public class Entity {
             double scale = (double) gamepanel.tileSize/ maxLife;
             double HPBar = life * scale;
 
-            g2.setColor(new Color(35, 35, 35));
+            g2.setColor(new Color(0, 0, 0));
             g2.fillRect(screenX - 1, screenY - 10, gamepanel.tileSize + 2, 7);
 
             g2.setColor(new Color(255, 0, 30));
-            g2.fillRect(screenX, screenY - 10, (int)HPBar, 5);
+            g2.fillRect(screenX, screenY - 10, Math.max((int)HPBar, 0), 5);
 
             HPBarCounter++;
             if(HPBarCounter == 600)

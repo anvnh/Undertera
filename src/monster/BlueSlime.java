@@ -12,7 +12,7 @@ public class BlueSlime extends Entity {
         super(gamePanel);
         this.gamepanel = gamePanel;
 
-        type = 2;
+        type = type_monster;
         name = "Blue Slime";
         speed = 1;
         maxLife = 50;

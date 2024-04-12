@@ -11,14 +11,12 @@ public class DoorObject extends Entity
     {
         super(gamePanel);
         name = "Door";
+        direction = "down";
+        objectType = "object";
         /*
         down_1 = setup_entity("/objects/door.png");
          */
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/door.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        image = setup_entity("/objects/wooden_door");
         collision = true;
     }
 }

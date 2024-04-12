@@ -170,6 +170,7 @@ public class GamePanel extends JPanel implements Runnable {
             //Add entity to the array
 
             entityArrayList.add(player);
+
             //player.draw_player(g2);
 
             //adding npc's
@@ -180,6 +181,7 @@ public class GamePanel extends JPanel implements Runnable {
                     entityArrayList.add(npc[i]);
                 }
             }
+
             //adding objects
             for(int i = 0; i < objects.length; i++)
             {
@@ -214,6 +216,10 @@ public class GamePanel extends JPanel implements Runnable {
                 if(entityArrayList.get(i).name.equals("player"))
                 {
                     player.draw_player(g2);
+                }
+                else if(entityArrayList.get(i).objectType.equals("object"))
+                {
+                    entityArrayList.get(i).draw_object(g2);
                 }
                 else
                 {
