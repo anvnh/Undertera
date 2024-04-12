@@ -123,21 +123,44 @@ public class Player extends Entity{
     }
     public void getPlayerAttackImage()
     {
-        for(int i = 0; i < 4; i++)
+        if(currentWeapon.type == type_sword)
         {
-            attack_down[i] = setup_player("/player/attack/attack_down_" + (i));
+            for(int i = 0; i < 4; i++)
+            {
+                attack_down[i] = setup_player("/player/attack/sword/attack_down_" + (i));
+            }
+            for(int i = 0; i < 4; i++)
+            {
+                attack_up[i] = setup_player("/player/attack/sword/attack_up_" + (i));
+            }
+            for(int i = 0; i < 4; i++)
+            {
+                attack_right[i] = setup_player("/player/attack/sword/attack_right_" + (i));
+            }
+            for(int i = 0; i < 4; i++)
+            {
+                attack_left[i] = setup_player("/player/attack/sword/attack_left_" + (i));
+            }
         }
-        for(int i = 0; i < 4; i++)
+        if(currentWeapon.type == type_axe)
         {
-            attack_up[i] = setup_player("/player/attack/attack_up_" + (i));
-        }
-        for(int i = 0; i < 4; i++)
-        {
-            attack_right[i] = setup_player("/player/attack/attack_right_" + (i));
-        }
-        for(int i = 0; i < 4; i++)
-        {
-            attack_left[i] = setup_player("/player/attack/attack_left_" + (i));
+            for(int i = 0; i < 4; i++)
+            {
+                attack_down[i] = setup_player("/player/attack/axe/attack_down_axe_" + (i));
+            }
+            for(int i = 0; i < 4; i++)
+            {
+                attack_up[i] = setup_player("/player/attack/axe/attack_up_axe_" + (i));
+            }
+            for(int i = 0; i < 4; i++)
+            {
+                attack_right[i] = setup_player("/player/attack/axe/attack_right_axe_" + (i));
+            }
+            for(int i = 0; i < 4; i++)
+            {
+                attack_left[i] = setup_player("/player/attack/axe/attack_left_axe_" + (i));
+            }
+
         }
     }
     public void update()
@@ -397,6 +420,7 @@ public class Player extends Entity{
             {
                 currentWeapon = selectedItem;
                 attack = getAttack();
+                getPlayerAttackImage();
             }
             if(selectedItem.type == type_armor)
             {
