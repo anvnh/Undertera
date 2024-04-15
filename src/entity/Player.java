@@ -356,7 +356,7 @@ public class Player extends Entity{
     public void contactMonster(int monsterIndex) {
         if(monsterIndex != 999)
         {
-            if(!invincible)
+            if(!invincible && !gamepanel.monster[monsterIndex].dying)
             {
                 life -= calculateDamageReceive(gamepanel.monster[monsterIndex]);
                 invincible = true;
@@ -429,7 +429,8 @@ public class Player extends Entity{
             }
             if(selectedItem.type == type_consumable)
             {
-                //Later
+                selectedItem.use(this, gamepanel);
+                inventory.remove(itemIndex);
             }
         }
     }

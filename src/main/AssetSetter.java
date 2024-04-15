@@ -17,6 +17,10 @@ public class AssetSetter {
         gamepanel.objects[1] = new AxeObject(gamepanel);
         gamepanel.objects[1].worldX = gamepanel.tileSize * 24;
         gamepanel.objects[1].worldY = gamepanel.tileSize * 21;
+
+        gamepanel.objects[2] = new Potion_RedObject(gamepanel);
+        gamepanel.objects[2].worldX = gamepanel.tileSize * 24;
+        gamepanel.objects[2].worldY = gamepanel.tileSize * 23;
     }
 
     public void setNPC() {

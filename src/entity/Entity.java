@@ -8,7 +8,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
-import monster.*;
 
 public class Entity {
     GamePanel gamepanel;
@@ -132,10 +131,7 @@ public class Entity {
         else if(Objects.equals(gamepanel.player.direction, "right"))
             direction = "left";
     }
-    public void playerReceivedDamage()
-    {
-
-    }
+    public void use(Entity entity, GamePanel gamepanel){}
     public void update(){
 
         setAction();
@@ -211,7 +207,19 @@ public class Entity {
         BufferedImage image = null;
         try {
             image = ImageIO.read((Objects.requireNonNull(getClass().getResourceAsStream(imgPath + ".png"))));
-            image = utilityTools.scaleImage(image, gamepanel.npcSize, gamepanel.npcSize);
+            image = utilityTools.scaleImage(image, gamepanel.tileSize, gamepanel.tileSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+    public BufferedImage setup_weap(String imgPath)
+    {
+        UtilityTools utilityTools = new UtilityTools();
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read((Objects.requireNonNull(getClass().getResourceAsStream(imgPath + ".png"))));
+            image = utilityTools.scaleImage(image, gamepanel.weapSize, gamepanel.weapSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -256,7 +264,7 @@ public class Entity {
         if(dyingCounter > i * 7 && dyingCounter <= i * 8) changeAlpha(g2, 1f);
         if(dyingCounter > i * 8)
         {
-            dying = false;
+            //dying = false;
             dyingCounter = 0;
             alive = false;
         }

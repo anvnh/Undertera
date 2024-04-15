@@ -15,11 +15,7 @@ public class KeyObject extends Entity {
         direction = "down";
         objectType = "object";
         //collision = false;
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/key.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        image = setup_entity("/objects/key_01a");
         description = "[" + name + "]" + " A key to unlock the door.";
     }
 }

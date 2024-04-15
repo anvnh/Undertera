@@ -8,7 +8,7 @@ public class AxeObject extends Entity {
     public AxeObject(GamePanel gamePanel) {
         super(gamePanel);
         name = "Axe";
-        image = setup_entity("/objects/axe_tier_0");
+        image = setup_weap("/objects/axe_tier_0");
         objectType = "object";
         type = type_axe;
 

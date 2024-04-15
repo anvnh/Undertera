@@ -68,6 +68,7 @@ public class UI {
         {
             drawPlayerLife();
             drawMessage();
+            drawInventoryHUD();
         }
 
         //Pause state
@@ -376,6 +377,36 @@ public class UI {
         g2.drawImage(imageEquip, tailX + 70, textY, null);
 
     }
+    public void drawInventoryHUD(){
+        final int hud_X = gamepanel.tileSize / 2;
+        final int hud_Y = gamepanel.tileSize / 4 ;
+        final int hud_Width = gamepanel.tileSize * 9;
+        final int hud_Height = gamepanel.tileSize;
+
+        int slotX = hud_X + 5;
+        int slotY = hud_Y + 5;
+
+        drawInvenHUD(hud_X, hud_Y, hud_Width, hud_Height);
+
+        //Draw inventory HUD
+        for(int i = 0; i < gamepanel.player.inventory.size(); i++)
+        {
+            g2.drawImage(gamepanel.player.inventory.get(i).image, slotX, slotY, gamepanel.tileSize - 8, gamepanel.tileSize - 8,null);
+            slotX += gamepanel.tileSize;
+            if((i + 1) % 9 == 0)
+            {
+                break;
+            }
+        }
+
+        //Draw grid
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(3));
+        for(int i = 1; i < 9; i++)
+        {
+            g2.drawLine(hud_X + gamepanel.tileSize * i, hud_Y + 3, hud_X + gamepanel.tileSize * i, hud_Y + hud_Height - 2);
+        }
+    }
     public void drawInventory()
     {
         //Inventory
@@ -408,7 +439,7 @@ public class UI {
                 g2.fillRoundRect(slotX, slotY, gamepanel.tileSize, gamepanel.tileSize, 10, 10);
             }
 
-            g2.drawImage(gamepanel.player.inventory.get(i).image, slotX, slotY, null);
+            g2.drawImage(gamepanel.player.inventory.get(i).image, slotX, slotY, gamepanel.tileSize, gamepanel.tileSize,null);
             slotX += gamepanel.tileSize;
             if(i % 17 == 0 && i != 0)
             {
@@ -465,6 +496,17 @@ public class UI {
     public int getItemIndexOnSlot() {
         //System.out.println(17 * (slotRow + 1) + slotRow - (17 - slotCol));
         return 17 * (slotRow + 1) + slotRow - (17 - slotCol);
+    }
+    public void drawInvenHUD(int x, int y, int width, int height)
+    {
+        Color c = new Color(0, 0, 0, 205);
+        g2.setColor(c);
+        g2.fillRoundRect(x, y, width, height, 30, 30);
+
+        c = new Color(255, 255, 255);
+        g2.setColor(c);
+        g2.setStroke(new BasicStroke(2));
+        g2.drawRoundRect(x + 2, y + 2, width - 2, height - 2, 25, 25);
     }
     public void drawSubWindow(int x, int y, int width, int height)
     {
