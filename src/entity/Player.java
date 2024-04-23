@@ -3,6 +3,7 @@ import main.GamePanel;
 import main.KeyboardHandler;
 import main.UtilityTools;
 import object.ArmorObject;
+import object.FireballObject;
 import object.KeyObject;
 import object.SwordObject;
 
@@ -68,6 +69,7 @@ public class Player extends Entity{
         coin = 0;
         currentWeapon = new SwordObject(gamepanel);
         currentArmor = new ArmorObject(gamepanel);
+        projectile = new FireballObject(gamepanel);
         attack = getAttack(); // total attack
         defense = getDefense(); // total defense
     }
@@ -241,6 +243,12 @@ public class Player extends Entity{
                 standAnimation = standAnimation == 6 ? 1 : standAnimation + 1;
                 standCount = 0;
             }
+        }
+
+        if(gamepanel.Key.Projectile_Pressed && !projectile.alive) {
+            projectile.set(worldX, worldY, direction, true, this);
+            //Add to the list
+            gamepanel.projectileList.add(projectile);
         }
 
         if(invincible)

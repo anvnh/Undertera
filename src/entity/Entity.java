@@ -80,6 +80,10 @@ public class Entity {
 
 
     //
+
+    public int maxMana;
+    public int mana;
+
     public int level;
     public int strength;
     public int dexterity;
@@ -90,12 +94,14 @@ public class Entity {
     public int coin;
     public Entity currentWeapon;
     public Entity currentArmor;
+    public Projectile projectile;
 
     //Item attributes
     public int attackValue;
     public int defenseValue;
     public String description;
 
+    public int useCost;
 
     // I have no idea what this does
     public BufferedImage image;

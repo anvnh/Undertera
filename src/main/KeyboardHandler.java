@@ -10,7 +10,7 @@ import java.security.Key;
 public class KeyboardHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, communicateWithNPC, F_Pressed, C_Pressed,
-            J_Pressed, K_Pressed, L_Pressed, I_Pressed, O_Pressed, U_Pressed, Y_Pressed, pausePress, characterScreenPressed;
+            J_Pressed, K_Pressed, L_Pressed, Projectile_Pressed, O_Pressed, U_Pressed, Y_Pressed, pausePress, characterScreenPressed;
     boolean checkDrawTime = true;
     GamePanel gamepanel;
 
@@ -137,10 +137,14 @@ public class KeyboardHandler implements KeyListener {
             gamepanel.gameState = gamepanel.pauseState;
             pausePress = true;
         }
-
         if(code == KeyEvent.VK_BACK_SLASH)
         {
             gamepanel.tileM.loadmap("/maps/worldV4.txt");
+        }
+        if(code == KeyEvent.VK_I)
+        {
+            // shot projectile
+            Projectile_Pressed = true;
         }
 
     }
@@ -229,6 +233,10 @@ public class KeyboardHandler implements KeyListener {
         if(code == KeyEvent.VK_C)
         {
             characterScreenPressed = false;
+        }
+        if(code == KeyEvent.VK_I)
+        {
+            Projectile_Pressed = false;
         }
     }
 }
