@@ -137,10 +137,12 @@ public class KeyboardHandler implements KeyListener {
             gamepanel.gameState = gamepanel.pauseState;
             pausePress = true;
         }
+        // For fast reloading the map
         if(code == KeyEvent.VK_BACK_SLASH)
         {
             gamepanel.tileM.loadmap("/maps/worldV4.txt");
         }
+        // Shoot the projectile
         if(code == KeyEvent.VK_I)
         {
             // shot projectile
@@ -237,6 +239,10 @@ public class KeyboardHandler implements KeyListener {
         if(code == KeyEvent.VK_I)
         {
             Projectile_Pressed = false;
+        }
+        if(code == KeyEvent.VK_J)
+        {
+            J_Pressed = false;
         }
     }
 }

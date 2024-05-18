@@ -156,7 +156,7 @@ public class GamePanel extends JPanel implements Runnable {
                         projectileList.get(i).update();
                     }
                     if(!projectileList.get(i).alive) {
-                        projectileList.get(i).update();
+                        projectileList.remove(i);
                     }
                 }
             }
@@ -213,13 +213,14 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
 
+            // Projectile
             for(int i = 0; i < projectileList.size(); i++) {
                 if(projectileList.get(i) != null) {
                     entityArrayList.add(projectileList.get(i));
                 }
             }
 
-            // Sort
+            // Sorting
             entityArrayList.sort(new Comparator<Entity>() {
                 @Override
                 public int compare(Entity e1, Entity e2) {
@@ -252,7 +253,7 @@ public class GamePanel extends JPanel implements Runnable {
             ui.draw(g2);
         }
         //DEBUG
-        if(Key.checkDrawTime == true)
+        if(Key.checkDrawTime)
         {
             g2.setFont(new Font("Arial", Font.PLAIN, 20));
             int x, y;

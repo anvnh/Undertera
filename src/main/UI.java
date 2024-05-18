@@ -68,7 +68,6 @@ public class UI {
         {
             drawPlayerLife();
             drawMessage();
-            drawInventoryHUD();
         }
 
         //Pause state
@@ -377,36 +376,7 @@ public class UI {
         g2.drawImage(imageEquip, tailX + 70, textY, null);
 
     }
-    public void drawInventoryHUD(){
-        final int hud_X = gamepanel.tileSize / 2;
-        final int hud_Y = gamepanel.tileSize / 4 ;
-        final int hud_Width = gamepanel.tileSize * 9;
-        final int hud_Height = gamepanel.tileSize;
 
-        int slotX = hud_X + 5;
-        int slotY = hud_Y + 5;
-
-        drawInvenHUD(hud_X, hud_Y, hud_Width, hud_Height);
-
-        //Draw inventory HUD
-        for(int i = 0; i < gamepanel.player.inventory.size(); i++)
-        {
-            g2.drawImage(gamepanel.player.inventory.get(i).image, slotX, slotY, gamepanel.tileSize - 8, gamepanel.tileSize - 8,null);
-            slotX += gamepanel.tileSize;
-            if((i + 1) % 9 == 0)
-            {
-                break;
-            }
-        }
-
-        //Draw grid
-        g2.setColor(Color.WHITE);
-        g2.setStroke(new BasicStroke(3));
-        for(int i = 1; i < 9; i++)
-        {
-            g2.drawLine(hud_X + gamepanel.tileSize * i, hud_Y + 3, hud_X + gamepanel.tileSize * i, hud_Y + hud_Height - 2);
-        }
-    }
     public void drawInventory()
     {
         //Inventory

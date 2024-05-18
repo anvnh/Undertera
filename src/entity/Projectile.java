@@ -17,6 +17,19 @@ public class Projectile extends Entity{
         this.life = this.maxLife;
     }
     public void update() {
+        if(user == gamepanel.player)
+        {
+            int monsterIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.monster);
+            if(monsterIndex != 999)
+            {
+                gamepanel.player.damageProjectileMonster(monsterIndex, attack);
+                alive = false;
+            }
+        }
+        if(user != gamepanel.player)
+        {
+
+        }
         switch (direction) {
             case "up":
                 worldY -= speed;
@@ -31,6 +44,7 @@ public class Projectile extends Entity{
                 worldX += speed;
                 break;
         }
+
         life--;
         if(life <= 0) {
             alive = false;

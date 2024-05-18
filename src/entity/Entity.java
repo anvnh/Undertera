@@ -14,13 +14,18 @@ public class Entity {
     public int worldX, worldY;
     public int speed;
     public String direction = "down";
+
+    // COUNTER
     public int runCount = 0;
     public int runAnimation = 1;
     public int standCount = 0;
     public int standAnimation = 1;
     public int attackCount = 0;
     public int attackAnimation = 1;
-    //Attack
+    public int shotAvailableCounter = 0;
+
+
+    // ATTACK
     boolean attacking = false;
     public boolean alive = true;
     //Dying
@@ -83,7 +88,6 @@ public class Entity {
 
     public int maxMana;
     public int mana;
-
     public int level;
     public int strength;
     public int dexterity;
@@ -326,7 +330,6 @@ public class Entity {
         }
 
 
-
         if(invincible) {
             HPBarOn = true;
             HPBarCounter = 0;
@@ -340,4 +343,5 @@ public class Entity {
         g2.drawImage(image, screenX, screenY, null);
         changeAlpha(g2, 1f);
     }
+
 }

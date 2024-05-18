@@ -170,6 +170,7 @@ public class Player extends Entity{
         if(attacking)
         {
             attack();
+            //System.out.println(attackAvailableCounter);
         }
         if(Key.upPressed || Key.downPressed || Key.leftPressed || Key.rightPressed || Key.communicateWithNPC)
         {
@@ -245,10 +246,14 @@ public class Player extends Entity{
             }
         }
 
-        if(gamepanel.Key.Projectile_Pressed && !projectile.alive) {
+        // Shooting projectile
+        if(gamepanel.Key.Projectile_Pressed && !projectile.alive && shotAvailableCounter == 60) {
+            // Set default coordinate, direction and user
             projectile.set(worldX, worldY, direction, true, this);
             //Add to the list
             gamepanel.projectileList.add(projectile);
+
+            shotAvailableCounter = 0;
         }
 
         if(invincible)
@@ -258,6 +263,10 @@ public class Player extends Entity{
                 invincible = false;
                 invincibleCounter = 0;
             }
+        }
+        if(shotAvailableCounter < 60)
+        {
+            shotAvailableCounter++;
         }
 
     }
@@ -275,6 +284,10 @@ public class Player extends Entity{
         attack = getAttack();
         return attack * ((double) 110 / (110 + entity.defense));
         // 110 is defense constant, defined as C, but I personally like to write it all down than use variables
+    }
+    public double calculateDamageDealwithProjectile(Entity entity, int Attack)
+    {
+        return Attack;
     }
     public double calculateDamageReceive(Entity entity)
     {
@@ -384,6 +397,35 @@ public class Player extends Entity{
 
                 gamepanel.monster[monsterIndex].life -= calculateDamageDeal(gamepanel.monster[monsterIndex]);
                 gamepanel.ui.addMessage(calculateDamageDeal(gamepanel.monster[monsterIndex]) + " damage");
+                //System.out.println(gamepanel.monster[monsterIndex].life);
+
+                gamepanel.monster[monsterIndex].invincible = true;
+                gamepanel.monster[monsterIndex].damageReaction();
+
+
+                if(gamepanel.monster[monsterIndex].life <= 0)
+                {
+                    gamepanel.monster[monsterIndex].dying = true;
+                    gamepanel.ui.addMessage("Killed " + gamepanel.monster[monsterIndex].name);
+                    gamepanel.ui.addMessage("Received " + gamepanel.monster[monsterIndex].exp + " exp");
+                    exp += gamepanel.monster[monsterIndex].exp;
+                    checkLevelUp();
+                }
+            }
+        }
+    }
+    // Projectile attacked ignore defense
+    public void damageProjectileMonster(int monsterIndex, int Attack)
+    {
+        if(monsterIndex != 999)
+        {
+            if(!gamepanel.monster[monsterIndex].invincible)
+            {
+                gamepanel.playSoundEffect(3);
+
+
+                gamepanel.monster[monsterIndex].life -= calculateDamageDealwithProjectile(gamepanel.monster[monsterIndex], Attack);
+                gamepanel.ui.addMessage(calculateDamageDealwithProjectile(gamepanel.monster[monsterIndex], Attack) + " damage");
                 //System.out.println(gamepanel.monster[monsterIndex].life);
 
                 gamepanel.monster[monsterIndex].invincible = true;
