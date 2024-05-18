@@ -1,5 +1,6 @@
 package object;
 
+import entity.Entity;
 import entity.Projectile;
 import main.GamePanel;
 
@@ -14,7 +15,7 @@ public class FireballObject extends Projectile {
         maxLife = 80;
         life = maxLife;
         attack = 15;
-        useCost = 1;
+        useCost = 10;
         alive = false;
         getImage();
     }
@@ -28,5 +29,12 @@ public class FireballObject extends Projectile {
         go_down[1] = setup_entity("/projectile/fireball/fireball_down_2");
         go_left[0] = setup_entity("/projectile/fireball/fireball_left_1");
         go_left[1] = setup_entity("/projectile/fireball/fireball_left_2");
+    }
+
+    public boolean haveEnoughMana(Entity user) {
+        return user.mana >= useCost;
+    }
+    public void useMana(Entity user) {
+        user.mana -= useCost;
     }
 }

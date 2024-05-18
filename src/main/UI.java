@@ -2,6 +2,7 @@ package main;
 
 import entity.Entity;
 import object.HeartObject;
+import object.ManaObject;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,7 +19,8 @@ public class UI {
     public String currentDialogue;
     Font CCRedAlert;
     public int commandNumber = 0;
-    BufferedImage heart_full, heart_quarter, heart_half, heart_threequarter, heart_empty;
+    BufferedImage   heart_full, heart_quarter, heart_half, heart_threequarter, heart_empty,
+                    mana_full, mana_half, mana_blank;
     ArrayList<String> messages = new ArrayList<>();
     ArrayList<Integer> messageCounter = new ArrayList<>();
     public int slotCol = 0, slotRow = 0;
@@ -42,6 +44,11 @@ public class UI {
         heart_half = heart.image3;
         heart_threequarter = heart.image2;
         heart_empty = heart.image5;
+
+        ManaObject mana = new ManaObject(gamepanel);
+        mana_full = mana.image1;
+        mana_half = mana.image2;
+        mana_blank = mana.image3;
 
     }
     public void addMessage(String text)
@@ -67,6 +74,7 @@ public class UI {
         if(gamepanel.gameState == gamepanel.playState)
         {
             drawPlayerLife();
+            drawPlayerMana();
             drawMessage();
         }
 
@@ -75,12 +83,14 @@ public class UI {
         {
             drawPauseScreen(g2);
             drawPlayerLife();
+            drawPlayerMana();
         }
 
         //Dialogue State
         if(gamepanel.gameState == gamepanel.dialogueState)
         {
             drawPlayerLife();
+            drawPlayerMana();
             drawDialogueScreen();
         }
 
@@ -89,6 +99,37 @@ public class UI {
         {
             drawCharacterScreen();
             drawInventory();
+        }
+    }
+    public void drawPlayerMana()
+    {
+        int x = gamepanel.screenWidth - (gamepanel.tileSize * 7) - 31;
+        int y = (gamepanel.tileSize + 2) / 2 + (gamepanel.tileSize / 2 - (gamepanel.tileSize + 2) / 4);
+        //Blank mana
+        for(int i = 0; i < 10; i++)
+        {
+            g2.drawImage(mana_blank, x, y, null);
+            x += 35;
+        }
+
+        // Reset
+        x = gamepanel.screenWidth - (gamepanel.tileSize * 7) - 31;
+        y = (gamepanel.tileSize + 2) / 2 + (gamepanel.tileSize / 2 - (gamepanel.tileSize + 2) / 4);
+
+        //Draw current mana
+        double currentMana = gamepanel.player.mana;
+        currentMana /= 10;
+        int solidMana = (int) currentMana;
+        double remainder = currentMana - solidMana;
+
+        for(int i = 0; i < solidMana; i++)
+        {
+            g2.drawImage(mana_full, x, y, null);
+            x += 35;
+        }
+        if(remainder == 0.5)
+        {
+            g2.drawImage(mana_half, x, y, null);
         }
     }
     public void drawPlayerLife()
@@ -292,6 +333,8 @@ public class UI {
         textY += lineHeight;
         g2.drawString("ATK:", textX, textY);
         textY += lineHeight;
+        g2.drawString("MANA:", textX, textY);
+        textY += lineHeight;
         g2.drawString("DEF:", textX, textY);
         textY += lineHeight;
         g2.drawString("EXP:", textX, textY);
@@ -319,7 +362,7 @@ public class UI {
         value = String.valueOf(Math.round(gamepanel.player.life));
         textY += lineHeight;
         textX = getXforAlignRight(value, tailX);
-        g2.drawString(value, textX, textY);
+        g2.drawString(value + "/100", textX - 54, textY);
 
         value = String.valueOf(gamepanel.player.strength);
         textY += lineHeight;
@@ -335,6 +378,11 @@ public class UI {
         textY += lineHeight;
         textX = getXforAlignRight(value, tailX);
         g2.drawString(value, textX, textY);
+
+        value = String.valueOf(gamepanel.player.mana);
+        textY += lineHeight;
+        textX = getXforAlignRight(value, tailX);
+        g2.drawString(value + "/100", textX - 54, textY);
 
         value = String.valueOf(gamepanel.player.defense);
         textY += lineHeight;

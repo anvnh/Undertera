@@ -2,6 +2,7 @@ package monster;
 
 import entity.Entity;
 import main.GamePanel;
+import object.RockObject;
 
 import java.awt.*;
 import java.util.Random;
@@ -20,6 +21,7 @@ public class BlueSlime extends Entity {
         attack = 5;
         defense = 50;
         exp = 10;
+        projectile = new RockObject(gamepanel);
 
         solidArea.x = 10;
         solidArea.y = 10;
@@ -83,6 +85,14 @@ public class BlueSlime extends Entity {
             else
                 direction = "down";
             actionLockCounter = 0;
+        }
+
+        // Randomly shooting the projectile
+        int i = new Random().nextInt(1000) + 1;
+        if(i > 999 && !projectile.alive && shotAvailableCounter == 60){
+            projectile.set(worldX, worldY, direction, true, this);
+            gamepanel.projectileList.add(projectile);
+            shotAvailableCounter = 0;
         }
     }
     public void damageReaction()

@@ -60,8 +60,10 @@ public class Player extends Entity{
         speed = 3;
         direction = "down";
         //Status
-        maxLife = 100;
+        maxLife = 100; // max life (cannot add more than this)
         life = 100;
+        maxMana = 100;  // mana for projectile
+        mana = maxMana;
         strength = 10;  // more strength, more attack
         dexterity = 10; // more dexterity, more defense
         exp = 0;
@@ -247,9 +249,15 @@ public class Player extends Entity{
         }
 
         // Shooting projectile
-        if(gamepanel.Key.Projectile_Pressed && !projectile.alive && shotAvailableCounter == 60) {
+        if(gamepanel.Key.Projectile_Pressed && !projectile.alive && shotAvailableCounter == 60
+                && projectile.haveEnoughMana(this)
+        ) {
             // Set default coordinate, direction and user
             projectile.set(worldX, worldY, direction, true, this);
+
+            // Use mana
+            projectile.useMana(this);
+
             //Add to the list
             gamepanel.projectileList.add(projectile);
 
@@ -268,7 +276,6 @@ public class Player extends Entity{
         {
             shotAvailableCounter++;
         }
-
     }
     public void check_attack()
     {
@@ -453,6 +460,7 @@ public class Player extends Entity{
             nextLevelExp = (int) (nextLevelExp * 1.5);
             //maxLife += 10;
             life = maxLife;
+            mana = maxMana;
             strength += 2;
             dexterity += 2;
             gamepanel.ui.addMessage("Level Up!");

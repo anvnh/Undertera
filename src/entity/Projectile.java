@@ -28,7 +28,12 @@ public class Projectile extends Entity{
         }
         if(user != gamepanel.player)
         {
-
+            boolean contactPlayer = gamepanel.collisionCheck.checkPlayer(this);
+            if(!gamepanel.player.invincible && contactPlayer)
+            {
+                damagePlayer();
+                alive = false;
+            }
         }
         switch (direction) {
             case "up":
@@ -58,5 +63,11 @@ public class Projectile extends Entity{
             }
             runCount = 0;
         }
+    }
+    public boolean haveEnoughMana(Entity user) {
+        return user.mana >= useCost;
+    }
+    public void useMana(Entity user) {
+        user.mana -= useCost;
     }
 }

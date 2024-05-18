@@ -108,6 +108,7 @@ public class Entity {
     public int useCost;
 
     // I have no idea what this does
+    // Oh okay this is for entity like heart, mana
     public BufferedImage image;
     public BufferedImage image1, image2, image3, image4, image5;
     public String name;
@@ -155,13 +156,7 @@ public class Entity {
 
         if(this.type == type_monster && contactPlayer)
         {
-            if(!gamepanel.player.invincible)
-            {
-                gamepanel.playSoundEffect(4);
-                gamepanel.player.life -= ((double) (this.attack * 110) / (110 + gamepanel.player.defense));
-                gamepanel.player.invincible = true;
-            }
-
+            damagePlayer();
         }
 
         //if collision is false, player can move
@@ -197,6 +192,12 @@ public class Entity {
                 invincibleCounter = 0;
             }
         }
+
+        if(shotAvailableCounter < 60)
+        {
+            shotAvailableCounter++;
+        }
+
     }
 
     public BufferedImage setup_player(String imgName)
@@ -258,6 +259,15 @@ public class Entity {
         for(int i = 0; i < 8; i++)
         {
             dying_animate[i] = setup_entity("/monster/blue_slime/dying/blue_slime_dead" + i);
+        }
+    }
+    public void damagePlayer()
+    {
+        if(!gamepanel.player.invincible)
+        {
+            gamepanel.playSoundEffect(4);
+            gamepanel.player.life -= ((double) (this.attack * 110) / (110 + gamepanel.player.defense));
+            gamepanel.player.invincible = true;
         }
     }
     public void drawDying(Graphics2D g2)
