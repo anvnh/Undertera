@@ -276,6 +276,19 @@ public class Player extends Entity{
         {
             shotAvailableCounter++;
         }
+        if(Key.Projectile_Pressed) manaRegenCounter = 0;
+        if(manaRegenCounter < 120 && mana < maxMana)
+        {
+            manaRegenCounter++;
+        }
+        if(manaRegenCounter == 120)
+        {
+            regenerateMana();
+            manaRegenCounter = 0;
+        }
+    }
+    public void regenerateMana(){
+        mana += 5;
     }
     public void check_attack()
     {

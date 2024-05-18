@@ -23,6 +23,7 @@ public class Entity {
     public int attackCount = 0;
     public int attackAnimation = 1;
     public int shotAvailableCounter = 0;
+    public int manaRegenCounter = 0;
 
 
     // ATTACK
