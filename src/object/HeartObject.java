@@ -14,6 +14,10 @@ public class HeartObject extends Entity {
         super(gp);
         this.gamepanel = gp;
         name = "Heart";
+        value = 2;
+        objectType = "object";
+        type = type_pickuponly;
+        image = setup_entity_1("/objects/heart_full");
         try {
             image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/heart0.png")));
             image2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/heart1.png")));
@@ -23,5 +27,11 @@ public class HeartObject extends Entity {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public void use(Entity entity, GamePanel gamepanel)
+    {
+        gamepanel.playSoundEffect(7);
+        gamepanel.ui.addMessage("Healed " + value + " HP.");
+        entity.life += value;
     }
 }

@@ -68,6 +68,7 @@ public class Entity {
     public final int type_axe = 4;
     public final int type_armor = 5;
     public final int type_consumable = 6;
+    public final int type_pickuponly = 7;
 
 
     public String objectType = "";
@@ -102,10 +103,10 @@ public class Entity {
     public Projectile projectile;
 
     //Item attributes
+    public int value;
     public int attackValue;
     public int defenseValue;
     public String description;
-
     public int useCost;
 
     // I have no idea what this does
@@ -144,6 +145,19 @@ public class Entity {
             direction = "left";
     }
     public void use(Entity entity, GamePanel gamepanel){}
+    public void checkDrop(){}
+    public void dropItem(Entity drpItem){
+        drpItem.worldY = worldY;
+        drpItem.worldX = worldX;
+        for(int i = 0; i < gamepanel.objects.length; i++)
+        {
+            if(gamepanel.objects[i] == null)
+            {
+                gamepanel.objects[i] = drpItem;
+                break;
+            }
+        }
+    }
     public void update(){
 
         setAction();
@@ -220,6 +234,18 @@ public class Entity {
         try {
             image = ImageIO.read((Objects.requireNonNull(getClass().getResourceAsStream(imgPath + ".png"))));
             image = utilityTools.scaleImage(image, gamepanel.tileSize, gamepanel.tileSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+    public BufferedImage setup_entity_1(String imgPath)
+    {
+        UtilityTools utilityTools = new UtilityTools();
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read((Objects.requireNonNull(getClass().getResourceAsStream(imgPath + ".png"))));
+            image = utilityTools.scaleImage(image, 32, 32);
         } catch (Exception e) {
             e.printStackTrace();
         }

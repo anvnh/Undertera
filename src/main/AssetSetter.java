@@ -21,6 +21,14 @@ public class AssetSetter {
         gamepanel.objects[2] = new Potion_RedObject(gamepanel);
         gamepanel.objects[2].worldX = gamepanel.tileSize * 24;
         gamepanel.objects[2].worldY = gamepanel.tileSize * 23;
+
+        gamepanel.objects[3] = new BronzeCoinObject(gamepanel);
+        gamepanel.objects[3].worldX = gamepanel.tileSize * 24;
+        gamepanel.objects[3].worldY = gamepanel.tileSize * 22;
+
+        gamepanel.objects[4] = new HeartObject(gamepanel);
+        gamepanel.objects[4].worldX = gamepanel.tileSize * 24;
+        gamepanel.objects[4].worldY = gamepanel.tileSize * 24;
     }
 
     public void setNPC() {
@@ -32,9 +40,11 @@ public class AssetSetter {
         gamepanel.npc[1].worldX = gamepanel.tileSize * 24;
         gamepanel.npc[1].worldY = gamepanel.tileSize * 26;
 
+        /*
         gamepanel.npc[2] = new NPC_OldMan(gamepanel);
         gamepanel.npc[2].worldX = gamepanel.tileSize * 27;
         gamepanel.npc[2].worldY = gamepanel.tileSize * 22;
+         */
     }
 
     public void setMonster() {
@@ -53,12 +63,14 @@ public class AssetSetter {
         gamepanel.monster[i].worldX = gamepanel.tileSize * 28;
         gamepanel.monster[i].worldY = gamepanel.tileSize * 22;
 
-        /*
         i++;
         gamepanel.monster[i] = new BlueSlime(gamepanel);
         gamepanel.monster[i].worldX = gamepanel.tileSize * 31;
         gamepanel.monster[i].worldY = gamepanel.tileSize * 22;
-         */
-    }
 
+        i++;
+        gamepanel.monster[i] = new BlueSlime(gamepanel);
+        gamepanel.monster[i].worldX = gamepanel.tileSize * 33;
+        gamepanel.monster[i].worldY = gamepanel.tileSize * 22;
+    }
 }

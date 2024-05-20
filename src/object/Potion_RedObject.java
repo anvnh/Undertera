@@ -7,13 +7,13 @@ import entity.*;
 
 public class Potion_RedObject extends Entity{
     GamePanel gamepanel;
-    int value = 10;
     public Potion_RedObject(GamePanel gamepanel){
         super(gamepanel);
 
+        value = 10;
         name = "Red Potion";
         //type = type_potion;
-        image = setup_entity("/objects/potion_red");
+        image = setup_entity_1("/objects/potion_red");
         objectType = "object";
         type = type_consumable;
         description = "[" + name + "]" + " A potion that can be \n used to restore health. \n Restores " + value + " HP.";

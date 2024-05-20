@@ -42,13 +42,16 @@ public class EventHandler {
 
         if(canTouchEvent)
         {
+            /*
             if(hit(26, 20, "any"))
             {
                 damagePit(gamepanel.dialogueState);
             }
-            if(hit(23, 12, "any"))
+             */
+            if(hit(23, 12, "up"))
             {
                 healingPool(gamepanel.dialogueState);
+                resetMons(gamepanel.dialogueState);
             }
         }
     }
@@ -87,13 +90,15 @@ public class EventHandler {
     }
     public void healingPool(int gameState)
     {
-        if(gamepanel.Key.F_Pressed)
-        {
-            gamepanel.gameState = gameState;
-            gamepanel.ui.currentDialogue = "The healing pool's gentle embrace replenishes your vitality, restoring \nyour health with each passing moment.";
-            gamepanel.player.life = gamepanel.player.maxLife;
-            gamepanel.assetSetter.setMonster();
-        }
-        gamepanel.Key.F_Pressed = false;
+        gamepanel.gameState = gameState;
+        gamepanel.ui.currentDialogue = "The healing pool's gentle embrace replenishes your vitality, restoring \nyour health with each passing moment.";
+        gamepanel.player.life = gamepanel.player.maxLife;
+        gamepanel.assetSetter.setMonster();
+    }
+    public void resetMons(int gameState)
+    {
+        gamepanel.gameState = gameState;
+        gamepanel.ui.currentDialogue = "The monsters have returned!";
+        gamepanel.assetSetter.setMonster();
     }
 }

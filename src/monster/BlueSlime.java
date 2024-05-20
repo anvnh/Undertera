@@ -2,7 +2,7 @@ package monster;
 
 import entity.Entity;
 import main.GamePanel;
-import object.RockObject;
+import object.*;
 
 import java.awt.*;
 import java.util.Random;
@@ -99,5 +99,19 @@ public class BlueSlime extends Entity {
     {
         actionLockCounter = 0;
         direction = gamepanel.player.direction;
+    }
+    public void checkDrop()
+    {
+        int i = new Random().nextInt(1000) + 1;
+        if(i <= 800){
+            dropItem(new BronzeCoinObject(gamepanel));
+        }
+        else if(i <= 900) {
+            dropItem(new SilverCoinObject(gamepanel));
+        }
+        else {
+            dropItem(new GoldCoinObject(gamepanel));
+        }
+
     }
 }

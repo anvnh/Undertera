@@ -277,15 +277,19 @@ public class Player extends Entity{
             shotAvailableCounter++;
         }
         if(Key.Projectile_Pressed) manaRegenCounter = 0;
-        if(manaRegenCounter < 120 && mana < maxMana)
+        if(manaRegenCounter < 240 && mana < maxMana)
         {
             manaRegenCounter++;
         }
-        if(manaRegenCounter == 120)
+        if(manaRegenCounter == 240)
         {
             regenerateMana();
             manaRegenCounter = 0;
         }
+        //if(life > maxLife) life = maxLife;
+        //if(mana > maxMana) mana = maxMana;
+        life = Math.min(life, maxLife);
+        mana = Math.min(mana, maxMana);
     }
     public void regenerateMana(){
         mana += 5;
@@ -370,14 +374,22 @@ public class Player extends Entity{
     public void pickUpObject(int objectIndex) {
         if(objectIndex != 999)
         {
-            String text;
-            if(inventory.size() != maxInventorySize)
+            // Pick up only items
+            if(gamepanel.objects[objectIndex].type == type_pickuponly)
             {
-                inventory.add(gamepanel.objects[objectIndex]);
-                gamepanel.playSoundEffect(7);
-                text = "Picked up " + gamepanel.objects[objectIndex].name;
-                gamepanel.ui.addMessage(text);
+                gamepanel.objects[objectIndex].use(this, gamepanel);
                 gamepanel.objects[objectIndex] = null;
+            }
+            else {
+                String text;
+                if(inventory.size() != maxInventorySize)
+                {
+                    inventory.add(gamepanel.objects[objectIndex]);
+                    gamepanel.playSoundEffect(7);
+                    text = "Picked up " + gamepanel.objects[objectIndex].name;
+                    gamepanel.ui.addMessage(text);
+                    gamepanel.objects[objectIndex] = null;
+                }
             }
         }
     }
