@@ -113,7 +113,7 @@ public class Entity {
     // Oh okay this is for entity like heart, mana
     public BufferedImage image;
     public BufferedImage image1, image2, image3, image4, image5;
-    public String name;
+    public String name = "";
 
     //Collision
     public boolean collision = false;
@@ -162,6 +162,37 @@ public class Entity {
                 break;
             }
         }
+    }
+    public Color getParticleColor() {
+        Color color = null;
+        return color;
+    }
+    public int getParticleSize() {
+        int size = 0;
+        return size;
+    }
+    public int getParticleSpeed() {
+        int speed = 0;
+        return speed;
+    }
+    public int getParticleMaxLife() {
+        int maxLife = 0;
+        return maxLife;
+    }
+    public void generateParticle(Entity generator, Entity target) {
+        Color color = generator.getParticleColor();
+        int size = generator.getParticleSize();
+        int speed = generator.getParticleSpeed();
+        int maxLife = generator.getParticleMaxLife();
+
+        Particle p1 = new Particle(gamepanel, target, color, size, speed, maxLife, -2, -1);
+        Particle p2 = new Particle(gamepanel, target , color, size, speed, maxLife, 2, -1);
+        Particle p3 = new Particle(gamepanel, target, color, size, speed, maxLife, -2, 1);
+        Particle p4 = new Particle(gamepanel, target, color, size, speed, maxLife, 2, 1);
+        gamepanel.particleList.add(p1);
+        gamepanel.particleList.add(p2);
+        gamepanel.particleList.add(p3);
+        gamepanel.particleList.add(p4);
     }
     public void update(){
 
@@ -322,6 +353,7 @@ public class Entity {
             alive = false;
         }
     }
+    public void draw(Graphics2D g2){}
     public void changeAlpha(Graphics2D g2, float alpha)
     {
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));

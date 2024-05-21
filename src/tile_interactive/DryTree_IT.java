@@ -4,6 +4,8 @@ import entity.Entity;
 import main.GamePanel;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
+import java.nio.charset.CoderResult;
 import java.util.Objects;
 
 public class DryTree_IT extends InteractiveTile {
@@ -35,5 +37,21 @@ public class DryTree_IT extends InteractiveTile {
     public InteractiveTile getDestroyedForm() {
         InteractiveTile Itile = new Trunk_IT(gamepanel, worldX / gamepanel.tileSize, worldY / gamepanel.tileSize);
         return Itile;
+    }
+    public Color getParticleColor() {
+        Color color = new Color(65,50,30);
+        return color;
+    }
+    public int getParticleSize() {
+        int size = 6;
+        return size;
+    }
+    public int getParticleSpeed() {
+        int speed = 1;
+        return speed;
+    }
+    public int getParticleMaxLife() {
+        int maxLife = 20;
+        return maxLife;
     }
 }

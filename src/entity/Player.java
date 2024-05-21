@@ -436,6 +436,9 @@ public class Player extends Entity{
             gamepanel.interactiveTile[interactiveIndex].life--;
             gamepanel.interactiveTile[interactiveIndex].invincible = true;
 
+            // Generate particle
+            generateParticle(gamepanel.interactiveTile[interactiveIndex], gamepanel.interactiveTile[interactiveIndex]);
+
             if(gamepanel.interactiveTile[interactiveIndex].life == 0){
                 gamepanel.interactiveTile[interactiveIndex] = gamepanel.interactiveTile[interactiveIndex].getDestroyedForm();
             }
