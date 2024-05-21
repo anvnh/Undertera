@@ -3,6 +3,7 @@ package main;
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
+import tile_interactive.InteractiveTile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,12 +46,15 @@ public class GamePanel extends JPanel implements Runnable {
     public EventHandler eventHandler = new EventHandler(this);
     public CollisionCheck collisionCheck = new CollisionCheck(this);
     public AssetSetter assetSetter = new AssetSetter(this);
+
+    // Entity and Object
     public Player player = new Player(this, Key);
 
     public Entity[] objects = new Entity[500];
     //ArrayList<Entity> objects = new ArrayList<>();
     public Entity[] npc = new Entity[100];
     public Entity[] monster = new Entity[100];
+    public InteractiveTile[] interactiveTile = new InteractiveTile[100];
     ArrayList<Entity> entityArrayList = new ArrayList<>();
     public ArrayList<Entity> projectileList = new ArrayList<>();
 
@@ -72,10 +76,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupGame()
     {
+        //Initial for game
         gameState = titleState;
         assetSetter.setObject();
         assetSetter.setNPC();
         assetSetter.setMonster();
+        assetSetter.setInteractiveTile();
         playMusic(0);
 
     }
@@ -161,9 +167,17 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
             }
+            for(int i = 0; i < interactiveTile.length; i++)
+            {
+                if(interactiveTile[i] != null)
+                {
+                    interactiveTile[i].update();
+                }
+            }
         }
         if(gameState == pauseState)
         {
+            // do nothing
         }
     }
     public void paintComponent(Graphics g) {
@@ -180,6 +194,14 @@ public class GamePanel extends JPanel implements Runnable {
 
             //Tile
             tileM.draw(g2);
+
+            for(int i = 0; i < interactiveTile.length; i++)
+            {
+                if(interactiveTile[i] != null)
+                {
+                    interactiveTile[i].draw_object(g2);
+                }
+            }
 
             //Add entity to the array
 

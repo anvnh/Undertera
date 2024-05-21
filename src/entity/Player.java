@@ -204,6 +204,9 @@ public class Player extends Entity{
             int monsterIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.monster);
             contactMonster(monsterIndex);
 
+            // Check Interactive Tile Collision
+            gamepanel.collisionCheck.checkEntity(this, gamepanel.interactiveTile);
+
             //Attack
             check_attack();
 
@@ -352,8 +355,13 @@ public class Player extends Entity{
             solidArea.width = attackArea.width;
             solidArea.height = attackArea.height;
 
+            // Check monster collision
             int monsterIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.monster);
             damageMonster(monsterIndex);
+
+            // Check interactive collision
+            int interactiveIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.interactiveTile);
+            damageInteractiveTile(interactiveIndex);
 
             worldX = currentWorldX;
             worldY = currentWorldY;
@@ -417,7 +425,22 @@ public class Player extends Entity{
             }
         }
     }
+    public void damageInteractiveTile(int interactiveIndex){
+        if(interactiveIndex != 999
+                && gamepanel.interactiveTile[interactiveIndex].destructible
+                && gamepanel.interactiveTile[interactiveIndex].isCorrectItem(this)
+                && !gamepanel.interactiveTile[interactiveIndex].invincible
+        )
+        {
+            gamepanel.interactiveTile[interactiveIndex].playSE();
+            gamepanel.interactiveTile[interactiveIndex].life--;
+            gamepanel.interactiveTile[interactiveIndex].invincible = true;
 
+            if(gamepanel.interactiveTile[interactiveIndex].life == 0){
+                gamepanel.interactiveTile[interactiveIndex] = gamepanel.interactiveTile[interactiveIndex].getDestroyedForm();
+            }
+        }
+    }
     public void damageMonster(int monsterIndex)
     {
         if(monsterIndex != 999)

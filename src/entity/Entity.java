@@ -146,14 +146,19 @@ public class Entity {
     }
     public void use(Entity entity, GamePanel gamepanel){}
     public void checkDrop(){}
-    public void dropItem(Entity drpItem){
-        drpItem.worldY = worldY;
-        drpItem.worldX = worldX;
+    public void dropItem(Entity drpItem){ // item dropped from killing monster
+        //drpItem.worldY = worldY;
+        //drpItem.worldX = worldX;
         for(int i = 0; i < gamepanel.objects.length; i++)
         {
             if(gamepanel.objects[i] == null)
             {
                 gamepanel.objects[i] = drpItem;
+                gamepanel.objects[i].worldX = worldX;
+                gamepanel.objects[i].worldY = worldY;
+                // Check if the dropped item is on the same tile
+                // If is in the same tile, we move it a little bit, in this case, is 15 pixel
+                // Not yet implemented
                 break;
             }
         }
@@ -167,6 +172,7 @@ public class Entity {
         gamepanel.collisionCheck.checkObject(this, false);
         gamepanel.collisionCheck.checkEntity(this, gamepanel.npc);
         gamepanel.collisionCheck.checkEntity(this, gamepanel.monster);
+        gamepanel.collisionCheck.checkEntity(this, gamepanel.interactiveTile);
         boolean contactPlayer = gamepanel.collisionCheck.checkPlayer(this);
 
         if(this.type == type_monster && contactPlayer)
@@ -324,6 +330,7 @@ public class Entity {
     {
         g2.drawImage(image, worldX - gamepanel.player.worldX + gamepanel.player.screenX, worldY - gamepanel.player.worldY + gamepanel.player.screenY, null);
     }
+
     public void draw_entity(Graphics2D g2)
     {
         BufferedImage image = null;

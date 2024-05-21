@@ -105,12 +105,15 @@ public class BlueSlime extends Entity {
         int i = new Random().nextInt(1000) + 1;
         if(i <= 800){
             dropItem(new BronzeCoinObject(gamepanel));
+            dropItem(new HeartObject(gamepanel));
         }
-        else if(i <= 900) {
+        else if(i <= 990) {
             dropItem(new SilverCoinObject(gamepanel));
+            dropItem(new HeartObject(gamepanel));
         }
         else {
             dropItem(new GoldCoinObject(gamepanel));
+            dropItem(new HeartObject(gamepanel));
         }
 
     }

@@ -3,6 +3,7 @@ package main;
 import entity.*;
 import object.*;
 import monster.*;
+import tile_interactive.DryTree_IT;
 
 public class AssetSetter {
     GamePanel gamepanel;
@@ -72,5 +73,24 @@ public class AssetSetter {
         gamepanel.monster[i] = new BlueSlime(gamepanel);
         gamepanel.monster[i].worldX = gamepanel.tileSize * 33;
         gamepanel.monster[i].worldY = gamepanel.tileSize * 22;
+    }
+    public void setInteractiveTile() {
+        int i = 0;
+        gamepanel.interactiveTile[i] = new DryTree_IT(gamepanel, 27, 13);
+        i++;
+        gamepanel.interactiveTile[i] = new DryTree_IT(gamepanel, 28, 13);
+
+        i++;
+        gamepanel.interactiveTile[i] = new DryTree_IT(gamepanel, 29, 13);
+
+        i++;
+        gamepanel.interactiveTile[i] = new DryTree_IT(gamepanel, 30, 13);
+
+        i++;
+        gamepanel.interactiveTile[i] = new DryTree_IT(gamepanel, 27, 20);
+        i++;
+        gamepanel.interactiveTile[i] = new DryTree_IT(gamepanel, 27, 21);
+        i++;
+        gamepanel.interactiveTile[i] = new DryTree_IT(gamepanel, 27, 22);
     }
 }
