@@ -10,7 +10,8 @@ import java.security.Key;
 public class KeyboardHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, communicateWithNPC, F_Pressed, C_Pressed,
-            J_Pressed, K_Pressed, L_Pressed, Projectile_Pressed, O_Pressed, U_Pressed, Y_Pressed, pausePress, characterScreenPressed;
+            J_Pressed, K_Pressed, L_Pressed, Projectile_Pressed, O_Pressed, U_Pressed, Y_Pressed, pausePress, characterScreenPressed,
+            enterPressed, Options_Pressed;
     boolean checkDrawTime = true;
     GamePanel gamepanel;
 
@@ -65,6 +66,11 @@ public class KeyboardHandler implements KeyListener {
         if(gamepanel.gameState == gamepanel.characterState)
         {
             characterState(code);
+        }
+        //Options State
+        if(gamepanel.gameState == gamepanel.optionsState)
+        {
+            optionState(code);
         }
     }
     public void titleState(int code) {
@@ -132,7 +138,7 @@ public class KeyboardHandler implements KeyListener {
         {
             J_Pressed = true;
         }
-        if(code == KeyEvent.VK_ESCAPE)
+        if(code == KeyEvent.VK_P)
         {
             gamepanel.gameState = gamepanel.pauseState;
             pausePress = true;
@@ -148,10 +154,14 @@ public class KeyboardHandler implements KeyListener {
             // shot projectile
             Projectile_Pressed = true;
         }
-
+        if(code == KeyEvent.VK_ESCAPE)
+        {
+            gamepanel.gameState = gamepanel.optionsState;
+            Options_Pressed = true;
+        }
     }
     public void pauseState(int code) {
-        if(code == KeyEvent.VK_ESCAPE && !pausePress)
+        if(code == KeyEvent.VK_P && !pausePress)
         {
             gamepanel.gameState = gamepanel.playState;
         }
@@ -209,6 +219,51 @@ public class KeyboardHandler implements KeyListener {
             gamepanel.player.selectItem();
         }
     }
+    public void optionState(int code)
+    {
+        if(code == KeyEvent.VK_ESCAPE && !Options_Pressed)
+        {
+            gamepanel.gameState = gamepanel.playState;
+        }
+        if(code == KeyEvent.VK_ENTER)
+        {
+            enterPressed = true;
+        }
+        if(code == KeyEvent.VK_J || code == KeyEvent.VK_DOWN)
+        {
+            gamepanel.playSoundEffect(6);
+            gamepanel.ui.commandNum = (gamepanel.ui.commandNum + 1) % 5;
+        }
+
+        if(code == KeyEvent.VK_K || code == KeyEvent.VK_UP)
+        {
+            gamepanel.playSoundEffect(6);
+            gamepanel.ui.commandNum = (gamepanel.ui.commandNum + 4) % 5;
+        }
+        if(code == KeyEvent.VK_H || code == KeyEvent.VK_LEFT)
+        {
+            if(gamepanel.ui.subState == 0)
+            {
+                if(gamepanel.ui.commandNum == 0 && gamepanel.sound.volumeScale > 0){
+                    gamepanel.sound.volumeScale--;
+                    gamepanel.sound.checkVolume();
+                    gamepanel.playSoundEffect(6);
+                }
+            }
+        }
+        if(code == KeyEvent.VK_L || code == KeyEvent.VK_RIGHT)
+        {
+            if(gamepanel.ui.subState == 0)
+            {
+                if(gamepanel.ui.commandNum == 0 && gamepanel.sound.volumeScale < 11){
+                    gamepanel.sound.volumeScale++;
+                    gamepanel.sound.checkVolume();
+                    gamepanel.playSoundEffect(6);
+                }
+            }
+        }
+
+    }
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
@@ -228,7 +283,7 @@ public class KeyboardHandler implements KeyListener {
         {
             rightPressed = false;
         }
-        if(code == KeyEvent.VK_ESCAPE)
+        if(code == KeyEvent.VK_P)
         {
             pausePress = false;
         }
@@ -243,6 +298,9 @@ public class KeyboardHandler implements KeyListener {
         if(code == KeyEvent.VK_J)
         {
             J_Pressed = false;
+        }
+        if(code == KeyEvent.VK_ESCAPE) {
+            Options_Pressed = false;
         }
     }
 }

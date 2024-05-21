@@ -1,13 +1,18 @@
 package main;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import java.net.URL;
 
 public class Sound {
     Clip clip;
-    URL soundURL[] = new URL[30];
+    URL[] soundURL = new URL[30];
+    FloatControl floatControl;
+    //float[] volumeScale = {-80f, -71.4f, -62.8f, -54.2f, -45.6f, -37f, -28.4f, -19.8f, -11.2f, 6f, 6f};
+    int volumeScale = 9;
+    float volume;
+
     public Sound() {
         soundURL[0] = getClass().getResource("/sounds/Main.wav");
         soundURL[1] = getClass().getResource("/sounds/sword_slash_1.wav");
@@ -26,6 +31,10 @@ public class Sound {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
             clip = AudioSystem.getClip();
             clip.open(ais);
+            floatControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            // Accept from -80f to 6f
+            // -80f is the lowest volume, 6f is the highest volume
+            checkVolume();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,6 +50,21 @@ public class Sound {
     public void stop()
     {
         clip.stop();
+    }
+    public void checkVolume() {
+        switch (volumeScale){
+            case 1: volume = (-80f); break;
+            case 2: volume = (-71.4f); break;
+            case 3: volume = (-62.8f); break;
+            case 4: volume = (-54.2f); break;
+            case 5: volume = (-45.6f); break;
+            case 6: volume = (-37f); break;
+            case 7: volume = (-28.4f); break;
+            case 8: volume = (-19.8f); break;
+            case 9: volume = (-11.2f); break;
+            case 10: volume = (6f); break;
+        }
+        floatControl.setValue(volume);
     }
 
 }
