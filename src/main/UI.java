@@ -595,11 +595,12 @@ public class UI {
         textY = frameY + gamepanel.tileSize + 25;
         g2.setStroke(new BasicStroke(3));
         // Music
-        g2.drawRect(textX, textY, 220, 30);
-        g2.fillRect(textX, textY, 20 * gamepanel.sound.volumeScale, 30);
+        g2.drawRect(textX, textY, 200, 30);
+        g2.fillRect(textX, textY, 20 * gamepanel.sound.musicVolumeScale, 30);
         // SE
         textY += gamepanel.tileSize;
-        g2.drawRect(textX, textY, 220, 30);
+        g2.drawRect(textX, textY, 200, 30);
+        g2.fillRect(textX, textY, 20 * gamepanel.sound.volumeScale, 30);
     }
     public int getItemIndexOnSlot() {
         //System.out.println(17 * (slotRow + 1) + slotRow - (17 - slotCol));

@@ -244,10 +244,16 @@ public class KeyboardHandler implements KeyListener {
         {
             if(gamepanel.ui.subState == 0)
             {
-                if(gamepanel.ui.commandNum == 0 && gamepanel.sound.volumeScale > 0){
+                if(gamepanel.ui.commandNum == 1 && gamepanel.sound.volumeScale > 0){
                     gamepanel.sound.volumeScale--;
                     gamepanel.sound.checkVolume();
                     gamepanel.playSoundEffect(6);
+                }
+                else if(gamepanel.ui.commandNum == 0 && gamepanel.sound.musicVolumeScale > 0){
+                    gamepanel.sound.musicVolumeScale--;
+                    gamepanel.sound.checkMusicVolume();
+                    gamepanel.playSoundEffect(6);
+                    gamepanel.playMusic(0);
                 }
             }
         }
@@ -255,10 +261,16 @@ public class KeyboardHandler implements KeyListener {
         {
             if(gamepanel.ui.subState == 0)
             {
-                if(gamepanel.ui.commandNum == 0 && gamepanel.sound.volumeScale < 11){
+                if(gamepanel.ui.commandNum == 1 && gamepanel.sound.volumeScale < 10){
                     gamepanel.sound.volumeScale++;
                     gamepanel.sound.checkVolume();
                     gamepanel.playSoundEffect(6);
+                }
+                else if(gamepanel.ui.commandNum == 0 && gamepanel.sound.musicVolumeScale < 10){
+                    gamepanel.sound.musicVolumeScale++;
+                    gamepanel.sound.checkMusicVolume();
+                    gamepanel.playSoundEffect(6);
+                    gamepanel.playMusic(0);
                 }
             }
         }

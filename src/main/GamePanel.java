@@ -90,7 +90,6 @@ public class GamePanel extends JPanel implements Runnable {
         assetSetter.setMonster();
         assetSetter.setInteractiveTile();
         playMusic(0);
-
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
 
@@ -471,9 +470,7 @@ public class GamePanel extends JPanel implements Runnable {
             g2.drawString("World Y: " + player.worldY, x, y + lineHeight);
             g2.drawString("X: " + (player.worldX + player.solidArea.x) / tileSize, x, y + lineHeight * 2);
             g2.drawString("Y: " + (player.worldY + player.solidArea.y) / tileSize, x, y + lineHeight * 3);
-
         }
-
         g2.dispose();
     }
     public void drawToScreen() {

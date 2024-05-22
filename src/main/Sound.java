@@ -9,24 +9,25 @@ public class Sound {
     Clip clip;
     URL[] soundURL = new URL[30];
     FloatControl floatControl;
-    //float[] volumeScale = {-80f, -71.4f, -62.8f, -54.2f, -45.6f, -37f, -28.4f, -19.8f, -11.2f, 6f, 6f};
-    int volumeScale = 9;
+    //float[] musicVolumeScale = {-80f, -71.4f, -62.8f, -54.2f, -45.6f, -37f, -28.4f, -19.8f, -11.2f, 6f, 6f};
+    int volumeScale = 5;
+    int musicVolumeScale = 5;
     float volume;
+    float volumeMusic;
 
     public Sound() {
         soundURL[0] = getClass().getResource("/sounds/Main.wav");
-        soundURL[1] = getClass().getResource("/sounds/sword_slash_1.wav");
+        soundURL[1] = getClass().getResource("/sounds/sword_slash_1.wav");  // sound effect
         //soundURL[2] = getClass().getResource("/sounds/sword_slash_2.wav");
-        soundURL[3] = getClass().getResource("/sounds/hitting.wav");
-        soundURL[4] = getClass().getResource("/sounds/being_hit.wav");
-        soundURL[5] = getClass().getResource("/sounds/level_up.wav");
-        soundURL[6] = getClass().getResource("/sounds/select_menu.wav");
-        soundURL[7] = getClass().getResource("/sounds/collect_item.wav");
-        soundURL[8] = getClass().getResource("/sounds/dig_1.wav");
+        soundURL[3] = getClass().getResource("/sounds/hitting.wav"); // sound effect
+        soundURL[4] = getClass().getResource("/sounds/being_hit.wav"); // sound effect
+        soundURL[5] = getClass().getResource("/sounds/level_up.wav"); // sound effect
+        soundURL[6] = getClass().getResource("/sounds/select_menu.wav"); // sound effect
+        soundURL[7] = getClass().getResource("/sounds/collect_item.wav"); // sound effect
+        soundURL[8] = getClass().getResource("/sounds/dig_1.wav"); // sound effect
     }
 
-    public void setFile(int i)
-    {
+    public void setFile(int i) {
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
             clip = AudioSystem.getClip();
@@ -34,37 +35,58 @@ public class Sound {
             floatControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             // Accept from -80f to 6f
             // -80f is the lowest volume, 6f is the highest volume
-            checkVolume();
+            if (i == 0) {
+                checkMusicVolume();
+            } else {
+                checkVolume();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void play()
-    {
+
+    public void play() {
         clip.start();
     }
-    public void loop()
-    {
+
+    public void loop() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
-    public void stop()
-    {
+
+    public void stop() {
         clip.stop();
     }
+
     public void checkVolume() {
-        switch (volumeScale){
-            case 1: volume = (-80f); break;
-            case 2: volume = (-71.4f); break;
-            case 3: volume = (-62.8f); break;
-            case 4: volume = (-54.2f); break;
-            case 5: volume = (-45.6f); break;
-            case 6: volume = (-37f); break;
-            case 7: volume = (-28.4f); break;
-            case 8: volume = (-19.8f); break;
-            case 9: volume = (-11.2f); break;
-            case 10: volume = (6f); break;
+        switch (volumeScale) {
+            case 0: volume = -80f; break;
+            case 1: volume = -60f; break;
+            case 2: volume = -50f; break;
+            case 3: volume = -40f; break;
+            case 4: volume = -30f; break;
+            case 5: volume = -20f; break;
+            case 6: volume = -10f; break;
+            case 7: volume = 0f; break;
+            case 8: volume = 0.5f; break;
+            case 9: volume = 1f; break;
+            case 10: volume = 6f; break;
         }
         floatControl.setValue(volume);
     }
-
+    public void checkMusicVolume() {
+        switch (musicVolumeScale) {
+            case 0: volumeMusic = -80f; break;
+            case 1: volumeMusic = -60f; break;
+            case 2: volumeMusic = -50f; break;
+            case 3: volumeMusic = -40f; break;
+            case 4: volumeMusic = -30f; break;
+            case 5: volumeMusic = -20f; break;
+            case 6: volumeMusic = -10f; break;
+            case 7: volumeMusic = 0f; break;
+            case 8: volumeMusic = 0.5f; break;
+            case 9: volumeMusic = 1f; break;
+            case 10: volumeMusic = 6f; break;
+        }
+        floatControl.setValue(volumeMusic);
+    }
 }
