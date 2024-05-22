@@ -20,7 +20,7 @@ public class DryTree_IT extends InteractiveTile {
 
         image = setup_entity("/tiles_interactive/drytree");
         destructible = true;
-        life = 5;
+        life = 2;
     }
     public boolean isCorrectItem(Entity entity){
         boolean isCorrectItem = false;
