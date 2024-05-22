@@ -149,13 +149,13 @@ public class Entity {
     public void dropItem(Entity drpItem){ // item dropped from killing monster
         //drpItem.worldY = worldY;
         //drpItem.worldX = worldX;
-        for(int i = 0; i < gamepanel.objects.length; i++)
+        for(int i = 0; i < gamepanel.objects[1].length; i++)
         {
-            if(gamepanel.objects[i] == null)
+            if(gamepanel.objects[gamepanel.currentMap][i] == null)
             {
-                gamepanel.objects[i] = drpItem;
-                gamepanel.objects[i].worldX = worldX;
-                gamepanel.objects[i].worldY = worldY;
+                gamepanel.objects[gamepanel.currentMap][i] = drpItem;
+                gamepanel.objects[gamepanel.currentMap][i].worldX = worldX;
+                gamepanel.objects[gamepanel.currentMap][i].worldY = worldY;
                 // Check if the dropped item is on the same tile
                 // If is in the same tile, we move it a little bit, in this case, is 15 pixel
                 // Not yet implemented

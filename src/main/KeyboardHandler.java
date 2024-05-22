@@ -127,6 +127,7 @@ public class KeyboardHandler implements KeyListener {
         {
             gamepanel.gameState = gamepanel.characterState;
             characterScreenPressed = true;
+            gamepanel.playSoundEffect(9);
         }
         if(code == KeyEvent.VK_E)
         {
@@ -146,10 +147,12 @@ public class KeyboardHandler implements KeyListener {
             pausePress = true;
         }
         // For fast reloading the map
+        /*
         if(code == KeyEvent.VK_BACK_SLASH)
         {
-            gamepanel.tileM.loadmap("/maps/worldV4.txt");
+            gamepanel.tileM.loadmap("/maps/worldV4.txt", );
         }
+         */
         // Shoot the projectile
         if(code == KeyEvent.VK_I)
         {
@@ -178,6 +181,7 @@ public class KeyboardHandler implements KeyListener {
         if(code == KeyEvent.VK_C && !characterScreenPressed)
         {
             gamepanel.gameState = gamepanel.playState;
+            gamepanel.playSoundEffect(10);
         }
         if(code == KeyEvent.VK_J || code == KeyEvent.VK_DOWN)
         {

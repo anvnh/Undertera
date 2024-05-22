@@ -11,86 +11,66 @@ public class AssetSetter {
         this.gamepanel = gp;
     }
     public void setObject() {
-        gamepanel.objects[0] = new KeyObject(gamepanel);
-        gamepanel.objects[0].worldX = gamepanel.tileSize * 24;
-        gamepanel.objects[0].worldY = gamepanel.tileSize * 19;
-
-        gamepanel.objects[1] = new AxeObject(gamepanel);
-        gamepanel.objects[1].worldX = gamepanel.tileSize * 24;
-        gamepanel.objects[1].worldY = gamepanel.tileSize * 21;
-
-        gamepanel.objects[2] = new Potion_RedObject(gamepanel);
-        gamepanel.objects[2].worldX = gamepanel.tileSize * 24;
-        gamepanel.objects[2].worldY = gamepanel.tileSize * 23;
-
-        gamepanel.objects[3] = new BronzeCoinObject(gamepanel);
-        gamepanel.objects[3].worldX = gamepanel.tileSize * 24;
-        gamepanel.objects[3].worldY = gamepanel.tileSize * 22;
-
-        gamepanel.objects[4] = new HeartObject(gamepanel);
-        gamepanel.objects[4].worldX = gamepanel.tileSize * 24;
-        gamepanel.objects[4].worldY = gamepanel.tileSize * 24;
+        int mapNum = 0;
+        int i = 0;
+        gamepanel.objects[mapNum][i] = new KeyObject(gamepanel);
+        gamepanel.objects[mapNum][i].worldX = gamepanel.tileSize * 24;
+        gamepanel.objects[mapNum][i].worldY = gamepanel.tileSize * 19;
+        i++;
     }
 
     public void setNPC() {
-        gamepanel.npc[0] = new NPC_OldMan(gamepanel);
-        gamepanel.npc[0].worldX = gamepanel.tileSize * 22;
-        gamepanel.npc[0].worldY = gamepanel.tileSize * 26;
+        int mapNum = 0;
+        int i = 0;
 
-        gamepanel.npc[1] = new NPC_OldMan(gamepanel);
-        gamepanel.npc[1].worldX = gamepanel.tileSize * 24;
-        gamepanel.npc[1].worldY = gamepanel.tileSize * 26;
+        gamepanel.npc[mapNum][i] = new NPC_OldMan(gamepanel);
+        gamepanel.npc[mapNum][i].worldX = gamepanel.tileSize * 22;
+        gamepanel.npc[mapNum][i].worldY = gamepanel.tileSize * 26;
+        i++;
 
-        /*
-        gamepanel.npc[2] = new NPC_OldMan(gamepanel);
-        gamepanel.npc[2].worldX = gamepanel.tileSize * 27;
-        gamepanel.npc[2].worldY = gamepanel.tileSize * 22;
-         */
+        gamepanel.npc[mapNum][i] = new NPC_OldMan(gamepanel);
+        gamepanel.npc[mapNum][i].worldX = gamepanel.tileSize * 24;
+        gamepanel.npc[mapNum][i].worldY = gamepanel.tileSize * 26;
     }
 
     public void setMonster() {
+        int mapNum = 0;
         int i = 0;
-        gamepanel.monster[i] = new BlueSlime(gamepanel);
-        gamepanel.monster[i].worldX = gamepanel.tileSize * 22;
-        gamepanel.monster[i].worldY = gamepanel.tileSize * 22;
-
+        gamepanel.monster[mapNum][i] = new BlueSlime(gamepanel);
+        gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 22;
+        gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 22;
         i++;
-        gamepanel.monster[i] = new BlueSlime(gamepanel);
-        gamepanel.monster[i].worldX = gamepanel.tileSize * 25;
-        gamepanel.monster[i].worldY = gamepanel.tileSize * 22;
-
+        gamepanel.monster[mapNum][i] = new BlueSlime(gamepanel);
+        gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 25;
+        gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 22;
         i++;
-        gamepanel.monster[i] = new BlueSlime(gamepanel);
-        gamepanel.monster[i].worldX = gamepanel.tileSize * 28;
-        gamepanel.monster[i].worldY = gamepanel.tileSize * 22;
-
+        gamepanel.monster[mapNum][i] = new BlueSlime(gamepanel);
+        gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 28;
+        gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 22;
         i++;
-        gamepanel.monster[i] = new BlueSlime(gamepanel);
-        gamepanel.monster[i].worldX = gamepanel.tileSize * 31;
-        gamepanel.monster[i].worldY = gamepanel.tileSize * 22;
-
+        gamepanel.monster[mapNum][i] = new BlueSlime(gamepanel);
+        gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 31;
+        gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 22;
         i++;
-        gamepanel.monster[i] = new BlueSlime(gamepanel);
-        gamepanel.monster[i].worldX = gamepanel.tileSize * 33;
-        gamepanel.monster[i].worldY = gamepanel.tileSize * 22;
+        gamepanel.monster[mapNum][i] = new BlueSlime(gamepanel);
+        gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 33;
+        gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 22;
     }
     public void setInteractiveTile() {
+        int mapNum = 0;
         int i = 0;
-        gamepanel.interactiveTile[i] = new DryTree_IT(gamepanel, 27, 13);
+        gamepanel.interactiveTile[mapNum][i] = new DryTree_IT(gamepanel, 27, 13);
         i++;
-        gamepanel.interactiveTile[i] = new DryTree_IT(gamepanel, 28, 13);
-
+        gamepanel.interactiveTile[mapNum][i] = new DryTree_IT(gamepanel, 28, 13);
         i++;
-        gamepanel.interactiveTile[i] = new DryTree_IT(gamepanel, 29, 13);
-
+        gamepanel.interactiveTile[mapNum][i] = new DryTree_IT(gamepanel, 29, 13);
         i++;
-        gamepanel.interactiveTile[i] = new DryTree_IT(gamepanel, 30, 13);
-
+        gamepanel.interactiveTile[mapNum][i] = new DryTree_IT(gamepanel, 30, 13);
         i++;
-        gamepanel.interactiveTile[i] = new DryTree_IT(gamepanel, 27, 20);
+        gamepanel.interactiveTile[mapNum][i] = new DryTree_IT(gamepanel, 27, 20);
         i++;
-        gamepanel.interactiveTile[i] = new DryTree_IT(gamepanel, 27, 21);
+        gamepanel.interactiveTile[mapNum][i] = new DryTree_IT(gamepanel, 27, 21);
         i++;
-        gamepanel.interactiveTile[i] = new DryTree_IT(gamepanel, 27, 22);
+        gamepanel.interactiveTile[mapNum][i] = new DryTree_IT(gamepanel, 27, 22);
     }
 }

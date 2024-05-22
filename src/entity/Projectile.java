@@ -23,7 +23,7 @@ public class Projectile extends Entity{
             if(monsterIndex != 999)
             {
                 gamepanel.player.damageProjectileMonster(monsterIndex, attack);
-                generateParticle(user.projectile, gamepanel.monster[monsterIndex]);
+                generateParticle(user.projectile, gamepanel.monster[gamepanel.currentMap][monsterIndex]);
                 alive = false;
             }
         }

@@ -397,20 +397,20 @@ public class Player extends Entity{
         if(objectIndex != 999)
         {
             // Pick up only items
-            if(gamepanel.objects[objectIndex].type == type_pickuponly)
+            if(gamepanel.objects[gamepanel.currentMap][objectIndex].type == type_pickuponly) //fixed
             {
-                gamepanel.objects[objectIndex].use(this, gamepanel);
-                gamepanel.objects[objectIndex] = null;
+                gamepanel.objects[gamepanel.currentMap][objectIndex].use(this, gamepanel); //fixed
+                gamepanel.objects[gamepanel.currentMap][objectIndex] = null; //fixed
             }
             else {
                 String text;
                 if(inventory.size() != maxInventorySize)
                 {
-                    inventory.add(gamepanel.objects[objectIndex]);
+                    inventory.add(gamepanel.objects[gamepanel.currentMap][objectIndex]); //fixed
                     gamepanel.playSoundEffect(7);
-                    text = "Picked up " + gamepanel.objects[objectIndex].name;
+                    text = "Picked up " + gamepanel.objects[gamepanel.currentMap][objectIndex].name; //fixed
                     gamepanel.ui.addMessage(text);
-                    gamepanel.objects[objectIndex] = null;
+                    gamepanel.objects[gamepanel.currentMap][objectIndex] = null; //fixed || REMEMBER THIS LINE!!!
                 }
             }
         }
@@ -422,8 +422,7 @@ public class Player extends Entity{
             if(gamepanel.Key.communicateWithNPC)
             {
                 gamepanel.gameState = gamepanel.dialogueState;
-                gamepanel.npc[npcIndex].speak();
-                //gamepanel.Key.communicateWithNPC = false;
+                gamepanel.npc[gamepanel.currentMap][npcIndex].speak(); //fixed
             }
         }
     }
@@ -431,9 +430,9 @@ public class Player extends Entity{
     public void contactMonster(int monsterIndex) {
         if(monsterIndex != 999)
         {
-            if(!invincible && !gamepanel.monster[monsterIndex].dying)
+            if(!invincible && !gamepanel.monster[gamepanel.currentMap][monsterIndex].dying)     //fixed
             {
-                life -= calculateDamageReceive(gamepanel.monster[monsterIndex]);
+                life -= calculateDamageReceive(gamepanel.monster[gamepanel.currentMap][monsterIndex]); //fixed
                 invincible = true;
                 gamepanel.playSoundEffect(4);
             }
@@ -441,20 +440,20 @@ public class Player extends Entity{
     }
     public void damageInteractiveTile(int interactiveIndex){
         if(interactiveIndex != 999
-                && gamepanel.interactiveTile[interactiveIndex].destructible
-                && gamepanel.interactiveTile[interactiveIndex].isCorrectItem(this)
-                && !gamepanel.interactiveTile[interactiveIndex].invincible
+                && gamepanel.interactiveTile[gamepanel.currentMap][interactiveIndex].destructible //fixed
+                && gamepanel.interactiveTile[gamepanel.currentMap][interactiveIndex].isCorrectItem(this) //fixed
+                && !gamepanel.interactiveTile[gamepanel.currentMap][interactiveIndex].invincible //fixed
         )
         {
-            gamepanel.interactiveTile[interactiveIndex].playSE();
-            gamepanel.interactiveTile[interactiveIndex].life--;
-            gamepanel.interactiveTile[interactiveIndex].invincible = true;
+            gamepanel.interactiveTile[gamepanel.currentMap][interactiveIndex].playSE(); //fixed
+            gamepanel.interactiveTile[gamepanel.currentMap][interactiveIndex].life--; //fixed
+            gamepanel.interactiveTile[gamepanel.currentMap][interactiveIndex].invincible = true; //fixed
 
             // Generate particle
-            generateParticle(gamepanel.interactiveTile[interactiveIndex], gamepanel.interactiveTile[interactiveIndex]);
+            generateParticle(gamepanel.interactiveTile[gamepanel.currentMap][interactiveIndex], gamepanel.interactiveTile[gamepanel.currentMap][interactiveIndex]); //fixed
 
-            if(gamepanel.interactiveTile[interactiveIndex].life == 0){
-                gamepanel.interactiveTile[interactiveIndex] = gamepanel.interactiveTile[interactiveIndex].getDestroyedForm();
+            if(gamepanel.interactiveTile[gamepanel.currentMap][interactiveIndex].life == 0){ //fixed
+                gamepanel.interactiveTile[gamepanel.currentMap][interactiveIndex] = gamepanel.interactiveTile[gamepanel.currentMap][interactiveIndex].getDestroyedForm(); //fixed
             }
         }
     }
@@ -462,25 +461,25 @@ public class Player extends Entity{
     {
         if(monsterIndex != 999)
         {
-            if(!gamepanel.monster[monsterIndex].invincible)
+            if(!gamepanel.monster[gamepanel.currentMap][monsterIndex].invincible) // fixed
             {
                 gamepanel.playSoundEffect(3);
 
 
-                gamepanel.monster[monsterIndex].life -= calculateDamageDeal(gamepanel.monster[monsterIndex]);
-                gamepanel.ui.addMessage(calculateDamageDeal(gamepanel.monster[monsterIndex]) + " damage");
+                gamepanel.monster[gamepanel.currentMap][monsterIndex].life -= calculateDamageDeal(gamepanel.monster[gamepanel.currentMap][monsterIndex]); //fixed
+                gamepanel.ui.addMessage(calculateDamageDeal(gamepanel.monster[gamepanel.currentMap][monsterIndex]) + " damage"); //fixed
                 //System.out.println(gamepanel.monster[monsterIndex].life);
 
-                gamepanel.monster[monsterIndex].invincible = true;
-                gamepanel.monster[monsterIndex].damageReaction();
+                gamepanel.monster[gamepanel.currentMap][monsterIndex].invincible = true; //fixed
+                gamepanel.monster[gamepanel.currentMap][monsterIndex].damageReaction(); //fixed
 
 
-                if(gamepanel.monster[monsterIndex].life <= 0)
+                if(gamepanel.monster[gamepanel.currentMap][monsterIndex].life <= 0) //fixed
                 {
-                    gamepanel.monster[monsterIndex].dying = true;
-                    gamepanel.ui.addMessage("Killed " + gamepanel.monster[monsterIndex].name);
-                    gamepanel.ui.addMessage("Received " + gamepanel.monster[monsterIndex].exp + " exp");
-                    exp += gamepanel.monster[monsterIndex].exp;
+                    gamepanel.monster[gamepanel.currentMap][monsterIndex].dying = true;
+                    gamepanel.ui.addMessage("Killed " + gamepanel.monster[gamepanel.currentMap][monsterIndex].name); //fixed
+                    gamepanel.ui.addMessage("Received " + gamepanel.monster[gamepanel.currentMap][monsterIndex].exp + " exp"); //fixed
+                    exp += gamepanel.monster[gamepanel.currentMap][monsterIndex].exp; //fixed
                     checkLevelUp();
                 }
             }
@@ -491,25 +490,25 @@ public class Player extends Entity{
     {
         if(monsterIndex != 999)
         {
-            if(!gamepanel.monster[monsterIndex].invincible)
+            if(!gamepanel.monster[gamepanel.currentMap][monsterIndex].invincible) // fixed
             {
                 gamepanel.playSoundEffect(3);
 
 
-                gamepanel.monster[monsterIndex].life -= calculateDamageDealwithProjectile(gamepanel.monster[monsterIndex], Attack);
-                gamepanel.ui.addMessage(calculateDamageDealwithProjectile(gamepanel.monster[monsterIndex], Attack) + " damage");
+                gamepanel.monster[gamepanel.currentMap][monsterIndex].life -= calculateDamageDealwithProjectile(gamepanel.monster[gamepanel.currentMap][monsterIndex], Attack); //fixed
+                gamepanel.ui.addMessage(calculateDamageDealwithProjectile(gamepanel.monster[gamepanel.currentMap][monsterIndex], Attack) + " damage");
                 //System.out.println(gamepanel.monster[monsterIndex].life);
 
-                gamepanel.monster[monsterIndex].invincible = true;
-                gamepanel.monster[monsterIndex].damageReaction();
+                gamepanel.monster[gamepanel.currentMap][monsterIndex].invincible = true;
+                gamepanel.monster[gamepanel.currentMap][monsterIndex].damageReaction();
 
 
-                if(gamepanel.monster[monsterIndex].life <= 0)
+                if(gamepanel.monster[gamepanel.currentMap][monsterIndex].life <= 0)
                 {
-                    gamepanel.monster[monsterIndex].dying = true;
-                    gamepanel.ui.addMessage("Killed " + gamepanel.monster[monsterIndex].name);
-                    gamepanel.ui.addMessage("Received " + gamepanel.monster[monsterIndex].exp + " exp");
-                    exp += gamepanel.monster[monsterIndex].exp;
+                    gamepanel.monster[gamepanel.currentMap][monsterIndex].dying = true;
+                    gamepanel.ui.addMessage("Killed " + gamepanel.monster[gamepanel.currentMap][monsterIndex].name);
+                    gamepanel.ui.addMessage("Received " + gamepanel.monster[gamepanel.currentMap][monsterIndex].exp + " exp");
+                    exp += gamepanel.monster[gamepanel.currentMap][monsterIndex].exp;
                     checkLevelUp();
                 }
             }
@@ -522,7 +521,7 @@ public class Player extends Entity{
             gamepanel.playSoundEffect(5);
             level++;
             exp = 0;
-            nextLevelExp = (int) (nextLevelExp * 1.5);
+            nextLevelExp = (int) (nextLevelExp * 2.5);
             //maxLife += 10;
             life = maxLife;
             mana = maxMana;

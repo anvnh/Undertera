@@ -23,6 +23,8 @@ public class Sound {
         soundURL[6] = getClass().getResource("/sounds/select_menu.wav"); // sound effect
         soundURL[7] = getClass().getResource("/sounds/collect_item.wav"); // sound effect
         soundURL[8] = getClass().getResource("/sounds/dig_1.wav"); // sound effect
+        soundURL[9] = getClass().getResource("/sounds/menu_open.wav"); // sound effect
+        soundURL[10] = getClass().getResource("/sounds/menu_close.wav"); // sound effect
     }
 
     public void setFile(int i) {
