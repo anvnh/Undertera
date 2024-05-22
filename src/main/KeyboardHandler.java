@@ -157,6 +157,7 @@ public class KeyboardHandler implements KeyListener {
         if(code == KeyEvent.VK_ESCAPE)
         {
             gamepanel.gameState = gamepanel.optionsState;
+            gamepanel.ui.subState = 0;
             Options_Pressed = true;
         }
     }
@@ -232,28 +233,46 @@ public class KeyboardHandler implements KeyListener {
         if(code == KeyEvent.VK_J || code == KeyEvent.VK_DOWN)
         {
             gamepanel.playSoundEffect(6);
-            gamepanel.ui.commandNum = (gamepanel.ui.commandNum + 1) % 5;
+            if(gamepanel.ui.subState == 0) {
+                gamepanel.ui.commandNum++;
+                if(gamepanel.ui.commandNum > 4)
+                    gamepanel.ui.commandNum = 0;
+            }
+            else if(gamepanel.ui.subState == 1) {
+                gamepanel.ui.commandNum = 0;
+            }
+            else if(gamepanel.ui.subState == 2) {
+                gamepanel.ui.commandNum ++;
+                if(gamepanel.ui.commandNum > 1)
+                    gamepanel.ui.commandNum = 0;
+            }
         }
 
         if(code == KeyEvent.VK_K || code == KeyEvent.VK_UP)
         {
             gamepanel.playSoundEffect(6);
-            gamepanel.ui.commandNum = (gamepanel.ui.commandNum + 4) % 5;
+            if(gamepanel.ui.subState == 0) {
+                gamepanel.ui.commandNum--;
+                if(gamepanel.ui.commandNum < 0)
+                    gamepanel.ui.commandNum = 4;
+            }
+            else if(gamepanel.ui.subState == 1) {
+                gamepanel.ui.commandNum = 0;
+            }
+            else if(gamepanel.ui.subState == 2) {
+                gamepanel.ui.commandNum --;
+                if(gamepanel.ui.commandNum < 0)
+                    gamepanel.ui.commandNum = 1;
+            }
         }
         if(code == KeyEvent.VK_H || code == KeyEvent.VK_LEFT)
         {
             if(gamepanel.ui.subState == 0)
             {
-                if(gamepanel.ui.commandNum == 1 && gamepanel.sound.volumeScale > 0){
-                    gamepanel.sound.volumeScale--;
+                if(gamepanel.ui.commandNum == 1 && gamepanel.sound.soundEffect> 0){
+                    gamepanel.sound.soundEffect--;
                     gamepanel.sound.checkVolume();
                     gamepanel.playSoundEffect(6);
-                }
-                else if(gamepanel.ui.commandNum == 0 && gamepanel.sound.musicVolumeScale > 0){
-                    gamepanel.sound.musicVolumeScale--;
-                    gamepanel.sound.checkMusicVolume();
-                    gamepanel.playSoundEffect(6);
-                    gamepanel.playMusic(0);
                 }
             }
         }
@@ -261,16 +280,10 @@ public class KeyboardHandler implements KeyListener {
         {
             if(gamepanel.ui.subState == 0)
             {
-                if(gamepanel.ui.commandNum == 1 && gamepanel.sound.volumeScale < 10){
-                    gamepanel.sound.volumeScale++;
+                if(gamepanel.ui.commandNum == 1 && gamepanel.sound.soundEffect < 10){
+                    gamepanel.sound.soundEffect++;
                     gamepanel.sound.checkVolume();
                     gamepanel.playSoundEffect(6);
-                }
-                else if(gamepanel.ui.commandNum == 0 && gamepanel.sound.musicVolumeScale < 10){
-                    gamepanel.sound.musicVolumeScale++;
-                    gamepanel.sound.checkMusicVolume();
-                    gamepanel.playSoundEffect(6);
-                    gamepanel.playMusic(0);
                 }
             }
         }
