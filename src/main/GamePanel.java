@@ -73,6 +73,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int dialogueState = 2;
     public final int characterState = 3;
     public final int optionsState = 4;
+    public final int gameOverState = 999;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -96,7 +97,22 @@ public class GamePanel extends JPanel implements Runnable {
 
         //setFullScreen();
     }
-
+    public void retryOrNewGame() {
+        player.setDefaultPosition();
+        player.restoreLiveAndMana();
+        assetSetter.setNPC();
+        assetSetter.setMonster();
+    }
+    public void restartOrQuit() {
+        player.setDefaultValues();
+        player.setDefaultPosition();
+        player.restoreLiveAndMana();
+        player.setItems();
+        assetSetter.setNPC();
+        assetSetter.setMonster();
+        assetSetter.setObject();
+        assetSetter.setInteractiveTile();
+    }
     public void setFullScreen() {
         // get local screen device
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
