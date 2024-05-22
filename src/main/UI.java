@@ -548,12 +548,18 @@ public class UI {
         x = gamepanel.screenWidth / 2 - g2.getFontMetrics().stringWidth(text) / 2;
         y = gamepanel.screenHeight / 2 + 50;
         g2.drawString(text, x, y);
+        if(commandNum == 0) {
+            g2.drawString(">", x - 50, y);
+        }
 
         // Back to the title screen
         text = "Quit";
         x = gamepanel.screenWidth / 2 - g2.getFontMetrics().stringWidth(text) / 2;
         y = gamepanel.screenHeight / 2 + 120;
         g2.drawString(text, x, y);
+        if(commandNum == 1) {
+            g2.drawString(">", x - 50, y);
+        }
     }
     public void drawOptionsScreen(){
         g2.setColor(Color.WHITE);

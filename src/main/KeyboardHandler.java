@@ -39,10 +39,6 @@ public class KeyboardHandler implements KeyListener {
             }
         }
         //Title State
-        if(code == KeyEvent.VK_ESCAPE)
-        {
-
-        }
         if(gamepanel.gameState == gamepanel.titleState)
         {
             titleState(code);
@@ -96,7 +92,7 @@ public class KeyboardHandler implements KeyListener {
             if(gamepanel.ui.commandNumber == 0)
             {
                 gamepanel.gameState = gamepanel.playState;
-                gamepanel.retryOrNewGame();
+                gamepanel.restart();
             }
             if(gamepanel.ui.commandNumber == 1)
             {
@@ -317,7 +313,13 @@ public class KeyboardHandler implements KeyListener {
             gamepanel.playSoundEffect(6);
         }
         if(code == KeyEvent.VK_ENTER) {
-            enterPressed = true;
+            if(gamepanel.ui.commandNum == 0) {
+                gamepanel.gameState = gamepanel.playState;
+                gamepanel.retry();
+            }
+            if(gamepanel.ui.commandNum == 1) {
+                gamepanel.gameState = gamepanel.titleState;
+            }
         }
     }
     @Override
