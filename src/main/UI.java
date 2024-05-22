@@ -621,6 +621,8 @@ public class UI {
         textY += gamepanel.tileSize;
         g2.drawRect(textX, textY, 200, 30);
         g2.fillRect(textX, textY, 20 * gamepanel.sound.soundEffect, 30);
+
+        gamepanel.config.saveConfig();
     }
 
     public void options_control(int frameX, int frameY)

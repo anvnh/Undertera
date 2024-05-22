@@ -10,6 +10,7 @@ public class Sound {
     URL[] soundURL = new URL[30];
     FloatControl floatControl;
     int soundEffect = 6;
+    int musicVolume = 10;
     float volume;
 
     public Sound() {

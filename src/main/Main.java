@@ -18,6 +18,8 @@ public class Main {
         GamePanel gamepanel = new GamePanel();
         window.add(gamepanel);
 
+        gamepanel.config.loadConfig();
+
         window.pack();
 
         window.setLocationRelativeTo(null);

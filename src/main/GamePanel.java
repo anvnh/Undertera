@@ -51,6 +51,7 @@ public class GamePanel extends JPanel implements Runnable {
     public EventHandler eventHandler = new EventHandler(this);
     public CollisionCheck collisionCheck = new CollisionCheck(this);
     public AssetSetter assetSetter = new AssetSetter(this);
+    Config config = new Config(this);
 
     // Entity and Object
     public Player player = new Player(this, Key);
