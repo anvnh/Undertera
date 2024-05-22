@@ -2,10 +2,7 @@ package entity;
 import main.GamePanel;
 import main.KeyboardHandler;
 import main.UtilityTools;
-import object.ArmorObject;
-import object.FireballObject;
-import object.KeyObject;
-import object.SwordObject;
+import object.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -75,9 +72,22 @@ public class Player extends Entity{
         attack = getAttack(); // total attack
         defense = getDefense(); // total defense
     }
+    public void setDefaultPosition() {
+        worldX = gamepanel.tileSize * 22;
+        worldY = gamepanel.tileSize * 20;
+        direction = "down";
+    }
+    public void restoreLiveAndMana() {
+        life = maxLife;
+        mana = maxMana;
+        invincible = false;
+    }
     public void setItems(){
+        inventory.clear();
         inventory.add(currentWeapon);
         inventory.add(currentArmor);
+        inventory.add(new AxeObject(gamepanel));
+        inventory.add(new KeyObject(gamepanel));
     }
     public int getAttack(){
         attackArea = currentWeapon.attackArea;
@@ -293,6 +303,10 @@ public class Player extends Entity{
         //if(mana > maxMana) mana = maxMana;
         life = Math.min(life, maxLife);
         mana = Math.min(mana, maxMana);
+
+        if(life <= 0) {
+            gamepanel.gameState = gamepanel.gameOverState;
+        }
     }
     public void regenerateMana(){
         mana += 5;

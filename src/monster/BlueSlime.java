@@ -18,7 +18,7 @@ public class BlueSlime extends Entity {
         speed = 1;
         maxLife = 50;
         life = maxLife;
-        attack = 5;
+        attack = 10;
         defense = 50;
         exp = 10;
         projectile = new RockObject(gamepanel);

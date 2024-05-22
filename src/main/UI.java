@@ -108,6 +108,12 @@ public class UI {
         {
             drawOptionsScreen();
         }
+
+        // Gameover State
+        if(gamepanel.gameState == gamepanel.gameOverState)
+        {
+            drawGameOverScreen();
+        }
     }
     public void drawPlayerMana()
     {
@@ -519,6 +525,36 @@ public class UI {
             }
         }
     }
+    public void drawGameOverScreen() {
+        g2.setColor(new Color(0, 0, 0, 150));
+        g2.fillRect(0, 0, gamepanel.screenWidth, gamepanel.screenHeight);
+
+        int x, y;
+        String text;
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 110f));
+        text = "Game Over";
+        // Shadow
+        g2.setColor(Color.BLACK);
+        x = gamepanel.screenWidth / 2 - g2.getFontMetrics().stringWidth(text) / 2;
+        y = gamepanel.screenHeight / 2 - 190;
+        g2.drawString(text, x, y);
+        // Main
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, x - 4, y - 4);
+
+        // Retry button
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50f));
+        text = "Retry";
+        x = gamepanel.screenWidth / 2 - g2.getFontMetrics().stringWidth(text) / 2;
+        y = gamepanel.screenHeight / 2 + 50;
+        g2.drawString(text, x, y);
+
+        // Back to the title screen
+        text = "Quit";
+        x = gamepanel.screenWidth / 2 - g2.getFontMetrics().stringWidth(text) / 2;
+        y = gamepanel.screenHeight / 2 + 120;
+        g2.drawString(text, x, y);
+    }
     public void drawOptionsScreen(){
         g2.setColor(Color.WHITE);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30f));
@@ -616,6 +652,7 @@ public class UI {
 
         // Music
         g2.drawRect(textX, textY, 200, 30);
+        g2.fillRect(textX, textY, 20 * gamepanel.sound.musicVolume, 30);
 
         // SE
         textY += gamepanel.tileSize;

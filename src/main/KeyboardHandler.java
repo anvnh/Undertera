@@ -72,6 +72,11 @@ public class KeyboardHandler implements KeyListener {
         {
             optionState(code);
         }
+        //Gameover State
+        if(gamepanel.gameState == gamepanel.gameOverState)
+        {
+            gameOverState(code);
+        }
     }
     public void titleState(int code) {
         if(code == KeyEvent.VK_UP)
@@ -91,6 +96,7 @@ public class KeyboardHandler implements KeyListener {
             if(gamepanel.ui.commandNumber == 0)
             {
                 gamepanel.gameState = gamepanel.playState;
+                gamepanel.retryOrNewGame();
             }
             if(gamepanel.ui.commandNumber == 1)
             {
@@ -269,7 +275,12 @@ public class KeyboardHandler implements KeyListener {
         {
             if(gamepanel.ui.subState == 0)
             {
-                if(gamepanel.ui.commandNum == 1 && gamepanel.sound.soundEffect> 0){
+                if(gamepanel.ui.commandNum == 0 && gamepanel.sound.musicVolume > 0){
+                    gamepanel.sound.musicVolume--;
+                    gamepanel.sound.checkVolume();
+                    gamepanel.playSoundEffect(6);
+                }
+                else if(gamepanel.ui.commandNum == 1 && gamepanel.sound.soundEffect> 0){
                     gamepanel.sound.soundEffect--;
                     gamepanel.sound.checkVolume();
                     gamepanel.playSoundEffect(6);
@@ -280,7 +291,12 @@ public class KeyboardHandler implements KeyListener {
         {
             if(gamepanel.ui.subState == 0)
             {
-                if(gamepanel.ui.commandNum == 1 && gamepanel.sound.soundEffect < 10){
+                if(gamepanel.ui.commandNum == 0 && gamepanel.sound.musicVolume < 10){
+                    gamepanel.sound.musicVolume++;
+                    gamepanel.sound.checkVolume();
+                    gamepanel.playSoundEffect(6);
+                }
+                else if(gamepanel.ui.commandNum == 1 && gamepanel.sound.soundEffect < 10){
                     gamepanel.sound.soundEffect++;
                     gamepanel.sound.checkVolume();
                     gamepanel.playSoundEffect(6);
@@ -288,6 +304,21 @@ public class KeyboardHandler implements KeyListener {
             }
         }
 
+    }
+    public void gameOverState(int code) {
+        if(code == KeyEvent.VK_J || code == KeyEvent.VK_DOWN) {
+            gamepanel.ui.commandNum--;
+            if(gamepanel.ui.commandNum < 0) gamepanel.ui.commandNum = 1;
+            gamepanel.playSoundEffect(6);
+        }
+        if(code == KeyEvent.VK_K || code == KeyEvent.VK_UP) {
+            gamepanel.ui.commandNum++;
+            if(gamepanel.ui.commandNum > 1) gamepanel.ui.commandNum = 0;
+            gamepanel.playSoundEffect(6);
+        }
+        if(code == KeyEvent.VK_ENTER) {
+            enterPressed = true;
+        }
     }
     @Override
     public void keyReleased(KeyEvent e) {
@@ -324,7 +355,7 @@ public class KeyboardHandler implements KeyListener {
         {
             J_Pressed = false;
         }
-        if(code == KeyEvent.VK_ESCAPE) {
+        if(code == KeyEvent.VK_ESCAPE){
             Options_Pressed = false;
         }
     }
