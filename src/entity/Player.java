@@ -203,28 +203,30 @@ public class Player extends Entity{
             collisionOn = false;
 
             // Check object collision
-            int objectIndex = gamepanel.collisionCheck.checkObject(this, true);
+            int objectIndex = gamepanel.collisionCheck.checkObject(this, true); // check player collision with object
             pickUpObject(objectIndex);
 
             // Check NPC Collision
-            int npcIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.npc);
+            int npcIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.npc); // check NPC collision with player
             interactNPC(npcIndex);
 
             // Check Monster's Collision
-            int monsterIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.monster);
+            int monsterIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.monster); // check monster collision with player
             contactMonster(monsterIndex);
 
             // Check Interactive Tile Collision
-            gamepanel.collisionCheck.checkEntity(this, gamepanel.interactiveTile);
+            gamepanel.collisionCheck.checkEntity(this, gamepanel.interactiveTile);  // check player collision with interactive tiles
+
+            // Check projectile collision with terrain (Not yet implemented)
 
             //Attack
             check_attack();
 
             // Check event
-            gamepanel.eventHandler.checkEvent();
+            gamepanel.eventHandler.checkEvent(); // Check if player is in the event area
 
             //Check tile collision
-            gamepanel.collisionCheck.checkTile(this);
+            gamepanel.collisionCheck.checkTile(this); // Check player collision with tile
 
             // Check attacking
             if(gamepanel.Key.J_Pressed)
@@ -263,8 +265,8 @@ public class Player extends Entity{
 
         // Shooting projectile
         if(gamepanel.Key.Projectile_Pressed && !projectile.alive && shotAvailableCounter == 60
-                && projectile.haveEnoughMana(this)
-        ) {
+                && projectile.haveEnoughMana(this) )
+        {
             // Set default coordinate, direction and user
             projectile.set(worldX, worldY, direction, true, this);
 
@@ -299,8 +301,7 @@ public class Player extends Entity{
             regenerateMana();
             manaRegenCounter = 0;
         }
-        //if(life > maxLife) life = maxLife;
-        //if(mana > maxMana) mana = maxMana;
+
         life = Math.min(life, maxLife);
         mana = Math.min(mana, maxMana);
 

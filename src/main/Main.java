@@ -1,6 +1,7 @@
 package main;
 
 import javax.swing.*;
+import java.util.Objects;
 
 public class Main {
 
@@ -14,6 +15,11 @@ public class Main {
         window.setTitle("Undertera");
         //window.setUndecorated(true);
         //window.setResizable(true);
+
+        // Set the icon
+
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("/icon/icon.png")));
+        window.setIconImage(icon.getImage());
 
         GamePanel gamepanel = new GamePanel();
         window.add(gamepanel);

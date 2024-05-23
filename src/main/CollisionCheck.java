@@ -2,6 +2,8 @@ package main;
 
 import entity.Entity;
 
+import java.util.ArrayList;
+
 public class CollisionCheck {
 
     GamePanel gamepanel;
