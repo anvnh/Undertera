@@ -26,6 +26,8 @@ public class Sound {
         soundURL[9] = getClass().getResource("/sounds/menu_open.wav"); // sound effect
         soundURL[10] = getClass().getResource("/sounds/menu_close.wav"); // sound effect
         soundURL[11] = getClass().getResource("/sounds/teleport.wav"); // sound effect
+        soundURL[12] = getClass().getResource("/sounds/MaxMana.wav");
+        soundURL[13] = getClass().getResource("/sounds/dash.wav");
     }
 
     public void setFile(int i) {

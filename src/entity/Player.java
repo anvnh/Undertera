@@ -20,6 +20,8 @@ public class Player extends Entity{
     public ArrayList<Entity> inventory = new ArrayList<>();
     public final int maxInventorySize = 144;
 
+    public boolean dashSound = false;
+
     public Player(GamePanel gp, KeyboardHandler kh){
         super(gp);
         this.gamepanel = gp;
@@ -55,6 +57,7 @@ public class Player extends Entity{
         worldX = gamepanel.tileSize * 22;
         worldY = gamepanel.tileSize * 20;
         speed = 3;
+        originalSpeed = 3;
         direction = "down";
         //Status
         maxLife = 100; // max life (cannot add more than this)
@@ -224,7 +227,7 @@ public class Player extends Entity{
             gamepanel.collisionCheck.checkTile(this); // Check player collision with tile
 
             // Check attacking
-            if(gamepanel.Key.J_Pressed)
+            if(gamepanel.Key.attack_Pressed)
             {
                 attacking = true;
             }
@@ -232,31 +235,69 @@ public class Player extends Entity{
             //if collision is false, player can move
             if(!collisionOn && !Key.communicateWithNPC)
             {
-                switch (direction)
-                {
+                switch (direction) {
                     case "up":
-                        if(gamepanel.Key.dashPressed)
+                        if (gamepanel.Key.dashPressed)
+                        {
                             worldY -= speed * 4;
-                        else
+                            if (!dashSound)
+                            {
+                                gamepanel.playSoundEffect(13);
+                                dashSound = true;
+                            }
+                        } else
+                        {
                             worldY -= speed;
+                            dashSound = false;
+                        }
                         break;
                     case "down":
                         if(gamepanel.Key.dashPressed)
+                        {
                             worldY += speed * 3;
+                            if(!dashSound)
+                            {
+                                gamepanel.playSoundEffect(13);
+                                dashSound = true;
+                            }
+                        }
                         else
+                        {
                             worldY += speed;
+                            dashSound = false;
+                        }
                         break;
                     case "left":
                         if(gamepanel.Key.dashPressed)
+                        {
+                            if(!dashSound)
+                            {
+                                gamepanel.playSoundEffect(13);
+                                dashSound = true;
+                            }
                             worldX -= speed * 4;
+                        }
                         else
+                        {
                             worldX -= speed;
+                            dashSound = false;
+                        }
                         break;
                     case "right":
                         if(gamepanel.Key.dashPressed)
+                        {
                             worldX += speed * 4;
+                            if(!dashSound)
+                            {
+                                gamepanel.playSoundEffect(13);
+                                dashSound = true;
+                            }
+                        }
                         else
+                        {
                             worldX += speed;
+                            dashSound = false;
+                        }
                         break;
                 }
             }
@@ -314,6 +355,7 @@ public class Player extends Entity{
         {
             regenerateMana();
             manaRegenCounter = 0;
+            if(mana == maxMana) gamepanel.playSoundEffect(12); // sound effect after mana is full
         }
 
         life = Math.min(life, maxLife);
@@ -328,12 +370,16 @@ public class Player extends Entity{
     }
     public void check_attack()
     {
-        if(gamepanel.Key.J_Pressed)
+        if(gamepanel.Key.attack_Pressed)
         {
             attacking = true;
-            gamepanel.Key.J_Pressed = false;
             gamepanel.playSoundEffect(1);
+            gamepanel.Key.attack_Pressed = false;
         }
+    }
+    public boolean check_dash()
+    {
+        return gamepanel.Key.dashPressed;
     }
     public double calculateDamageDeal(Entity entity)
     {
@@ -584,7 +630,8 @@ public class Player extends Entity{
                 {
                     image = getStandAnimate(image, stand_down);
                 }
-                else {
+                else
+                {
                     image = getAttackAnimate(image, attack_down);
                 }
             }
@@ -636,7 +683,18 @@ public class Player extends Entity{
             {
                 if(!attacking)
                 {
-                    image = getRunAnimate(image, go_up);
+                    if(check_dash())
+                    {
+                        image = null;
+                        if(!dashing) {
+                            dashing = true;
+                        }
+                    }
+                    else
+                    {
+                        image = getRunAnimate(image, go_up);
+                        dashing = false;
+                    }
                 }
                 else {
                     image = getAttackAnimate(image, attack_up);
@@ -646,7 +704,18 @@ public class Player extends Entity{
             {
                 if(!attacking)
                 {
-                    image = getRunAnimate(image, go_down);
+                    if(check_dash())
+                    {
+                        image = null;
+                        if(!dashing) {
+                            dashing = true;
+                        }
+                    }
+                    else
+                    {
+                        image = getRunAnimate(image, go_down);
+                        dashing = false;
+                    }
                 }
                 else {
                     image = getAttackAnimate(image, attack_down);
@@ -656,7 +725,18 @@ public class Player extends Entity{
             {
                 if(!attacking)
                 {
-                    image = getRunAnimate(image, go_left);
+                    if(check_dash())
+                    {
+                        image = null;
+                        if(!dashing) {
+                            dashing = true;
+                        }
+                    }
+                    else
+                    {
+                        image = getRunAnimate(image, go_left);
+                        dashing = false;
+                    }
                 }
                 else {
                     image = getAttackAnimate(image, attack_left);
@@ -666,7 +746,18 @@ public class Player extends Entity{
             {
                 if(!attacking)
                 {
-                    image = getRunAnimate(image, go_right);
+                    if(check_dash())
+                    {
+                        image = null;
+                        if(!dashing) {
+                            dashing = true;
+                        }
+                    }
+                    else
+                    {
+                        image = getRunAnimate(image, go_right);
+                        dashing = false;
+                    }
                 }
                 else {
                     image = getAttackAnimate(image, attack_right);

@@ -13,6 +13,7 @@ public class Entity {
     GamePanel gamepanel;
     public int worldX, worldY;
     public int speed;
+    public int originalSpeed;
     public String direction = "down";
 
     // COUNTER
@@ -28,9 +29,13 @@ public class Entity {
 
     // ATTACK
     boolean attacking = false;
+    // DASHING
+    boolean dashing = false;
+
     public boolean alive = true;
-    //Dying
+    // DYING
     public boolean dying = false;
+
 
     //Buffered image standing
     public BufferedImage[] stand_down = new BufferedImage[6];
