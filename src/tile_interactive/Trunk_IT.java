@@ -12,7 +12,7 @@ public class Trunk_IT extends InteractiveTile {
         this.worldX = gamepanel.tileSize * col;
         this.worldY = gamepanel.tileSize * row;
 
-        image = setup_entity("/tiles_interactive/trunk");
+        image = setup_entity("/tiles_interactive/trunk", gamepanel.tileSize, gamepanel.tileSize);
 
         solidArea.x = 0;
         solidArea.y = 0;

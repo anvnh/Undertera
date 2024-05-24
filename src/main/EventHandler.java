@@ -6,6 +6,7 @@ public class EventHandler {
 
     int previousEventX, previousEventY;
     boolean canTouchEvent = true;
+
     public EventHandler(GamePanel gamePanel) {
         this.gamepanel = gamePanel;
 

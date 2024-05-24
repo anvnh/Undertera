@@ -1,6 +1,7 @@
 package main;
 
-import entity.*;
+import entity.NPC.Merchant;
+import entity.NPC.NPC_OldMan;
 import object.*;
 import monster.*;
 import tile_interactive.DryTree_IT;
@@ -31,6 +32,12 @@ public class AssetSetter {
         gamepanel.npc[mapNum][i] = new NPC_OldMan(gamepanel);
         gamepanel.npc[mapNum][i].worldX = gamepanel.tileSize * 24;
         gamepanel.npc[mapNum][i].worldY = gamepanel.tileSize * 26;
+
+        // Map 1
+        i = 0; mapNum = 1;
+        gamepanel.npc[mapNum][i] = new Merchant(gamepanel);
+        gamepanel.npc[mapNum][i].worldX = gamepanel.tileSize * 12;
+        gamepanel.npc[mapNum][i].worldY = gamepanel.tileSize * 7;
     }
 
     public void setMonster() {

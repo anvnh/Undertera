@@ -22,14 +22,14 @@ public class RockObject extends Projectile {
     }
 
     public void getImage() {
-        go_up[0] = setup_entity("/projectile/rock/rock");
-        go_up[1] = setup_entity("/projectile/rock/rock");
-        go_right[0] = setup_entity("/projectile/rock/rock");
-        go_right[1] = setup_entity("/projectile/rock/rock");
-        go_down[0] = setup_entity("/projectile/rock/rock");
-        go_down[1] = setup_entity("/projectile/rock/rock");
-        go_left[0] = setup_entity("/projectile/rock/rock");
-        go_left[1] = setup_entity("/projectile/rock/rock");
+        go_up[0] = setup_entity("/projectile/rock/rock", gamepanel.tileSize, gamepanel.tileSize);
+        go_up[1] = setup_entity("/projectile/rock/rock", gamepanel.tileSize, gamepanel.tileSize);
+        go_right[0] = setup_entity("/projectile/rock/rock", gamepanel.tileSize, gamepanel.tileSize);
+        go_right[1] = setup_entity("/projectile/rock/rock", gamepanel.tileSize, gamepanel.tileSize);
+        go_down[0] = setup_entity("/projectile/rock/rock", gamepanel.tileSize, gamepanel.tileSize);
+        go_down[1] = setup_entity("/projectile/rock/rock", gamepanel.tileSize, gamepanel.tileSize);
+        go_left[0] = setup_entity("/projectile/rock/rock", gamepanel.tileSize, gamepanel.tileSize);
+        go_left[1] = setup_entity("/projectile/rock/rock", gamepanel.tileSize, gamepanel.tileSize);
     }
 
     public Color getParticleColor() {

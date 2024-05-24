@@ -181,6 +181,7 @@ public class KeyboardHandler implements KeyListener {
         }
     }
     public void characterState(int code) {
+        // For handling the cursor on the character screen
         if(code == KeyEvent.VK_C && !characterScreenPressed)
         {
             gamepanel.gameState = gamepanel.playState;

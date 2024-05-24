@@ -7,6 +7,7 @@ import main.UtilityTools;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Entity {
@@ -37,6 +38,7 @@ public class Entity {
     public boolean dying = false;
 
 
+    //=========================== Buffered animation for player ===============================//
     //Buffered image standing
     public BufferedImage[] stand_down = new BufferedImage[6];
     public BufferedImage[] stand_up = new BufferedImage[6];
@@ -46,14 +48,23 @@ public class Entity {
     public BufferedImage[] go_up = new BufferedImage[10];
     public BufferedImage[] go_left = new BufferedImage[10];
     public BufferedImage[] go_right = new BufferedImage[10];
-
     // Buffered attack
     public BufferedImage[] attack_right = new BufferedImage[4];
     public BufferedImage[] attack_left = new BufferedImage[4];
     public BufferedImage[] attack_up = new BufferedImage[4];
     public BufferedImage[] attack_down = new BufferedImage[4];
+    //==========================================================================================//
 
-    // Buffered dying
+
+    //============================== Buffered animation for npc =================================//
+    public BufferedImage[] npc_stand_down = new BufferedImage[10];
+    public BufferedImage[] npc_stand_up = new BufferedImage[10];
+    public BufferedImage[] npc_stand_left = new BufferedImage[10];
+    public BufferedImage[] npc_stand_right = new BufferedImage[10];
+    //==========================================================================================//
+
+
+    //Buffered dying
     public BufferedImage[] dying_animate = new BufferedImage[10];
 
 
@@ -64,7 +75,17 @@ public class Entity {
     public boolean collisionOn = false;
     public boolean invincible = false;
 
-    // Type
+    //================================== Item Attribute ========================================//
+    public ArrayList<Entity> inventory = new ArrayList<>();
+    public final int maxInventorySize = 144;
+    public int value;
+    public int attackValue;
+    public int defenseValue;
+    public String description;
+    public int useCost;
+    //==========================================================================================//
+
+    //====================================== Types =============================================//
     public int type; // 0 = player, 1 = npc, 2 = monster
     public final int type_player = 0;
     public final int type_npc = 1;
@@ -74,6 +95,7 @@ public class Entity {
     public final int type_armor = 5;
     public final int type_consumable = 6;
     public final int type_pickuponly = 7;
+    //==========================================================================================//
 
 
     public String objectType = "";
@@ -87,11 +109,8 @@ public class Entity {
     boolean HPBarOn = false;
     int HPBarCounter = 0;
     // Dialogue
-    String[] dialogue = new String[20];
+    public String[] dialogue = new String[20];
     int dialogueIndex = 0;
-
-
-    //
 
     public int maxMana;
     public int mana;
@@ -107,12 +126,6 @@ public class Entity {
     public Entity currentArmor;
     public Projectile projectile;
 
-    //Item attributes
-    public int value;
-    public int attackValue;
-    public int defenseValue;
-    public String description;
-    public int useCost;
 
     // I have no idea what this does
     // Oh okay this is for entity like heart, mana
@@ -269,13 +282,13 @@ public class Entity {
         }
         return scaledImage;
     }
-    public BufferedImage setup_entity(String imgPath)
+    public BufferedImage setup_entity(String imgPath, int width, int height)
     {
         UtilityTools utilityTools = new UtilityTools();
         BufferedImage image = null;
         try {
             image = ImageIO.read((Objects.requireNonNull(getClass().getResourceAsStream(imgPath + ".png"))));
-            image = utilityTools.scaleImage(image, gamepanel.tileSize, gamepanel.tileSize);
+            image = utilityTools.scaleImage(image, width, height);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -327,7 +340,7 @@ public class Entity {
     public void setDyingAnimate() {
         for(int i = 0; i < 8; i++)
         {
-            dying_animate[i] = setup_entity("/monster/blue_slime/dying/blue_slime_dead" + i);
+            dying_animate[i] = setup_entity("/monster/blue_slime/dying/blue_slime_dead" + i, gamepanel.tileSize, gamepanel.tileSize);
         }
     }
     public void damagePlayer()

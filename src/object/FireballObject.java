@@ -23,14 +23,46 @@ public class FireballObject extends Projectile {
     }
 
     public void getImage() {
-        go_up[0] = setup_entity("/projectile/fireball/fireball_up_1");
-        go_up[1] = setup_entity("/projectile/fireball/fireball_up_2");
-        go_right[0] = setup_entity("/projectile/fireball/fireball_right_1");
-        go_right[1] = setup_entity("/projectile/fireball/fireball_right_2");
-        go_down[0] = setup_entity("/projectile/fireball/fireball_down_1");
-        go_down[1] = setup_entity("/projectile/fireball/fireball_down_2");
-        go_left[0] = setup_entity("/projectile/fireball/fireball_left_1");
-        go_left[1] = setup_entity("/projectile/fireball/fireball_left_2");
+        go_up[0] = setup_entity("/projectile/fireball/fireball_up_00",70,70);
+        go_up[1] = setup_entity("/projectile/fireball/fireball_up_01",70,70);
+        go_up[2] = setup_entity("/projectile/fireball/fireball_up_02",70,70);
+        go_up[3] = setup_entity("/projectile/fireball/fireball_up_03",70,70);
+        go_up[4] = setup_entity("/projectile/fireball/fireball_up_04",70,70);
+        go_up[5] = setup_entity("/projectile/fireball/fireball_up_05",70,70);
+        go_up[6] = setup_entity("/projectile/fireball/fireball_up_06",70,70);
+        go_up[7] = setup_entity("/projectile/fireball/fireball_up_07",70,70);
+        go_up[8] = setup_entity("/projectile/fireball/fireball_up_08",70,70);
+        go_up[9] = setup_entity("/projectile/fireball/fireball_up_09",70,70);
+        go_right[0] = setup_entity("/projectile/fireball/fireball_right_00",70,70);
+        go_right[1] = setup_entity("/projectile/fireball/fireball_right_01",70,70);
+        go_right[2] = setup_entity("/projectile/fireball/fireball_right_02",70,70);
+        go_right[3] = setup_entity("/projectile/fireball/fireball_right_03",70,70);
+        go_right[4] = setup_entity("/projectile/fireball/fireball_right_04",70,70);
+        go_right[5] = setup_entity("/projectile/fireball/fireball_right_05",70,70);
+        go_right[6] = setup_entity("/projectile/fireball/fireball_right_06",70,70);
+        go_right[7] = setup_entity("/projectile/fireball/fireball_right_07",70,70);
+        go_right[8] = setup_entity("/projectile/fireball/fireball_right_08",70,70);
+        go_right[9] = setup_entity("/projectile/fireball/fireball_right_09",70,70);
+        go_left[0] = setup_entity("/projectile/fireball/fireball_left_00",70,70);
+        go_left[1] = setup_entity("/projectile/fireball/fireball_left_01",70,70);
+        go_left[2] = setup_entity("/projectile/fireball/fireball_left_02",70,70);
+        go_left[3] = setup_entity("/projectile/fireball/fireball_left_03",70,70);
+        go_left[4] = setup_entity("/projectile/fireball/fireball_left_04",70,70);
+        go_left[5] = setup_entity("/projectile/fireball/fireball_left_05",70,70);
+        go_left[6] = setup_entity("/projectile/fireball/fireball_left_06",70,70);
+        go_left[7] = setup_entity("/projectile/fireball/fireball_left_07",70,70);
+        go_left[8] = setup_entity("/projectile/fireball/fireball_left_08",70,70);
+        go_left[9] = setup_entity("/projectile/fireball/fireball_left_09",70,70);
+        go_down[0] = setup_entity("/projectile/fireball/fireball_down_00",70,70);
+        go_down[1] = setup_entity("/projectile/fireball/fireball_down_01",70,70);
+        go_down[2] = setup_entity("/projectile/fireball/fireball_down_02",70,70);
+        go_down[3] = setup_entity("/projectile/fireball/fireball_down_03",70,70);
+        go_down[4] = setup_entity("/projectile/fireball/fireball_down_04",70,70);
+        go_down[5] = setup_entity("/projectile/fireball/fireball_down_05",70,70);
+        go_down[6] = setup_entity("/projectile/fireball/fireball_down_06",70,70);
+        go_down[7] = setup_entity("/projectile/fireball/fireball_down_07",70,70);
+        go_down[8] = setup_entity("/projectile/fireball/fireball_down_08",70,70);
+        go_down[9] = setup_entity("/projectile/fireball/fireball_down_09",70,70);
     }
 
     public boolean haveEnoughMana(Entity user) {

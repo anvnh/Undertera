@@ -25,7 +25,7 @@ public class TileManager {
 
     public void getTileImage() {
         //placeholder
-        setup(0, "grass00", false);
+        setup(0, "blank", true);
         setup(1, "grass00", false);
         setup(2, "grass00", false);
         setup(3, "grass00", false);

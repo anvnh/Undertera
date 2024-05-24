@@ -32,42 +32,42 @@ public class BlueSlime extends Entity {
         getImage();
     }
     public void getImage() {
-        go_up[0] = setup_entity("/monster/blue_slime/blue_slime_up_0");
-        go_up[1] = setup_entity("/monster/blue_slime/blue_slime_up_1");
-        go_up[2] = setup_entity("/monster/blue_slime/blue_slime_up_2");
-        go_up[3] = setup_entity("/monster/blue_slime/blue_slime_up_3");
-        go_up[4] = setup_entity("/monster/blue_slime/blue_slime_up_4");
-        go_up[5] = setup_entity("/monster/blue_slime/blue_slime_up_5");
-        go_up[6] = setup_entity("/monster/blue_slime/blue_slime_up_6");
-        go_up[7] = setup_entity("/monster/blue_slime/blue_slime_up_7");
+        go_up[0] = setup_entity("/monster/blue_slime/blue_slime_up_0", gamepanel.tileSize, gamepanel.tileSize);
+        go_up[1] = setup_entity("/monster/blue_slime/blue_slime_up_1", gamepanel.tileSize, gamepanel.tileSize);
+        go_up[2] = setup_entity("/monster/blue_slime/blue_slime_up_2", gamepanel.tileSize, gamepanel.tileSize);
+        go_up[3] = setup_entity("/monster/blue_slime/blue_slime_up_3", gamepanel.tileSize, gamepanel.tileSize);
+        go_up[4] = setup_entity("/monster/blue_slime/blue_slime_up_4", gamepanel.tileSize, gamepanel.tileSize);
+        go_up[5] = setup_entity("/monster/blue_slime/blue_slime_up_5", gamepanel.tileSize, gamepanel.tileSize);
+        go_up[6] = setup_entity("/monster/blue_slime/blue_slime_up_6", gamepanel.tileSize, gamepanel.tileSize);
+        go_up[7] = setup_entity("/monster/blue_slime/blue_slime_up_7", gamepanel.tileSize, gamepanel.tileSize);
 
 
-        go_down[0] = setup_entity("/monster/blue_slime/blue_slime_down_0");
-        go_down[1] = setup_entity("/monster/blue_slime/blue_slime_down_1");
-        go_down[2] = setup_entity("/monster/blue_slime/blue_slime_down_2");
-        go_down[3] = setup_entity("/monster/blue_slime/blue_slime_down_3");
-        go_down[4] = setup_entity("/monster/blue_slime/blue_slime_down_4");
-        go_down[5] = setup_entity("/monster/blue_slime/blue_slime_down_5");
-        go_down[6] = setup_entity("/monster/blue_slime/blue_slime_down_6");
-        go_down[7] = setup_entity("/monster/blue_slime/blue_slime_down_7");
+        go_down[0] = setup_entity("/monster/blue_slime/blue_slime_down_0", gamepanel.tileSize, gamepanel.tileSize);
+        go_down[1] = setup_entity("/monster/blue_slime/blue_slime_down_1", gamepanel.tileSize, gamepanel.tileSize);
+        go_down[2] = setup_entity("/monster/blue_slime/blue_slime_down_2", gamepanel.tileSize, gamepanel.tileSize);
+        go_down[3] = setup_entity("/monster/blue_slime/blue_slime_down_3", gamepanel.tileSize, gamepanel.tileSize);
+        go_down[4] = setup_entity("/monster/blue_slime/blue_slime_down_4", gamepanel.tileSize, gamepanel.tileSize);
+        go_down[5] = setup_entity("/monster/blue_slime/blue_slime_down_5", gamepanel.tileSize, gamepanel.tileSize);
+        go_down[6] = setup_entity("/monster/blue_slime/blue_slime_down_6", gamepanel.tileSize, gamepanel.tileSize);
+        go_down[7] = setup_entity("/monster/blue_slime/blue_slime_down_7", gamepanel.tileSize, gamepanel.tileSize);
 
-        go_left[0] = setup_entity("/monster/blue_slime/blue_slime_left_0");
-        go_left[1] = setup_entity("/monster/blue_slime/blue_slime_left_1");
-        go_left[2] = setup_entity("/monster/blue_slime/blue_slime_left_2");
-        go_left[3] = setup_entity("/monster/blue_slime/blue_slime_left_3");
-        go_left[4] = setup_entity("/monster/blue_slime/blue_slime_left_4");
-        go_left[5] = setup_entity("/monster/blue_slime/blue_slime_left_5");
-        go_left[6] = setup_entity("/monster/blue_slime/blue_slime_left_6");
-        go_left[7] = setup_entity("/monster/blue_slime/blue_slime_left_7");
+        go_left[0] = setup_entity("/monster/blue_slime/blue_slime_left_0", gamepanel.tileSize, gamepanel.tileSize);
+        go_left[1] = setup_entity("/monster/blue_slime/blue_slime_left_1", gamepanel.tileSize, gamepanel.tileSize);
+        go_left[2] = setup_entity("/monster/blue_slime/blue_slime_left_2", gamepanel.tileSize, gamepanel.tileSize);
+        go_left[3] = setup_entity("/monster/blue_slime/blue_slime_left_3", gamepanel.tileSize, gamepanel.tileSize);
+        go_left[4] = setup_entity("/monster/blue_slime/blue_slime_left_4", gamepanel.tileSize, gamepanel.tileSize);
+        go_left[5] = setup_entity("/monster/blue_slime/blue_slime_left_5", gamepanel.tileSize, gamepanel.tileSize);
+        go_left[6] = setup_entity("/monster/blue_slime/blue_slime_left_6", gamepanel.tileSize, gamepanel.tileSize);
+        go_left[7] = setup_entity("/monster/blue_slime/blue_slime_left_7", gamepanel.tileSize, gamepanel.tileSize);
 
-        go_right[0] = setup_entity("/monster/blue_slime/blue_slime_right_0");
-        go_right[1] = setup_entity("/monster/blue_slime/blue_slime_right_1");
-        go_right[2] = setup_entity("/monster/blue_slime/blue_slime_right_2");
-        go_right[3] = setup_entity("/monster/blue_slime/blue_slime_right_3");
-        go_right[4] = setup_entity("/monster/blue_slime/blue_slime_right_4");
-        go_right[5] = setup_entity("/monster/blue_slime/blue_slime_right_5");
-        go_right[6] = setup_entity("/monster/blue_slime/blue_slime_right_6");
-        go_right[7] = setup_entity("/monster/blue_slime/blue_slime_right_7");
+        go_right[0] = setup_entity("/monster/blue_slime/blue_slime_right_0", gamepanel.tileSize, gamepanel.tileSize);
+        go_right[1] = setup_entity("/monster/blue_slime/blue_slime_right_1", gamepanel.tileSize, gamepanel.tileSize);
+        go_right[2] = setup_entity("/monster/blue_slime/blue_slime_right_2", gamepanel.tileSize, gamepanel.tileSize);
+        go_right[3] = setup_entity("/monster/blue_slime/blue_slime_right_3", gamepanel.tileSize, gamepanel.tileSize);
+        go_right[4] = setup_entity("/monster/blue_slime/blue_slime_right_4", gamepanel.tileSize, gamepanel.tileSize);
+        go_right[5] = setup_entity("/monster/blue_slime/blue_slime_right_5", gamepanel.tileSize, gamepanel.tileSize);
+        go_right[6] = setup_entity("/monster/blue_slime/blue_slime_right_6", gamepanel.tileSize, gamepanel.tileSize);
+        go_right[7] = setup_entity("/monster/blue_slime/blue_slime_right_7", gamepanel.tileSize, gamepanel.tileSize);
     }
     public void setAction()
     {

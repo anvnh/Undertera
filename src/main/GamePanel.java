@@ -20,8 +20,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int playerSize = originalTileSize * (scale + 2);
     public final int weapSize = originalTileSize * (scale + 1);
     public final int tileSize = originalTileSize * scale;
-    public final int maxScreenCol = 35;
-    public final int maxScreenRow = 18;
+    public final int maxScreenCol = 30;
+    public final int maxScreenRow = 15;
     public final int screenWidth = tileSize * maxScreenCol; //30 * 48 = 1440
     public final int screenHeight = tileSize * maxScreenRow; //15 * 48 = 720
 
@@ -76,6 +76,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int optionsState = 4;
     public final int gameOverState = 999;
 
+
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
@@ -95,8 +96,6 @@ public class GamePanel extends JPanel implements Runnable {
         playMusic(0);
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
-
-        //setFullScreen();
     }
     public void retry() {
         player.setDefaultPosition();
@@ -113,6 +112,7 @@ public class GamePanel extends JPanel implements Runnable {
         assetSetter.setMonster();
         assetSetter.setObject();
         assetSetter.setInteractiveTile();
+        currentMap = 0;
     }
     public void setFullScreen() {
         // get local screen device
@@ -132,7 +132,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        double drawTime = 1000000000 / FPS;
+        double drawTime = (double) 1000000000 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;

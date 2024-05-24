@@ -12,6 +12,6 @@ public class ChestObject extends Entity {
     public ChestObject(GamePanel gamepanel){
         super(gamepanel);
         name = "Chest";
-        image = setup_entity("/objects/chest.png");
+        image = setup_entity("/objects/chest.png", gamepanel.tileSize, gamepanel.tileSize);
     }
 }

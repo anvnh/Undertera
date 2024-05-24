@@ -16,7 +16,7 @@ public class DoorObject extends Entity
         /*
         down_1 = setup_entity("/objects/door.png");
          */
-        image = setup_entity("/objects/wooden_door");
+        image = setup_entity("/objects/wooden_door", gamePanel.tileSize, gamePanel.tileSize);
         collision = true;
     }
 }

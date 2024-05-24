@@ -15,6 +15,8 @@ public class Projectile extends Entity{
         this.alive = alive;
         this.user = user;
         this.life = this.maxLife;
+        this.solidArea.x = 0;
+        this.solidArea.y = 0;
     }
     public void update() {
         if(user == gamepanel.player)
@@ -57,12 +59,8 @@ public class Projectile extends Entity{
             alive = false;
         }
         runCount++;
-        if(runCount > 12) {
-            if(runAnimation == 1) {
-                runAnimation = 2;
-            } else {
-                runAnimation = 1;
-            }
+        if (runCount > 15) {
+            runAnimation = runAnimation == 10 ? 1 : runAnimation + 1;
             runCount = 0;
         }
     }

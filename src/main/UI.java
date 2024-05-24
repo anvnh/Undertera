@@ -471,14 +471,14 @@ public class UI {
         {
             //Equipped cursor color
             if(gamepanel.player.inventory.get(i) == gamepanel.player.currentWeapon
-             || gamepanel.player.inventory.get(i) == gamepanel.player.currentArmor )
+             || gamepanel.player.inventory.get(i) == gamepanel.player.currentArmor ) // Check if the item is equipped
             {
-                g2.setColor(new Color(61, 162, 242));
+                g2.setColor(new Color(241, 229, 63));
                 g2.fillRoundRect(slotX, slotY, gamepanel.tileSize, gamepanel.tileSize, 10, 10);
             }
 
             g2.drawImage(gamepanel.player.inventory.get(i).image, slotX, slotY, gamepanel.tileSize, gamepanel.tileSize,null);
-            slotX += gamepanel.tileSize;
+            slotX += gamepanel.tileSize; //calculate the next slot
             if(i % 17 == 0 && i != 0)
             {
                 slotX = slotXStart;
@@ -491,14 +491,13 @@ public class UI {
         g2.setStroke(new BasicStroke(3));
         g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
 
-
-        //Description of the item
+        // Description of the item
         final int descriptionX = frameX;
         final int descriptionY = frameY + frameHeight + 20;
         final int descriptionWidth = (frameWidth - 20) / 2;
         final int descriptionHeight = gamepanel.screenHeight - frameY * 2 - 20 - frameHeight;
 
-        //Draw description text
+        // Draw description text
         int textDescX = descriptionX + 20;
         int textDescY = descriptionY + gamepanel.tileSize;
         g2.setFont(g2.getFont().deriveFont(30f));
@@ -572,7 +571,7 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30f));
 
         // Sub window
-        int frameX = gamepanel.tileSize * 12;
+        int frameX = gamepanel.tileSize * 9 + 20;
         int frameY = gamepanel.tileSize;
         int frameWidth = gamepanel.tileSize * 11;
         int frameHeight = gamepanel.screenHeight - frameY * 2;
@@ -600,7 +599,7 @@ public class UI {
 
         // Full screen on/off ?
         // Music on/off ?
-        textY += gamepanel.tileSize;
+        textY += gamepanel.tileSize + 23;
         g2.drawString("Music", textX, textY);
         if(commandNum == 0)
         {
@@ -658,7 +657,7 @@ public class UI {
         }
         // ___________________________________________________________________________________________ //
         textX = frameX + gamepanel.tileSize * 6;
-        textY = frameY + gamepanel.tileSize + 25;
+        textY = frameY + gamepanel.tileSize + 25 + 23;
         g2.setStroke(new BasicStroke(3));
 
 
