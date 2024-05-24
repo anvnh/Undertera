@@ -13,11 +13,8 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("Undertera");
-        //window.setUndecorated(true);
-        //window.setResizable(true);
 
         // Set the icon
-
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(Main.class.getResource("/icon/icon.png")));
         window.setIconImage(icon.getImage());
 

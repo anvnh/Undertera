@@ -9,8 +9,8 @@ import java.security.Key;
 
 public class KeyboardHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, communicateWithNPC, F_Pressed, C_Pressed,
-            J_Pressed, K_Pressed, L_Pressed, Projectile_Pressed, O_Pressed, U_Pressed, Y_Pressed, pausePress, characterScreenPressed,
+    public boolean upPressed, downPressed, leftPressed, rightPressed, communicateWithNPC, F_Pressed,
+            J_Pressed, Projectile_Pressed, pausePress, characterScreenPressed, dashPressed,
             enterPressed, Options_Pressed;
     boolean checkDrawTime = true;
     GamePanel gamepanel;
@@ -158,6 +158,9 @@ public class KeyboardHandler implements KeyListener {
         {
             // shot projectile
             Projectile_Pressed = true;
+        }
+        if(code == KeyEvent.VK_K) {
+            dashPressed = true;
         }
         if(code == KeyEvent.VK_ESCAPE)
         {
@@ -360,6 +363,9 @@ public class KeyboardHandler implements KeyListener {
         if(code == KeyEvent.VK_J)
         {
             J_Pressed = false;
+        }
+        if(code == KeyEvent.VK_K){
+            dashPressed = false;
         }
         if(code == KeyEvent.VK_ESCAPE){
             Options_Pressed = false;

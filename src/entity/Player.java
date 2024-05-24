@@ -182,22 +182,17 @@ public class Player extends Entity{
         if(attacking)
         {
             attack();
-            //System.out.println(attackAvailableCounter);
         }
         if(Key.upPressed || Key.downPressed || Key.leftPressed || Key.rightPressed || Key.communicateWithNPC)
         {
             if (Key.upPressed) {
                 direction = "up";
-                //worldY -= speed;
             } else if (Key.downPressed) {
                 direction = "down";
-                //worldY += speed;
             } else if (Key.leftPressed) {
                 direction = "left";
-                //worldX -= speed;
             } else if (Key.rightPressed){
                 direction = "right";
-                //worldX += speed;
             }
 
             collisionOn = false;
@@ -234,29 +229,48 @@ public class Player extends Entity{
                 attacking = true;
             }
 
-
             //if collision is false, player can move
             if(!collisionOn && !Key.communicateWithNPC)
             {
                 switch (direction)
                 {
-                    case "up": worldY -= speed; break;
-                    case "down": worldY += speed; break;
-                    case "left": worldX -= speed; break;
-                    case "right": worldX += speed; break;
+                    case "up":
+                        if(gamepanel.Key.dashPressed)
+                            worldY -= speed * 4;
+                        else
+                            worldY -= speed;
+                        break;
+                    case "down":
+                        if(gamepanel.Key.dashPressed)
+                            worldY += speed * 3;
+                        else
+                            worldY += speed;
+                        break;
+                    case "left":
+                        if(gamepanel.Key.dashPressed)
+                            worldX -= speed * 4;
+                        else
+                            worldX -= speed;
+                        break;
+                    case "right":
+                        if(gamepanel.Key.dashPressed)
+                            worldX += speed * 4;
+                        else
+                            worldX += speed;
+                        break;
                 }
             }
 
             gamepanel.Key.communicateWithNPC = false;
 
-            runCount++;
+            runCount++; // Counter for switching running animation
             if (runCount > 15) {
                 runAnimation = runAnimation == 6 ? 1 : runAnimation + 1;
                 runCount = 0;
             }
         }
         else {
-            standCount++;
+            standCount++; // Counter for switching standing animation
             if (standCount > 15) {
                 standAnimation = standAnimation == 6 ? 1 : standAnimation + 1;
                 standCount = 0;

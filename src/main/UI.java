@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.zip.InflaterInputStream;
 
+
 public class UI {
     GamePanel gamepanel;
     Graphics2D g2;
@@ -40,6 +41,8 @@ public class UI {
         }
 
         //create HUD object
+
+        // Heart object
         HeartObject heart = new HeartObject(gamepanel);
         heart_full = heart.image1;
         heart_quarter = heart.image4;
@@ -47,6 +50,7 @@ public class UI {
         heart_threequarter = heart.image2;
         heart_empty = heart.image5;
 
+        // Mana object
         ManaObject mana = new ManaObject(gamepanel);
         mana_full = mana.image1;
         mana_half = mana.image2;
@@ -289,8 +293,10 @@ public class UI {
     }
     public void drawBackground(Graphics2D g2){
         try {
+
             BufferedImage bg = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/background/background.png")));
             g2.drawImage(bg, 0, 0, gamepanel.screenWidth, gamepanel.screenHeight, null);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

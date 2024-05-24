@@ -78,10 +78,18 @@ public class CollisionCheck {
 
                 switch(entity.direction)
                 {
-                    case "up": entity.solidArea.y -= entity.speed; break;
-                    case "down": entity.solidArea.y += entity.speed; break;
-                    case "left": entity.solidArea.x -= entity.speed; break;
-                    case "right": entity.solidArea.x += entity.speed; break;
+                    case "up":
+                        entity.solidArea.y -= entity.speed;
+                        break;
+                    case "down":
+                        entity.solidArea.y += entity.speed;
+                        break;
+                    case "left":
+                        entity.solidArea.x -= entity.speed;
+                        break;
+                    case "right":
+                        entity.solidArea.x += entity.speed;
+                        break;
                 }
                 if(entity.solidArea.intersects(gamepanel.objects[gamepanel.currentMap][i].solidArea))
                 {
@@ -114,10 +122,23 @@ public class CollisionCheck {
 
                 switch(entity.direction)
                 {
-                    case "up": entity.solidArea.y -= entity.speed; break;
-                    case "down": entity.solidArea.y += entity.speed; break;
-                    case "left": entity.solidArea.x -= entity.speed; break;
-                    case "right": entity.solidArea.x += entity.speed; break;
+                    // Check if player is using dash or not
+                    case "up":
+                        if(gamepanel.Key.dashPressed) entity.solidArea.y -= entity.speed * 4;
+                        else entity.solidArea.y -= entity.speed;
+                        break;
+                    case "down":
+                        if(gamepanel.Key.dashPressed) entity.solidArea.y += entity.speed * 4;
+                        else entity.solidArea.y += entity.speed;
+                        break;
+                    case "left":
+                        if(gamepanel.Key.dashPressed) entity.solidArea.x -= entity.speed * 4;
+                        else entity.solidArea.x -= entity.speed;
+                        break;
+                    case "right":
+                        if(gamepanel.Key.dashPressed) entity.solidArea.x += entity.speed * 4;
+                        else entity.solidArea.x += entity.speed;
+                        break;
                 }
                 if(entity.solidArea.intersects(target[gamepanel.currentMap][i].solidArea))
                 {
