@@ -1,7 +1,7 @@
 package main;
 
-import entity.NPC.Merchant;
-import entity.NPC.NPC_OldMan;
+import entity.Merchant;
+import entity.NPC_OldMan;
 import object.*;
 import monster.*;
 import tile_interactive.DryTree_IT;
@@ -66,6 +66,7 @@ public class AssetSetter {
     public void setInteractiveTile() {
         int mapNum = 0;
         int i = 0;
+        /*
         gamepanel.interactiveTile[mapNum][i] = new DryTree_IT(gamepanel, 27, 13);
         i++;
         gamepanel.interactiveTile[mapNum][i] = new DryTree_IT(gamepanel, 28, 13);
@@ -74,6 +75,7 @@ public class AssetSetter {
         i++;
         gamepanel.interactiveTile[mapNum][i] = new DryTree_IT(gamepanel, 30, 13);
         i++;
+         */
         gamepanel.interactiveTile[mapNum][i] = new DryTree_IT(gamepanel, 27, 20);
         i++;
         gamepanel.interactiveTile[mapNum][i] = new DryTree_IT(gamepanel, 27, 21);

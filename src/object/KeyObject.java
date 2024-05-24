@@ -17,5 +17,7 @@ public class KeyObject extends Entity {
         //collision = false;
         image = setup_entity_1("/objects/key_01a");
         description = "[" + name + "]" + " A key to unlock the door.";
+
+        price = 2;
     }
 }

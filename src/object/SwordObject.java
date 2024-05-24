@@ -15,6 +15,8 @@ public class SwordObject extends Entity {
         attackArea.width = 48;
         attackArea.height = 48;
 
-        description = "[" + name + "] \nBasic sword that can be used\n to attack enemies.";
+        description = "[" + name + "] \nBasic sword that can be used\nto attack enemies.";
+
+        price = 10;
     }
 }

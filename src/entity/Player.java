@@ -17,7 +17,7 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
     public int hasKey = 0;
-    public ArrayList<Entity> inventory = new ArrayList<>();
+    //public ArrayList<Entity> inventory = new ArrayList<>();
     public final int maxInventorySize = 144;
 
     public boolean dashSound = false;
@@ -68,7 +68,9 @@ public class Player extends Entity{
         dexterity = 10; // more dexterity, more defense
         exp = 0;
         nextLevelExp = 20;
-        coin = 0;
+        ///
+        coin = 1000;
+        ///
         currentWeapon = new SwordObject(gamepanel);
         currentArmor = new ArmorObject(gamepanel);
         projectile = new FireballObject(gamepanel);
@@ -593,7 +595,7 @@ public class Player extends Entity{
     }
 
     public void selectItem(){
-        int itemIndex = gamepanel.ui.getItemIndexOnSlot();
+        int itemIndex = gamepanel.ui.getItemIndexOnSlot(gamepanel.ui.playerSlotCol, gamepanel.ui.playerSlotRow);
 
         if(itemIndex < inventory.size())
         {

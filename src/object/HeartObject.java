@@ -27,6 +27,7 @@ public class HeartObject extends Entity {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
     public void use(Entity entity, GamePanel gamepanel)
     {

@@ -17,6 +17,7 @@ public class Potion_RedObject extends Entity{
         objectType = "object";
         type = type_consumable;
         description = "[" + name + "]" + " A potion that can be \n used to restore health. \n Restores " + value + " HP.";
+        price = 5;
     }
     public void use(Entity entity, GamePanel gamepanel)
     {

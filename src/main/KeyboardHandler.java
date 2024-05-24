@@ -12,7 +12,7 @@ public class KeyboardHandler implements KeyListener {
     public boolean upPressed, downPressed, leftPressed, rightPressed, communicateWithNPC, F_Pressed,
             attack_Pressed, Projectile_Pressed, pausePress, characterScreenPressed, dashPressed,
             enterPressed, Options_Pressed;
-    boolean checkDrawTime = true;
+    boolean checkDrawTime = false;
     GamePanel gamepanel;
 
     public KeyboardHandler(GamePanel gamePanel)
@@ -68,10 +68,14 @@ public class KeyboardHandler implements KeyListener {
         {
             optionState(code);
         }
-        //Gameover State
+        //Game over State
         if(gamepanel.gameState == gamepanel.gameOverState)
         {
             gameOverState(code);
+        }
+        if(gamepanel.gameState == gamepanel.tradeState)
+        {
+            tradeState(code);
         }
     }
     public void titleState(int code) {
@@ -187,48 +191,11 @@ public class KeyboardHandler implements KeyListener {
             gamepanel.gameState = gamepanel.playState;
             gamepanel.playSoundEffect(10);
         }
-        if(code == KeyEvent.VK_J || code == KeyEvent.VK_DOWN)
-        {
-            gamepanel.playSoundEffect(6);
-            if(gamepanel.ui.slotRow < 7)
-                gamepanel.ui.slotRow++;
-        }
-        if(code == KeyEvent.VK_K || code == KeyEvent.VK_UP)
-        {
-            gamepanel.playSoundEffect(6);
-            if(gamepanel.ui.slotRow > 0)
-                gamepanel.ui.slotRow--;
-        }
-        if(code == KeyEvent.VK_L || code == KeyEvent.VK_RIGHT)
-        {
-            gamepanel.playSoundEffect(6);
-            if(gamepanel.ui.slotCol <= 17){
-                gamepanel.ui.slotCol++;
-                if(gamepanel.ui.slotCol == 18) {
-                    gamepanel.ui.slotCol = 0;
-                    if(gamepanel.ui.slotRow < 7)
-                        gamepanel.ui.slotRow++;
-                    else gamepanel.ui.slotRow = 0;
-                }
-            }
-        }
-        if(code == KeyEvent.VK_H || code == KeyEvent.VK_LEFT)
-        {
-            gamepanel.playSoundEffect(6);
-            if(gamepanel.ui.slotCol >= 0){
-                gamepanel.ui.slotCol--;
-                if(gamepanel.ui.slotCol == -1) {
-                    gamepanel.ui.slotCol = 17;
-                    if(gamepanel.ui.slotRow > 0)
-                        gamepanel.ui.slotRow--;
-                    else gamepanel.ui.slotRow = 7;
-                }
-            }
-        }
         if(code == KeyEvent.VK_ENTER)
         {
             gamepanel.player.selectItem();
         }
+        playerInventory(code);
     }
     public void optionState(int code)
     {
@@ -327,6 +294,126 @@ public class KeyboardHandler implements KeyListener {
             }
             if(gamepanel.ui.commandNum == 1) {
                 gamepanel.gameState = gamepanel.titleState;
+            }
+        }
+    }
+    public void tradeState(int code) {
+        if(code == KeyEvent.VK_ENTER)
+        {
+            enterPressed = true;
+        }
+        if(gamepanel.ui.subState == 0) {
+            if(code == KeyEvent.VK_J || code == KeyEvent.VK_DOWN)
+            {
+                gamepanel.ui.commandNum++;
+                if(gamepanel.ui.commandNum > 2)
+                    gamepanel.ui.commandNum = 0;
+                gamepanel.playSoundEffect(6);
+            }
+            if(code == KeyEvent.VK_K || code == KeyEvent.VK_UP)
+            {
+                gamepanel.ui.commandNum--;
+                if(gamepanel.ui.commandNum < 0)
+                    gamepanel.ui.commandNum = 2;
+                gamepanel.playSoundEffect(6);
+            }
+        }
+        if(gamepanel.ui.subState == 1) {
+            npcInventory(code);
+            if(code == KeyEvent.VK_ESCAPE)
+            {
+                gamepanel.ui.subState = 0;
+            }
+        }
+        if(gamepanel.ui.subState == 2)
+        {
+            playerInventory(code);
+            if(code == KeyEvent.VK_ESCAPE)
+            {
+                gamepanel.ui.subState = 0;
+            }
+
+        }
+    }
+    public void playerInventory(int code)
+    {
+        if(code == KeyEvent.VK_J || code == KeyEvent.VK_DOWN)
+        {
+            gamepanel.playSoundEffect(6);
+            if(gamepanel.ui.playerSlotRow < 7)
+                gamepanel.ui.playerSlotRow++;
+        }
+        if(code == KeyEvent.VK_K || code == KeyEvent.VK_UP)
+        {
+            gamepanel.playSoundEffect(6);
+            if(gamepanel.ui.playerSlotRow > 0)
+                gamepanel.ui.playerSlotRow--;
+        }
+        if(code == KeyEvent.VK_L || code == KeyEvent.VK_RIGHT)
+        {
+            gamepanel.playSoundEffect(6);
+            if(gamepanel.ui.playerSlotCol <= 17){
+                gamepanel.ui.playerSlotCol++;
+                if(gamepanel.ui.playerSlotCol == 18) {
+                    gamepanel.ui.playerSlotCol = 0;
+                    if(gamepanel.ui.playerSlotRow < 7)
+                        gamepanel.ui.playerSlotRow++;
+                    else gamepanel.ui.playerSlotRow = 0;
+                }
+            }
+        }
+        if(code == KeyEvent.VK_H || code == KeyEvent.VK_LEFT)
+        {
+            gamepanel.playSoundEffect(6);
+            if(gamepanel.ui.playerSlotCol >= 0){
+                gamepanel.ui.playerSlotCol--;
+                if(gamepanel.ui.playerSlotCol == -1) {
+                    gamepanel.ui.playerSlotCol = 17;
+                    if(gamepanel.ui.playerSlotRow > 0)
+                        gamepanel.ui.playerSlotRow--;
+                    else gamepanel.ui.playerSlotRow = 7;
+                }
+            }
+        }
+    }
+    public void npcInventory(int code)
+    {
+        if(code == KeyEvent.VK_J || code == KeyEvent.VK_DOWN)
+        {
+            gamepanel.playSoundEffect(6);
+            if(gamepanel.ui.npcSlotRow < 7)
+                gamepanel.ui.npcSlotRow++;
+        }
+        if(code == KeyEvent.VK_K || code == KeyEvent.VK_UP)
+        {
+            gamepanel.playSoundEffect(6);
+            if(gamepanel.ui.npcSlotRow > 0)
+                gamepanel.ui.npcSlotRow--;
+        }
+        if(code == KeyEvent.VK_L || code == KeyEvent.VK_RIGHT)
+        {
+            gamepanel.playSoundEffect(6);
+            if(gamepanel.ui.npcSlotCol <= 7){
+                gamepanel.ui.npcSlotCol++;
+                if(gamepanel.ui.npcSlotCol == 8) {
+                    gamepanel.ui.npcSlotCol = 0;
+                    if(gamepanel.ui.npcSlotRow < 7)
+                        gamepanel.ui.npcSlotRow++;
+                    else gamepanel.ui.npcSlotRow = 0;
+                }
+            }
+        }
+        if(code == KeyEvent.VK_H || code == KeyEvent.VK_LEFT)
+        {
+            gamepanel.playSoundEffect(6);
+            if(gamepanel.ui.npcSlotCol >= 0){
+                gamepanel.ui.npcSlotCol--;
+                if(gamepanel.ui.npcSlotCol == -1) {
+                    gamepanel.ui.npcSlotCol = 7;
+                    if(gamepanel.ui.npcSlotRow > 0)
+                        gamepanel.ui.npcSlotRow--;
+                    else gamepanel.ui.npcSlotRow = 7;
+                }
             }
         }
     }

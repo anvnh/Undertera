@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Entity {
@@ -83,6 +84,7 @@ public class Entity {
     public int defenseValue;
     public String description;
     public int useCost;
+    public int price = 0;
     //==========================================================================================//
 
     //====================================== Types =============================================//
@@ -149,10 +151,13 @@ public class Entity {
     public void setAction(){}
     public void damageReaction(){}
     public void speak() {
-        if(dialogueIndex == 11)
-            dialogueIndex = 0;
+
+        // Check if the dialogue is at the end
+        long nonNullCount = Arrays.stream(dialogue).filter(Objects::nonNull).count();
+        if(dialogueIndex == nonNullCount) dialogueIndex = 0;
         gamepanel.ui.currentDialogue = dialogue[dialogueIndex];
         dialogueIndex++;
+
         if(Objects.equals(gamepanel.player.direction, "up"))
             direction = "down";
         else if(Objects.equals(gamepanel.player.direction, "down"))

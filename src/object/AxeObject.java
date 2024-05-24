@@ -16,6 +16,8 @@ public class AxeObject extends Entity {
         attackArea.width = 30;
         attackArea.height = 30;
 
+        price = 10;
+
         description = "[" + name + "] \nBasic axe that can be used to \nattack enemies.";
     }
 }
