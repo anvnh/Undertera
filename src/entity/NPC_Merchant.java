@@ -6,8 +6,8 @@ import object.KeyObject;
 import object.Potion_RedObject;
 import object.SwordObject;
 
-public class Merchant extends Entity {
-    public Merchant(GamePanel gamepanel) {
+public class NPC_Merchant extends Entity {
+    public NPC_Merchant(GamePanel gamepanel) {
         super(gamepanel);
         direction = "down";
         speed = 0;

@@ -31,7 +31,6 @@ public class UI {
     public int npcSlotCol = 0, npcSlotRow = 0;
     int subState = 0;
     public Entity npc;
-
     public UI(GamePanel gp)
     {
         this.gamepanel = gp;

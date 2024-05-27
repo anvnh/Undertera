@@ -14,6 +14,9 @@ public class TileManager {
     GamePanel gamepanel;
     public Tile[] tile;
     public int[][][] mapTileNum;
+    boolean drawPath = true;
+
+
     public TileManager(GamePanel gp){
         this.gamepanel = gp;
         tile = new Tile[50];
@@ -138,6 +141,21 @@ public class TileManager {
             {
                 worldCol = 0;
                 worldRow++;
+            }
+        }
+        // Draw the path that the entity is following
+        if(drawPath)
+        {
+            g2.setColor(new Color(255, 0, 0, 70));
+            for(int i = 0; i < gamepanel.pathFinder.pathList.size(); i++)
+            {
+                int worldX = gamepanel.pathFinder.pathList.get(i).col * gamepanel.tileSize;
+                int worldY = gamepanel.pathFinder.pathList.get(i).row * gamepanel.tileSize;
+                int screenX = worldX - gamepanel.player.worldX + gamepanel.player.screenX;
+                int screenY = worldY - gamepanel.player.worldY + gamepanel.player.screenY;
+
+                g2.fillRect(screenX, screenY, gamepanel.tileSize, gamepanel.tileSize);
+
             }
         }
     }

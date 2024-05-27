@@ -59,25 +59,38 @@ public class NPC_OldMan extends Entity {
         dialogue[10] = "Farewell, young one. May the winds guide you and the stars light your way.";
     }
     public void setAction() {
-
-        actionLockCounter ++;
-        if(actionLockCounter == 120)
+        if(onPath)
         {
-            Random random = new Random();
-            int i = random.nextInt(100) + 1;
-            if(i <= 25)
-                direction = "left";
-            else if(i <= 50)
-                direction = "up";
-            else if(i <= 75)
-                direction = "right";
-            else
-                direction = "down";
-            actionLockCounter = 0;
+
+            //int endCol = 10;
+            //int endRow = 8;
+            int endCol = (gamepanel.player.worldX + gamepanel.player.solidArea.x) / gamepanel.tileSize;
+            int endRow = (gamepanel.player.worldY + gamepanel.player.solidArea.y) / gamepanel.tileSize;
+
+            searchPath(endCol, endRow);
+        }
+        else
+        {
+            actionLockCounter ++;
+            if(actionLockCounter == 120)
+            {
+                Random random = new Random();
+                int i = random.nextInt(100) + 1;
+                if(i <= 25)
+                    direction = "left";
+                else if(i <= 50)
+                    direction = "up";
+                else if(i <= 75)
+                    direction = "right";
+                else
+                    direction = "down";
+                actionLockCounter = 0;
+            }
         }
     }
     public void speak() {
         super.speak();
+        onPath = true;
     }
 
 }

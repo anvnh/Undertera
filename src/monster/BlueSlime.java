@@ -69,36 +69,71 @@ public class BlueSlime extends Entity {
         go_right[6] = setup_entity("/monster/blue_slime/blue_slime_right_6", gamepanel.tileSize, gamepanel.tileSize);
         go_right[7] = setup_entity("/monster/blue_slime/blue_slime_right_7", gamepanel.tileSize, gamepanel.tileSize);
     }
+    public void update()
+    {
+        super.update();
+
+        int xDistance = Math.abs(worldX - gamepanel.player.worldX);
+        int yDistance = Math.abs(worldY - gamepanel.player.worldY);
+        int tileDistance = (int)Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2)) / gamepanel.tileSize;
+
+        if(!onPath && tileDistance < 5)
+        {
+            int i = new Random().nextInt(1000) + 1;
+            if(i >= 500)
+            {
+                onPath = true;
+            }
+        }
+        // The maximum distance to drop aggro
+        if(onPath && tileDistance > 10)
+        {
+            onPath = false;
+        }
+    }
     public void setAction()
     {
-        actionLockCounter ++;
-        if(actionLockCounter == 120)
+        if(onPath)
         {
-            Random random = new Random();
-            int i = random.nextInt(100) + 1;
-            if(i <= 25)
-                direction = "left";
-            else if(i <= 50)
-                direction = "up";
-            else if(i <= 75)
-                direction = "right";
-            else
-                direction = "down";
-            actionLockCounter = 0;
+
+            int endCol = (gamepanel.player.worldX + gamepanel.player.solidArea.x) / gamepanel.tileSize;
+            int endRow = (gamepanel.player.worldY + gamepanel.player.solidArea.y) / gamepanel.tileSize;
+
+            searchPath(endCol, endRow);
+
+            // Randomly shooting the projectile
+            int i = new Random().nextInt(1000) + 1;
+            if(i > 200 && !projectile.alive && shotAvailableCounter == 60){
+                projectile.set(worldX, worldY, direction, true, this);
+                gamepanel.projectileList.add(projectile);
+                shotAvailableCounter = 0;
+            }
+        }
+        else
+        {
+            actionLockCounter ++;
+            if(actionLockCounter == 120)
+            {
+                Random random = new Random();
+                int i = random.nextInt(100) + 1;
+                if(i <= 25)
+                    direction = "left";
+                else if(i <= 50)
+                    direction = "up";
+                else if(i <= 75)
+                    direction = "right";
+                else
+                    direction = "down";
+                actionLockCounter = 0;
+            }
         }
 
-        // Randomly shooting the projectile
-        int i = new Random().nextInt(1000) + 1;
-        if(i > 999 && !projectile.alive && shotAvailableCounter == 60){
-            projectile.set(worldX, worldY, direction, true, this);
-            gamepanel.projectileList.add(projectile);
-            shotAvailableCounter = 0;
-        }
     }
     public void damageReaction()
     {
         actionLockCounter = 0;
         direction = gamepanel.player.direction;
+        onPath = true;
     }
     public void checkDrop()
     {

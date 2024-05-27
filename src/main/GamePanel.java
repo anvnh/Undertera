@@ -1,5 +1,6 @@
 package main;
 
+import ai.PathFinder;
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
@@ -47,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     //System
-    TileManager tileM = new TileManager(this);
+    public TileManager tileM = new TileManager(this);
     public KeyboardHandler Key = new KeyboardHandler(this);
     Sound sound = new Sound();
     public UI ui = new UI(this);
@@ -55,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionCheck collisionCheck = new CollisionCheck(this);
     public AssetSetter assetSetter = new AssetSetter(this);
     Config config = new Config(this);
+    public PathFinder pathFinder = new PathFinder(this);
 
     // Entity and Object
     public Player player = new Player(this, Key);
@@ -66,7 +68,7 @@ public class GamePanel extends JPanel implements Runnable {
     public ArrayList<Entity> projectileList = new ArrayList<>();
     public ArrayList<Entity> particleList = new ArrayList<>();
 
-    //Game state
+    //==================================== Game states ==================================-======//
     public int gameState;
     public final int titleState = -1;
     public final int pauseState = 0;
@@ -76,6 +78,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int optionsState = 4;
     public final int tradeState = 5;
     public final int gameOverState = 999;
+    //==========================================================================================//
 
 
     public GamePanel() {

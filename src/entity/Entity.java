@@ -28,16 +28,20 @@ public class Entity {
     public int shotAvailableCounter = 0;
     public int manaRegenCounter = 0;
 
+    //======================================== State ===========================================//
 
-    // ATTACK
     boolean attacking = false;
-    // DASHING
     boolean dashing = false;
-
     public boolean alive = true;
-    // DYING
     public boolean dying = false;
+    boolean HPBarOn = false;
+    int dialogueIndex = 0;
+    public boolean collision = false;
+    public boolean collisionOn = false;
+    public boolean invincible = false;
+    public boolean onPath = false;
 
+    //==========================================================================================//
 
     //=========================== Buffered animation for player ===============================//
     //Buffered image standing
@@ -65,16 +69,17 @@ public class Entity {
     //==========================================================================================//
 
 
-    //Buffered dying
+    //==========================================================================================//
     public BufferedImage[] dying_animate = new BufferedImage[10];
+    //==========================================================================================//
 
 
-    //Solid area
+    //===================================== Solid Area ==========================================//
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
     public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
     public int solidAreaDefaultX, solidAreaDefaultY;
-    public boolean collisionOn = false;
-    public boolean invincible = false;
+    //==========================================================================================//
+
 
     //================================== Item Attribute ========================================//
     public ArrayList<Entity> inventory = new ArrayList<>();
@@ -100,20 +105,21 @@ public class Entity {
     //==========================================================================================//
 
 
+    //===================================== For advanced alg ====================================//
     public String objectType = "";
+    //==========================================================================================//
 
-    // Counter
+    //=================================== Counter ============================================//
     public int actionLockCounter = 0;
     public int invincibleCounter = 0;
     public int dyingCounter = 0;
     public int dyingAnimation = 1;
-    //HP Bar
-    boolean HPBarOn = false;
     int HPBarCounter = 0;
     // Dialogue
     public String[] dialogue = new String[20];
-    int dialogueIndex = 0;
+    //==========================================================================================//
 
+    //================================ Player attributes =====================================//
     public int maxMana;
     public int mana;
     public int level;
@@ -124,25 +130,26 @@ public class Entity {
     public int exp;
     public int nextLevelExp;
     public int coin;
+    public double maxLife;
+    public double life;
     public Entity currentWeapon;
     public Entity currentArmor;
     public Projectile projectile;
+    //==========================================================================================//
 
 
-    // I have no idea what this does
-    // Oh okay this is for entity like heart, mana
+    //================================== For object image =======================================//
+    //================================ which don't have much ====================================//
     public BufferedImage image;
     public BufferedImage image1, image2, image3, image4, image5;
     public String name = "";
+    //===========================================================================================//
 
     //Collision
-    public boolean collision = false;
 
-    // MAX HP
-    public double maxLife;
-    public double life;
-    //
+    //===========================================================================================//
     KeyboardHandler Key;
+    //===========================================================================================//
     public Entity(GamePanel gamePanel)
     {
         this.gamepanel = gamePanel;
@@ -170,8 +177,6 @@ public class Entity {
     public void use(Entity entity, GamePanel gamepanel){}
     public void checkDrop(){}
     public void dropItem(Entity drpItem){ // item dropped from killing monster
-        //drpItem.worldY = worldY;
-        //drpItem.worldX = worldX;
         for(int i = 0; i < gamepanel.objects[1].length; i++)
         {
             if(gamepanel.objects[gamepanel.currentMap][i] == null)
@@ -181,7 +186,11 @@ public class Entity {
                 gamepanel.objects[gamepanel.currentMap][i].worldY = worldY;
                 // Check if the dropped item is on the same tile
                 // If is in the same tile, we move it a little bit, in this case, is 15 pixel
-                // Not yet implemented
+                if(gamepanel.objects[gamepanel.currentMap][i].worldX == worldX && gamepanel.objects[gamepanel.currentMap][i].worldY == worldY)
+                {
+                    gamepanel.objects[gamepanel.currentMap][i].worldX += 15;
+                    gamepanel.objects[gamepanel.currentMap][i].worldY += 15;
+                }
                 break;
             }
         }
@@ -217,10 +226,8 @@ public class Entity {
         gamepanel.particleList.add(p3);
         gamepanel.particleList.add(p4);
     }
-    public void update(){
-
-        setAction();
-
+    public void checkCollision()
+    {
         collisionOn = false;
         gamepanel.collisionCheck.checkTile(this);
         gamepanel.collisionCheck.checkObject(this, false);
@@ -233,6 +240,12 @@ public class Entity {
         {
             damagePlayer();
         }
+    }
+
+    public void update(){
+
+        setAction();
+        checkCollision();
 
         //if collision is false, player can move
         if(!collisionOn)
@@ -442,5 +455,95 @@ public class Entity {
         g2.drawImage(image, screenX, screenY, null);
         changeAlpha(g2, 1f);
     }
+    public void searchPath(int endCol, int endRow)
+    {
+        int startCol = (worldX + solidArea.x) / gamepanel.tileSize;
+        int startRow = (worldY + solidArea.y) / gamepanel.tileSize;
 
+        gamepanel.pathFinder.setNodes(startCol, startRow, endCol, endRow, this);
+
+        if(gamepanel.pathFinder.search())
+        {
+            // Next worldX and worldY
+            int nextX = gamepanel.pathFinder.pathList.get(0).col * gamepanel.tileSize;
+            int nextY = gamepanel.pathFinder.pathList.get(0).row * gamepanel.tileSize;
+
+            // Entity solid area
+            int entityLeftX = worldX + solidArea.x;
+            int entityRightX = worldX + solidArea.x + solidArea.width;
+            int entityTopY = worldY + solidArea.y;
+            int entityBottomY = worldY + solidArea.y + solidArea.height;
+
+            if(entityTopY > nextY && entityLeftX >= nextX && entityRightX < nextX + gamepanel.tileSize)
+            {
+                direction = "up";
+            }
+            else if(entityBottomY < nextY && entityLeftX >= nextX && entityRightX < nextX + gamepanel.tileSize)
+            {
+                direction = "down";
+            }
+            else if(entityTopY >= nextY && entityBottomY < nextY + gamepanel.tileSize)
+            {
+                //left or right
+                if(entityLeftX > nextX) {
+                    direction = "left";
+                }
+                else if(entityLeftX < nextX) {
+                    direction = "right";
+                }
+            }
+            else if(entityTopY > nextY && entityLeftX > nextX)
+            {
+                //up or left
+                direction = "up";
+                checkCollision();
+                if(collisionOn)
+                {
+                    direction = "left";
+                }
+            }
+            else if(entityTopY > nextY && entityLeftX < nextX)
+            {
+                // up or right
+                direction = "up";
+                checkCollision();
+                if(collisionOn)
+                {
+                    direction = "right";
+                }
+            }
+            else if(entityTopY < nextY && entityLeftX < nextX)
+            {
+                // down or right
+                direction = "down";
+                checkCollision();
+                if(collisionOn)
+                {
+                    direction = "right";
+                }
+            }
+            else if(entityTopY < nextY && entityLeftX > nextX)
+            {
+                // down or left
+                direction = "down";
+                checkCollision();
+                if(collisionOn)
+                {
+                    direction = "left";
+                }
+            }
+
+
+            // If reaches the end, stop the path
+            // If make the entity to keep follow the end, disable 5 lines below
+            /*
+            int nextCol = gamepanel.pathFinder.pathList.get(0).col;
+            int nextRow = gamepanel.pathFinder.pathList.get(0).row;
+            if(nextCol == endCol && nextRow == endRow)
+            {
+                onPath = false;
+            }
+             */
+        }
+    }
 }
