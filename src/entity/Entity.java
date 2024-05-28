@@ -14,13 +14,13 @@ import java.util.Objects;
 public class Entity {
     GamePanel gamepanel;
     public int worldX, worldY;
-    //======================================== Speed =============================================//
+    //========================================= Speed =============================================//
     public int speed;
     public int originalSpeed;
     public int dashSpeed;
-    //======================================== Counter ===========================================//
+    //=============================================================================================//
 
-    //======================================== Counter ===========================================//
+    //========================================= Counter ===========================================//
     public int runCount = 0;
     public int runAnimation = 1;
     public int standCount = 0;
@@ -35,6 +35,9 @@ public class Entity {
     public int dyingCounter = 0;
     public int dyingAnimation = 1;
     int HPBarCounter = 0;
+
+    public int knockBackCounter = 0;
+
 
     //========================================--------============================================//
 
@@ -51,6 +54,7 @@ public class Entity {
     public boolean collisionOn = false;
     public boolean invincible = false;
     public boolean onPath = false;
+    public boolean knockBack = false;
 
     //==========================================================================================//
 
@@ -101,6 +105,7 @@ public class Entity {
     public String description;
     public int useCost;
     public int price = 0;
+    public int knockBackPower = 0;
     //==========================================================================================//
 
     //====================================== Types =============================================//
@@ -120,11 +125,8 @@ public class Entity {
     public String objectType = "";
     //==========================================================================================//
 
-    //=================================== Counter ============================================//
-
     // Dialogue
     public String[] dialogue = new String[20];
-    //==========================================================================================//
 
     //================================ Player attributes =====================================//
     public int maxMana;
@@ -250,28 +252,53 @@ public class Entity {
     }
 
     public void update(){
-
-        setAction();
-        checkCollision();
-
-        //if collision is false, player can move
-        if(!collisionOn)
+        if(knockBack)
         {
-            switch (direction){
-                case "up":
-                    worldY -= speed;
-                    break;
-                case "down":
-                    worldY += speed;
-                    break;
-                case "left":
-                    worldX -= speed;
-                    break;
-                case "right":
-                    worldX += speed;
-                    break;
+            checkCollision();
+            if(collisionOn)
+            {
+                knockBackCounter = 0;
+                knockBack = false;
+                speed = originalSpeed;
+            }
+            else
+            {
+                switch(gamepanel.player.direction)
+                {
+                    case "up": worldY -= speed; break;
+                    case "down": worldY += speed; break;
+                    case "left": worldX -= speed; break;
+                    case "right": worldX += speed; break;
+                }
+            }
+
+            knockBackCounter++;
+            // the more knockBackCounter is, the more distance object will be knock back
+            // Could be implemented knock back stat in future
+            if(knockBackCounter == 20)
+            {
+                    knockBackCounter = 0;
+                knockBack = false;
+                speed = originalSpeed;
             }
         }
+        else
+        {
+            setAction();
+            checkCollision();
+
+            //if collision is false, player can move
+            if(!collisionOn)
+            {
+                switch (direction){
+                    case "up": worldY -= speed; break;
+                    case "down": worldY += speed; break;
+                    case "left": worldX -= speed; break;
+                    case "right": worldX += speed; break;
+                }
+            }
+        }
+
         runCount++;
         if (runCount > 15) {
             runAnimation = runAnimation == 8 ? 1 : runAnimation + 1;

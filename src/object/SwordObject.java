@@ -14,9 +14,11 @@ public class SwordObject extends Entity {
         attackValue = 3;
         attackArea.width = 48;
         attackArea.height = 48;
+        price = 10;
+
+        knockBackPower = 5;
 
         description = "[" + name + "] \nBasic sword that can be used\nto attack enemies.";
 
-        price = 10;
     }
 }

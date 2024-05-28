@@ -51,7 +51,8 @@ public class Player extends Entity{
         getPlayerAttackImage();
         setItems();
     }
-    public void setDefaultValues(){
+    public void setDefaultValues()
+    {
         worldX = gamepanel.tileSize * 22;
         worldY = gamepanel.tileSize * 20;
         speed = 3;
@@ -446,7 +447,7 @@ public class Player extends Entity{
 
             // Check monster collision
             int monsterIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.monster);
-            damageMonster(monsterIndex);
+            damageMonster(monsterIndex, currentWeapon.knockBackPower);
 
             // Check interactive collision
             int interactiveIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.interactiveTile);
@@ -517,6 +518,12 @@ public class Player extends Entity{
             }
         }
     }
+    public void knockBack(Entity entity, int knockBackPower)
+    {
+        entity.direction = direction;
+        entity.speed += knockBackPower;
+        entity.knockBack = true;
+    }
     public void damageInteractiveTile(int interactiveIndex){
         if(interactiveIndex != 999
                 && gamepanel.interactiveTile[gamepanel.currentMap][interactiveIndex].destructible //fixed
@@ -536,7 +543,7 @@ public class Player extends Entity{
             }
         }
     }
-    public void damageMonster(int monsterIndex)
+    public void damageMonster(int monsterIndex, int knockBackPower)
     {
         if(monsterIndex != 999)
         {
@@ -544,6 +551,10 @@ public class Player extends Entity{
             {
                 gamepanel.playSoundEffect(3);
 
+                if(knockBackPower > 0)
+                {
+                    knockBack(gamepanel.monster[gamepanel.currentMap][monsterIndex], knockBackPower);
+                }
 
                 gamepanel.monster[gamepanel.currentMap][monsterIndex].life -= calculateDamageDeal(gamepanel.monster[gamepanel.currentMap][monsterIndex]); //fixed
                 gamepanel.ui.addMessage(calculateDamageDeal(gamepanel.monster[gamepanel.currentMap][monsterIndex]) + " damage"); //fixed

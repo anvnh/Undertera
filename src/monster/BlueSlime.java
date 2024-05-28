@@ -16,6 +16,7 @@ public class BlueSlime extends Entity {
         type = type_monster;
         name = "Blue Slime";
         speed = 1;
+        originalSpeed = 1;
         maxLife = 50;
         life = maxLife;
         attack = 10;
@@ -83,7 +84,7 @@ public class BlueSlime extends Entity {
             onPath = true;
         }
         // The maximum distance to drop aggro
-        if(onPath && tileDistance > 8)
+        if(onPath && tileDistance > 20)
         {
             onPath = false;
         }
@@ -98,10 +99,10 @@ public class BlueSlime extends Entity {
             searchPath(endCol, endRow);
 
             // Randomly shooting the projectile
+            /*
             int i = new Random().nextInt(1000) + 1;
             if(i > 200 && !projectile.alive && shotAvailableCounter == 60){
                 projectile.set(worldX, worldY, direction, true, this);
-                //gamepanel.projectileList.add(projectile);
                 for(int j = 0; j < gamepanel.projectile[1].length; j++)
                 {
                     if(gamepanel.projectile[gamepanel.currentMap][j] == null)
@@ -112,6 +113,7 @@ public class BlueSlime extends Entity {
                 }
                 shotAvailableCounter = 0;
             }
+             */
         }
         else
         {
@@ -154,6 +156,5 @@ public class BlueSlime extends Entity {
             dropItem(new GoldCoinObject(gamepanel));
             dropItem(new HeartObject(gamepanel));
         }
-
     }
 }
