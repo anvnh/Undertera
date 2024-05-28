@@ -25,6 +25,14 @@ public class CollisionCheck {
 
         int tileNum1, tileNum2;
 
+
+        // Check if player is using dash or not
+        if(entity == gamepanel.player)
+        {
+            if(gamepanel.Key.dashPressed) entity.speed = entity.dashSpeed;
+            else entity.speed = entity.originalSpeed;
+        }
+
         switch (entity.direction){
             case "up":
                 entityTopRow = (entityTopWorldY - entity.speed) / gamepanel.tileSize;
@@ -59,6 +67,7 @@ public class CollisionCheck {
                 }
                 break;
         }
+        if(entity == gamepanel.player) entity.speed = entity.originalSpeed;
 
     }
     public int checkObject(Entity entity, boolean player)

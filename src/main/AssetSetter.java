@@ -42,6 +42,7 @@ public class AssetSetter {
     public void setMonster() {
         int mapNum = 0;
         int i = 0;
+        /*
         gamepanel.monster[mapNum][i] = new BlueSlime(gamepanel);
         gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 22;
         gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 22;
@@ -50,9 +51,10 @@ public class AssetSetter {
         gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 25;
         gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 22;
         i++;
-        gamepanel.monster[mapNum][i] = new BlueSlime(gamepanel);
+         */
+        gamepanel.monster[mapNum][i] = new Skeleton(gamepanel);
         gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 28;
-        gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 22;
+        gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 21;
         i++;
         gamepanel.monster[mapNum][i] = new BlueSlime(gamepanel);
         gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 31;

@@ -21,6 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int playerSize = originalTileSize * (scale + 2);
     public final int weapSize = originalTileSize * (scale + 1);
     public final int tileSize = originalTileSize * scale;
+    public final int monsterSize = originalTileSize * (scale + 2);
     public final int maxScreenCol = 30;
     public final int maxScreenRow = 15;
     public final int screenWidth = tileSize * maxScreenCol; //30 * 48 = 1440
@@ -103,14 +104,14 @@ public class GamePanel extends JPanel implements Runnable {
     }
     public void retry() {
         player.setDefaultPosition();
-        player.restoreLiveAndMana();
+        player.restoreLifeAndMana();
         assetSetter.setNPC();
         assetSetter.setMonster();
     }
     public void restart() {
         player.setDefaultValues();
         player.setDefaultPosition();
-        player.restoreLiveAndMana();
+        player.restoreLifeAndMana();
         player.setItems();
         assetSetter.setNPC();
         assetSetter.setMonster();

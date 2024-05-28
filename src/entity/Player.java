@@ -17,9 +17,7 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
     public int hasKey = 0;
-    //public ArrayList<Entity> inventory = new ArrayList<>();
     public final int maxInventorySize = 144;
-
     public boolean dashSound = false;
 
     public Player(GamePanel gp, KeyboardHandler kh){
@@ -58,6 +56,7 @@ public class Player extends Entity{
         worldY = gamepanel.tileSize * 20;
         speed = 3;
         originalSpeed = 3;
+        dashSpeed = speed * 4;
         direction = "down";
         //Status
         maxLife = 100; // max life (cannot add more than this)
@@ -82,7 +81,7 @@ public class Player extends Entity{
         worldY = gamepanel.tileSize * 20;
         direction = "down";
     }
-    public void restoreLiveAndMana() {
+    public void restoreLifeAndMana() {
         life = maxLife;
         mana = maxMana;
         invincible = false;
@@ -98,7 +97,8 @@ public class Player extends Entity{
         attackArea = currentWeapon.attackArea;
         return attack = strength * currentWeapon.attackValue;
     }
-    public int getDefense() {
+    public int getDefense()
+    {
         return defense = dexterity * currentArmor.defenseValue;
     }
 
@@ -182,6 +182,7 @@ public class Player extends Entity{
 
         }
     }
+
     public void update()
     {
         if(attacking)
@@ -241,7 +242,7 @@ public class Player extends Entity{
                     case "up":
                         if (gamepanel.Key.dashPressed)
                         {
-                            worldY -= speed * 4;
+                            worldY -= dashSpeed;
                             if (!dashSound)
                             {
                                 gamepanel.playSoundEffect(13);
@@ -256,7 +257,7 @@ public class Player extends Entity{
                     case "down":
                         if(gamepanel.Key.dashPressed)
                         {
-                            worldY += speed * 3;
+                            worldY += dashSpeed;
                             if(!dashSound)
                             {
                                 gamepanel.playSoundEffect(13);
@@ -277,7 +278,7 @@ public class Player extends Entity{
                                 gamepanel.playSoundEffect(13);
                                 dashSound = true;
                             }
-                            worldX -= speed * 4;
+                            worldX -= dashSpeed;
                         }
                         else
                         {
@@ -288,7 +289,7 @@ public class Player extends Entity{
                     case "right":
                         if(gamepanel.Key.dashPressed)
                         {
-                            worldX += speed * 4;
+                            worldX += dashSpeed;
                             if(!dashSound)
                             {
                                 gamepanel.playSoundEffect(13);
@@ -348,6 +349,7 @@ public class Player extends Entity{
         {
             shotAvailableCounter++;
         }
+
         if(Key.Projectile_Pressed) manaRegenCounter = 0;
         if(manaRegenCounter < 240 && mana < maxMana)
         {
@@ -585,11 +587,10 @@ public class Player extends Entity{
             level++;
             exp = 0;
             nextLevelExp = (int) (nextLevelExp * 2.5);
-            //maxLife += 10;
             life = maxLife;
             mana = maxMana;
-            strength += 2;
-            dexterity += 2;
+            strength *= 5;
+            dexterity *= 5;
             gamepanel.ui.addMessage("Level Up!");
         }
     }

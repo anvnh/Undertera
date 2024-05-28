@@ -14,11 +14,13 @@ import java.util.Objects;
 public class Entity {
     GamePanel gamepanel;
     public int worldX, worldY;
+    //======================================== Speed =============================================//
     public int speed;
     public int originalSpeed;
-    public String direction = "down";
+    public int dashSpeed;
+    //======================================== Counter ===========================================//
 
-    // COUNTER
+    //======================================== Counter ===========================================//
     public int runCount = 0;
     public int runAnimation = 1;
     public int standCount = 0;
@@ -28,9 +30,18 @@ public class Entity {
     public int shotAvailableCounter = 0;
     public int manaRegenCounter = 0;
 
-    //======================================== State ===========================================//
+    public int actionLockCounter = 0;
+    public int invincibleCounter = 0;
+    public int dyingCounter = 0;
+    public int dyingAnimation = 1;
+    int HPBarCounter = 0;
 
-    boolean attacking = false;
+    //========================================--------============================================//
+
+    //========================================= State ============================================//
+
+    public String direction = "down";
+    public boolean attacking = false;
     boolean dashing = false;
     public boolean alive = true;
     public boolean dying = false;
@@ -54,10 +65,10 @@ public class Entity {
     public BufferedImage[] go_left = new BufferedImage[10];
     public BufferedImage[] go_right = new BufferedImage[10];
     // Buffered attack
-    public BufferedImage[] attack_right = new BufferedImage[4];
-    public BufferedImage[] attack_left = new BufferedImage[4];
-    public BufferedImage[] attack_up = new BufferedImage[4];
-    public BufferedImage[] attack_down = new BufferedImage[4];
+    public BufferedImage[] attack_right = new BufferedImage[10];
+    public BufferedImage[] attack_left = new BufferedImage[10];
+    public BufferedImage[] attack_up = new BufferedImage[10];
+    public BufferedImage[] attack_down = new BufferedImage[10];
     //==========================================================================================//
 
 
@@ -110,11 +121,7 @@ public class Entity {
     //==========================================================================================//
 
     //=================================== Counter ============================================//
-    public int actionLockCounter = 0;
-    public int invincibleCounter = 0;
-    public int dyingCounter = 0;
-    public int dyingAnimation = 1;
-    int HPBarCounter = 0;
+
     // Dialogue
     public String[] dialogue = new String[20];
     //==========================================================================================//
@@ -336,6 +343,33 @@ public class Entity {
         }
         return image;
     }
+
+
+    //==========================================================================================//
+    // Notes: 32x32 pixels only
+    public void getMonsterAttackImage(String name)
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            attack_down[i] = setup_entity("/monster/" + name + "/attack/attack_down_" + (i), gamepanel.monsterSize, gamepanel.monsterSize);
+        }
+        for(int i = 0; i < 5; i++)
+        {
+            attack_up[i] = setup_entity("/monster/" + name + "/attack/attack_up_" + (i), gamepanel.monsterSize, gamepanel.monsterSize);
+        }
+        for(int i = 0; i < 5; i++)
+        {
+            attack_left[i] = setup_entity("/monster/" + name + "/attack/attack_left_" + (i), gamepanel.monsterSize, gamepanel.monsterSize);
+        }
+        for(int i = 0; i < 5; i++)
+        {
+            attack_right[i] = setup_entity("/monster/" + name + "/attack/attack_right_" + (i), gamepanel.monsterSize, gamepanel.monsterSize);
+        }
+    }
+    //==========================================================================================//
+
+
+
     public BufferedImage getStandAnimate(BufferedImage image, BufferedImage[] stand)
     {
         image = stand[standAnimation - 1];
@@ -406,19 +440,43 @@ public class Entity {
         int screenY = worldY - gamepanel.player.worldY + gamepanel.player.screenY;
         if(direction.equals("up"))
         {
-            image = getRunAnimate(image, go_up);
+            if(!attacking)
+            {
+                image = getRunAnimate(image, go_up);
+            }
+            else {
+                image = getAttackAnimate(image, attack_up);
+            }
         }
         else if(direction.equals("down"))
         {
-            image = getRunAnimate(image, go_down);
+            if(!attacking)
+            {
+                image = getRunAnimate(image, go_down);
+            }
+            else {
+                image = getAttackAnimate(image, attack_down);
+            }
         }
         else if(direction.equals("left"))
         {
-            image = getRunAnimate(image, go_left);
+            if(!attacking)
+            {
+                image = getRunAnimate(image, go_left);
+            }
+            else {
+                image = getAttackAnimate(image, attack_left);
+            }
         }
         else if(direction.equals("right"))
         {
-            image = getRunAnimate(image, go_right);
+            if(!attacking)
+            {
+                image = getRunAnimate(image, go_right);
+            }
+            else {
+                image = getAttackAnimate(image, attack_right);
+            }
         }
 
         //HP Bar of the monster
@@ -455,6 +513,8 @@ public class Entity {
         g2.drawImage(image, screenX, screenY, null);
         changeAlpha(g2, 1f);
     }
+
+
     public void searchPath(int endCol, int endRow)
     {
         int startCol = (worldX + solidArea.x) / gamepanel.tileSize;

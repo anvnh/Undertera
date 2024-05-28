@@ -77,16 +77,13 @@ public class BlueSlime extends Entity {
         int yDistance = Math.abs(worldY - gamepanel.player.worldY);
         int tileDistance = (int)Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2)) / gamepanel.tileSize;
 
-        if(!onPath && tileDistance < 5)
+        // Minimum distance to have aggro
+        if(!onPath && tileDistance < 3)
         {
-            int i = new Random().nextInt(1000) + 1;
-            if(i >= 500)
-            {
-                onPath = true;
-            }
+            onPath = true;
         }
         // The maximum distance to drop aggro
-        if(onPath && tileDistance > 10)
+        if(onPath && tileDistance > 8)
         {
             onPath = false;
         }
@@ -95,7 +92,6 @@ public class BlueSlime extends Entity {
     {
         if(onPath)
         {
-
             int endCol = (gamepanel.player.worldX + gamepanel.player.solidArea.x) / gamepanel.tileSize;
             int endRow = (gamepanel.player.worldY + gamepanel.player.solidArea.y) / gamepanel.tileSize;
 

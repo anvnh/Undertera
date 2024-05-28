@@ -425,7 +425,7 @@ public class UI {
         textX = getXforAlignRight(value, tailX);
         g2.drawString(value, textX, textY);
 
-        value = String.valueOf(gamepanel.player.nextLevelExp);
+        value = String.valueOf(gamepanel.player.level + 1);
         textY += lineHeight;
         textX = getXforAlignRight(value, tailX);
         g2.drawString(value, textX, textY);
