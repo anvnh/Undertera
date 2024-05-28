@@ -623,8 +623,8 @@ public class Player extends Entity{
             nextLevelExp = (int) (nextLevelExp * 2.5);
             life = maxLife;
             mana = maxMana;
-            strength *= 5;
-            dexterity *= 5;
+            strength += 5;
+            dexterity += 5;
             gamepanel.ui.addMessage("Level Up!");
         }
     }

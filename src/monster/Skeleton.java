@@ -16,6 +16,7 @@ public class Skeleton extends Entity {
         type = type_monster;
         name = "skeleton";
         speed = 1;
+        originalSpeed = 1;
         maxLife = 150;
         life = maxLife;
         attack = 30;
@@ -97,11 +98,9 @@ public class Skeleton extends Entity {
 
             searchPath(endCol, endRow);
             attack();
-            speed = originalSpeed + 1;
         }
         else
         {
-            speed = originalSpeed;
             actionLockCounter ++;
             if(actionLockCounter == 120)
             {

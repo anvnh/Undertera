@@ -16,7 +16,7 @@ public class Entity {
     public int worldX, worldY;
     //========================================= Speed =============================================//
     public int speed;
-    public int originalSpeed;
+    public int originalSpeed = speed;
     public int dashSpeed;
     //=============================================================================================//
 
@@ -195,10 +195,9 @@ public class Entity {
                 gamepanel.objects[gamepanel.currentMap][i].worldY = worldY;
                 // Check if the dropped item is on the same tile
                 // If is in the same tile, we move it a little bit, in this case, is 15 pixel
-                if(gamepanel.objects[gamepanel.currentMap][i].worldX == worldX && gamepanel.objects[gamepanel.currentMap][i].worldY == worldY)
-                {
-                    gamepanel.objects[gamepanel.currentMap][i].worldX += 15;
-                    gamepanel.objects[gamepanel.currentMap][i].worldY += 15;
+                if(gamepanel.objects[gamepanel.currentMap][i].worldX == gamepanel.objects[gamepanel.currentMap][i - 1].worldX){
+                    gamepanel.objects[gamepanel.currentMap][i].worldX += 10;
+                    gamepanel.objects[gamepanel.currentMap][i].worldY += 10;
                 }
                 break;
             }
