@@ -12,8 +12,8 @@ public class RockObject extends Projectile {
         this.gamepanel = gamepanel;
 
         name = "Rock";
-        speed = 7;
-        maxLife = 80;
+        speed = 4;
+        maxLife = 120;
         life = maxLife;
         attack = 15;
         useCost = 1;

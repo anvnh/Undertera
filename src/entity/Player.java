@@ -215,6 +215,8 @@ public class Player extends Entity{
             int monsterIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.monster); // check monster collision with player
             contactMonster(monsterIndex);
 
+
+
             // Check Interactive Tile Collision
             gamepanel.collisionCheck.checkEntity(this, gamepanel.interactiveTile);  // check player collision with interactive tiles
 
@@ -332,7 +334,15 @@ public class Player extends Entity{
             projectile.useMana(this);
 
             //Add to the list
-            gamepanel.projectileList.add(projectile);
+            // gamepanel.projectileList.add(projectile);
+            for(int i = 0; i < gamepanel.projectile[1].length; i++)
+            {
+                if(gamepanel.projectile[gamepanel.currentMap][i] == null)
+                {
+                    gamepanel.projectile[gamepanel.currentMap][i] = projectile;
+                    break;
+                }
+            }
 
             shotAvailableCounter = 0;
         }
@@ -441,6 +451,10 @@ public class Player extends Entity{
             // Check interactive collision
             int interactiveIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.interactiveTile);
             damageInteractiveTile(interactiveIndex);
+
+            // Check projectile collision
+            int projectileIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.projectile);
+            damageProjectile(projectileIndex);
 
             worldX = currentWorldX;
             worldY = currentWorldY;
@@ -577,6 +591,15 @@ public class Player extends Entity{
                     checkLevelUp();
                 }
             }
+        }
+    }
+    public void damageProjectile(int projectileIndex)
+    {
+        if(projectileIndex != 999)
+        {
+            Entity projectile = gamepanel.projectile[gamepanel.currentMap][projectileIndex];
+            projectile.alive = false;
+            generateParticle(projectile, projectile);
         }
     }
     public void checkLevelUp()

@@ -101,7 +101,15 @@ public class BlueSlime extends Entity {
             int i = new Random().nextInt(1000) + 1;
             if(i > 200 && !projectile.alive && shotAvailableCounter == 60){
                 projectile.set(worldX, worldY, direction, true, this);
-                gamepanel.projectileList.add(projectile);
+                //gamepanel.projectileList.add(projectile);
+                for(int j = 0; j < gamepanel.projectile[1].length; j++)
+                {
+                    if(gamepanel.projectile[gamepanel.currentMap][j] == null)
+                    {
+                        gamepanel.projectile[gamepanel.currentMap][j] = projectile;
+                        break;
+                    }
+                }
                 shotAvailableCounter = 0;
             }
         }
