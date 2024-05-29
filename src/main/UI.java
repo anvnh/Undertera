@@ -1065,6 +1065,7 @@ public class UI {
                 gamepanel.environmentManager.lightning.filterAlpha = 0f;
                 counter = 0;
                 gamepanel.environmentManager.lightning.dayState = gamepanel.environmentManager.lightning.day;
+                gamepanel.environmentManager.lightning.dayCounter = 0;
                 gamepanel.gameState = gamepanel.playState;
                 gamepanel.player.getPlayerImage();
             }

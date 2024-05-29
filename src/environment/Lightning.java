@@ -14,7 +14,7 @@ import java.io.InputStream;
 public class Lightning {
     GamePanel gamepanel;
     BufferedImage darknessFilter;
-    int dayCounter;
+    public int dayCounter;
     public float filterAlpha = 0f;
 
     //Font
