@@ -35,6 +35,7 @@ public class Map extends TileManager{
                     g2.drawImage(gamepanel.tileM.tile[tileNum].image, col * gamepanel.tileSize, row * gamepanel.tileSize, null);
                 }
             }
+            g2.dispose();
         }
     }
     public void drawFullMapScreen(Graphics2D g2)

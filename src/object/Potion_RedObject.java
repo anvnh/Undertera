@@ -13,7 +13,7 @@ public class Potion_RedObject extends Entity{
         value = 10;
         name = "Red Potion";
         //type = type_potion;
-        image = setup_entity_1("/objects/potion_red");
+        image = setup_entity("/objects/potion_red", 32, 32);
         objectType = "object";
         type = type_consumable;
         description = "[" + name + "]" + " A potion that can be \n used to restore health. \n Restores " + value + " HP.";

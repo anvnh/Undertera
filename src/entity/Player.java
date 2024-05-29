@@ -434,68 +434,6 @@ public class Player extends Entity{
     {
         return entity.attack * ((double) 110 / (110 + defense));
     }
-    public void attack()
-    {
-        attackCount++;
-        if(attackCount <= 5) {
-            attackAnimation = 1;
-        }
-        if(attackCount > 5 && attackCount <= 25) {
-            attackAnimation = 2;
-
-            //Current world x, world y, solid area
-            int currentWorldX = worldX;
-            int currentWorldY = worldY;
-            int solidAreaWidth = solidArea.width;
-            int solidAreaHeight = solidArea.height;
-
-            if(direction.equals("up"))
-            {
-                worldY -= attackArea.height;
-            }
-            if(direction.equals("down"))
-            {
-                worldY += attackArea.height;
-            }
-            if(direction.equals("left"))
-            {
-                worldX -= attackArea.width;
-            }
-            if(direction.equals("right"))
-            {
-                worldX += attackArea.width;
-            }
-
-            solidArea.width = attackArea.width;
-            solidArea.height = attackArea.height;
-
-            // Check monster collision
-            int monsterIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.monster);
-            damageMonster(monsterIndex, currentWeapon.knockBackPower);
-
-            // Check interactive collision
-            int interactiveIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.interactiveTile);
-            damageInteractiveTile(interactiveIndex);
-
-            // Check projectile collision
-            int projectileIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.projectile);
-            damageProjectile(projectileIndex);
-
-            worldX = currentWorldX;
-            worldY = currentWorldY;
-            solidArea.width = solidAreaWidth;
-            solidArea.height = solidAreaHeight;
-
-        }
-        if(attackCount > 25 && attackCount <= 45) attackAnimation = 3;
-        if(attackCount > 45 && attackCount <= 65) attackAnimation = 4;
-        if(attackCount > 65)
-        {
-            attackCount = 0;
-            attackAnimation = 1;
-            attacking = false;
-        }
-    }
 
     public void pickUpObject(int objectIndex) {
         if(objectIndex != 999)
@@ -556,12 +494,7 @@ public class Player extends Entity{
             }
         }
     }
-    public void knockBack(Entity entity, int knockBackPower)
-    {
-        entity.direction = direction;
-        entity.speed += knockBackPower;
-        entity.knockBack = true;
-    }
+
     public void damageInteractiveTile(int interactiveIndex){
         if(interactiveIndex != 999
                 && gamepanel.interactiveTile[gamepanel.currentMap][interactiveIndex].destructible //fixed
@@ -581,7 +514,7 @@ public class Player extends Entity{
             }
         }
     }
-    public void damageMonster(int monsterIndex, int knockBackPower)
+    public void damageMonster(int monsterIndex, Entity attacker,int knockBackPower)
     {
         if(monsterIndex != 999)
         {
@@ -591,7 +524,7 @@ public class Player extends Entity{
 
                 if(knockBackPower > 0)
                 {
-                    knockBack(gamepanel.monster[gamepanel.currentMap][monsterIndex], knockBackPower);
+                    setKnockBack(gamepanel.monster[gamepanel.currentMap][monsterIndex], attacker,knockBackPower);
                 }
 
                 gamepanel.monster[gamepanel.currentMap][monsterIndex].life -= calculateDamageDeal(gamepanel.monster[gamepanel.currentMap][monsterIndex]); //fixed
@@ -621,7 +554,6 @@ public class Player extends Entity{
             if(!gamepanel.monster[gamepanel.currentMap][monsterIndex].invincible) // fixed
             {
                 gamepanel.playSoundEffect(3);
-
 
                 gamepanel.monster[gamepanel.currentMap][monsterIndex].life -= calculateDamageDealwithProjectile(gamepanel.monster[gamepanel.currentMap][monsterIndex], Attack); //fixed
                 gamepanel.ui.addMessage(calculateDamageDealwithProjectile(gamepanel.monster[gamepanel.currentMap][monsterIndex], Attack) + " damage");

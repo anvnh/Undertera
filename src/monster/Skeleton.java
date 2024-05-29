@@ -14,27 +14,27 @@ public class Skeleton extends Entity {
         this.gamepanel = gamePanel;
 
         type = type_monster;
-        name = "skeleton";
+        name = "Skeleton";
         speed = 1;
         originalSpeed = 1;
-        maxLife = 150;
+        maxLife = 200;
         life = maxLife;
-        attack = 30;
+        attack = 50;
         defense = 80;
-        exp = 20;
+        exp = 25;
+        projectile = new RockObject(gamepanel);
 
-        solidArea.x = 30;
-        solidArea.y = 35;
-
+        solidArea.x = 10;
+        solidArea.y = 10;
+        solidArea.width = 40;
+        solidArea.height = 44;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-
-        solidArea.width = 20;
-        solidArea.height = 25;
-
         attackArea.width = 48;
         attackArea.height = 48;
+
         getImage();
+        getAttackImage();
     }
     public void getImage() {
         go_up[0] = setup_entity("/monster/skeleton/skeleton_up_0", gamepanel.monsterSize, gamepanel.monsterSize);
@@ -64,115 +64,44 @@ public class Skeleton extends Entity {
         go_right[3] = setup_entity("/monster/skeleton/skeleton_right_3", gamepanel.monsterSize, gamepanel.monsterSize);
         go_right[4] = setup_entity("/monster/skeleton/skeleton_right_4", gamepanel.monsterSize, gamepanel.monsterSize);
         go_right[5] = setup_entity("/monster/skeleton/skeleton_right_5", gamepanel.monsterSize, gamepanel.monsterSize);
-
-        getMonsterAttackImage(this.name);
     }
-
+    public void getAttackImage()
+    {
+       for(int i = 0; i < 5; i++)
+       {
+           attack_up[i] = setup_entity("/monster/skeleton/attack/attack_up_" + i, gamepanel.monsterSize, gamepanel.monsterSize);
+           attack_down[i] = setup_entity("/monster/skeleton/attack/attack_down_" + i, gamepanel.monsterSize, gamepanel.monsterSize);
+           attack_left[i] = setup_entity("/monster/skeleton/attack/attack_left_" + i, gamepanel.monsterSize, gamepanel.monsterSize);
+           attack_right[i] = setup_entity("/monster/skeleton/attack/attack_right_" + i, gamepanel.monsterSize, gamepanel.monsterSize);
+       }
+    }
     public void update()
     {
         super.update();
-
-        int xDistance = Math.abs(worldX - gamepanel.player.worldX);
-        int yDistance = Math.abs(worldY - gamepanel.player.worldY);
-        int tileDistance = (int)Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2)) / gamepanel.tileSize;
-
-        // Minimum distance to have aggro
-        if(!onPath && tileDistance < 3)
-        {
-            onPath = true;
-            attacking = true;
-        }
-        // The maximum distance to drop aggro
-        if(onPath && tileDistance > 8)
-        {
-            onPath = false;
-            attacking = false;
-        }
     }
     public void setAction()
     {
         if(onPath)
         {
-            int endCol = (gamepanel.player.worldX + gamepanel.player.solidArea.x) / gamepanel.tileSize;
-            int endRow = (gamepanel.player.worldY + gamepanel.player.solidArea.y) / gamepanel.tileSize;
+            // The maximum distance to drop aggro
+            checkDropAggro(gamepanel.player, 20, 100);
 
-            searchPath(endCol, endRow);
-            attack();
+            // Find the direction
+            searchPath(getGoalCol(gamepanel.player), getGoalRow(gamepanel.player));
         }
         else
         {
-            actionLockCounter ++;
-            if(actionLockCounter == 120)
-            {
-                Random random = new Random();
-                int i = random.nextInt(100) + 1;
-                if(i <= 25)
-                    direction = "left";
-                else if(i <= 50)
-                    direction = "up";
-                else if(i <= 75)
-                    direction = "right";
-                else
-                    direction = "down";
-                actionLockCounter = 0;
-            }
+            // Minimum distance to have aggro
+            checkStartAggro(gamepanel.player, 20, 100);
+
+            //Get random direction
+            getRandomDirection();
         }
 
-    }
-    public void attack()
-    {
-        attackCount++;
-        if(attackCount <= 5) {
-            attackAnimation = 1;
-        }
-        if(attackCount > 5 && attackCount <= 25) {
-            attackAnimation = 2;
-
-            //Current world x, world y, solid area
-            int currentWorldX = worldX;
-            int currentWorldY = worldY;
-            int solidAreaWidth = solidArea.width;
-            int solidAreaHeight = solidArea.height;
-
-            if(direction.equals("up"))
-            {
-                worldY -= attackArea.height;
-            }
-            if(direction.equals("down"))
-            {
-                worldY += attackArea.height;
-            }
-            if(direction.equals("left"))
-            {
-                worldX -= attackArea.width;
-            }
-            if(direction.equals("right"))
-            {
-                worldX += attackArea.width;
-            }
-
-            solidArea.width = attackArea.width;
-            solidArea.height = attackArea.height;
-
-            // Check player collision
-            if(gamepanel.collisionCheck.checkPlayer(this))
-            {
-                gamepanel.player.calculateDamageReceive(this);
-            }
-            // Check interactive collision
-
-            worldX = currentWorldX;
-            worldY = currentWorldY;
-            solidArea.width = solidAreaWidth;
-            solidArea.height = solidAreaHeight;
-
-        }
-        if(attackCount > 25 && attackCount <= 45) attackAnimation = 3;
-        if(attackCount > 45 && attackCount <= 65) attackAnimation = 4;
-        if(attackCount > 65)
+        // check if it's time to attack
+        if(!attacking)
         {
-            attackCount = 0;
-            attackAnimation = 1;
+            checkAttackAggro(100, gamepanel.tileSize, gamepanel.tileSize);
         }
     }
     public void damageReaction()
@@ -196,6 +125,5 @@ public class Skeleton extends Entity {
             dropItem(new GoldCoinObject(gamepanel));
             dropItem(new HeartObject(gamepanel));
         }
-
     }
 }

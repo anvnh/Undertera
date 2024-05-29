@@ -18,7 +18,7 @@ public class KeyObject extends Entity {
         price = 2;
         type = type_consumable;
         //collision = false;
-        image = setup_entity_1("/objects/key_01a");
+        image = setup_entity("/objects/key_01a", 32, 32);
         description = "[" + name + "]" + " A key to unlock the door.";
         stackable = true;
     }

@@ -74,8 +74,8 @@ public class AssetSetter {
         i++;
          */
         gamepanel.monster[mapNum][i] = new Skeleton(gamepanel);
-        gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 28;
-        gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 21;
+        gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 13;
+        gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 34;
         i++;
         gamepanel.monster[mapNum][i] = new BlueSlime(gamepanel);
         gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 31;

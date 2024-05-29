@@ -74,66 +74,28 @@ public class BlueSlime extends Entity {
     {
         super.update();
 
-        int xDistance = Math.abs(worldX - gamepanel.player.worldX);
-        int yDistance = Math.abs(worldY - gamepanel.player.worldY);
-        int tileDistance = (int)Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2)) / gamepanel.tileSize;
-
-        // Minimum distance to have aggro
-        if(!onPath && tileDistance < 3)
-        {
-            onPath = true;
-        }
-        // The maximum distance to drop aggro
-        if(onPath && tileDistance > 20)
-        {
-            onPath = false;
-        }
     }
     public void setAction()
     {
         if(onPath)
         {
-            int endCol = (gamepanel.player.worldX + gamepanel.player.solidArea.x) / gamepanel.tileSize;
-            int endRow = (gamepanel.player.worldY + gamepanel.player.solidArea.y) / gamepanel.tileSize;
+            // The maximum distance to drop aggro
+            checkDropAggro(gamepanel.player, 20, 100);
 
-            searchPath(endCol, endRow);
+            // Find the direction
+            searchPath(getGoalCol(gamepanel.player), getGoalRow(gamepanel.player));
 
-            // Randomly shooting the projectile
-            /*
-            int i = new Random().nextInt(1000) + 1;
-            if(i > 200 && !projectile.alive && shotAvailableCounter == 60){
-                projectile.set(worldX, worldY, direction, true, this);
-                for(int j = 0; j < gamepanel.projectile[1].length; j++)
-                {
-                    if(gamepanel.projectile[gamepanel.currentMap][j] == null)
-                    {
-                        gamepanel.projectile[gamepanel.currentMap][j] = projectile;
-                        break;
-                    }
-                }
-                shotAvailableCounter = 0;
-            }
-             */
+            // Randomly shoot projectile
+            checkShootingAggro(1000, 60);
         }
         else
         {
-            actionLockCounter ++;
-            if(actionLockCounter == 120)
-            {
-                Random random = new Random();
-                int i = random.nextInt(100) + 1;
-                if(i <= 25)
-                    direction = "left";
-                else if(i <= 50)
-                    direction = "up";
-                else if(i <= 75)
-                    direction = "right";
-                else
-                    direction = "down";
-                actionLockCounter = 0;
-            }
-        }
+            // Minimum distance to have aggro
+            checkStartAggro(gamepanel.player, 5, 100);
 
+            //Get random direction
+            getRandomDirection();
+        }
     }
     public void damageReaction()
     {

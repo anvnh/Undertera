@@ -33,7 +33,14 @@ public class CollisionCheck {
             else entity.speed = entity.originalSpeed;
         }
 
-        switch (entity.direction){
+        // Use a temporal direction when it's being knocked back
+        String direction = entity.direction;
+        if(entity.knockBack)
+        {
+            direction = entity.knockBackDirection;
+        }
+
+        switch (direction){
             case "up":
                 entityTopRow = (entityTopWorldY - entity.speed) / gamepanel.tileSize;
                 tileNum1 = gamepanel.tileM.mapTileNum[gamepanel.currentMap][entityLeftCol][entityTopRow];
@@ -117,6 +124,12 @@ public class CollisionCheck {
     public int checkEntity(Entity entity, Entity[][] target)
     {
         int index = 999;
+        // Use a temporal direction when it's being knocked back
+        String direction = entity.direction;
+        if(entity.knockBack) {
+            direction = entity.knockBackDirection;
+
+        }
         for(int i = 0; i < target[1].length; i++)
         {
             if(target[gamepanel.currentMap][i] != null)
@@ -129,7 +142,7 @@ public class CollisionCheck {
                 target[gamepanel.currentMap][i].solidArea.x = target[gamepanel.currentMap][i].worldX + target[gamepanel.currentMap][i].solidArea.x;
                 target[gamepanel.currentMap][i].solidArea.y = target[gamepanel.currentMap][i].worldY + target[gamepanel.currentMap][i].solidArea.y;
 
-                switch(entity.direction)
+                switch(direction)
                 {
                     // Check if player is using dash or not
                     case "up":

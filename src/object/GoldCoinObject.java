@@ -16,7 +16,7 @@ public class GoldCoinObject extends Entity {
         name = "Gold Coin";
         value = 10;
         objectType = "object";
-        image = setup_entity_1("/objects/coins/gold_coin");
+        image = setup_entity("/objects/coins/gold_coin", 32, 32);
     }
     public boolean use(Entity entity, GamePanel gamepanel)
     {

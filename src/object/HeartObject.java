@@ -17,7 +17,7 @@ public class HeartObject extends Entity {
         value = 2;
         objectType = "object";
         type = type_pickuponly;
-        image = setup_entity_1("/objects/heart_full");
+        image = setup_entity("/objects/heart_full", 32, 32);
         try {
             image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/heart0.png")));
             image2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/heart1.png")));
