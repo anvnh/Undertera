@@ -97,6 +97,7 @@ public class Entity {
 
 
     //================================== Item Attribute ========================================//
+
     public ArrayList<Entity> inventory = new ArrayList<>();
     public final int maxInventorySize = 144;
     public int value;
@@ -106,6 +107,9 @@ public class Entity {
     public int useCost;
     public int price = 0;
     public int knockBackPower = 0;
+    public boolean stackable = false;
+    public int quantity = 1;
+
     //==========================================================================================//
 
     //====================================== Types =============================================//

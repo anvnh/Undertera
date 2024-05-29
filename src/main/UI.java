@@ -506,6 +506,26 @@ public class UI {
             }
 
             g2.drawImage(entity.inventory.get(i).image, slotX, slotY, gamepanel.tileSize, gamepanel.tileSize,null);
+
+            //Display the quantity
+            if(entity.inventory.get(i).quantity > 1)
+            {
+                g2.setFont(g2.getFont().deriveFont(20f));
+                int amountX, amountY;
+
+                String s = "" + entity.inventory.get(i).quantity;
+                amountX = slotX + gamepanel.tileSize - g2.getFontMetrics().stringWidth(s) - 5;
+                amountY = slotY + gamepanel.tileSize - 5;
+
+                // Shadow
+                g2.setColor(Color.BLACK);
+                g2.drawString(s, amountX, amountY);
+
+                // Number
+                g2.setColor(Color.WHITE);
+                g2.drawString(s, amountX - 2, amountY - 2);
+            }
+
             slotX += gamepanel.tileSize; //calculate the next slot
             if(slotX >= frameX + frameWidth - gamepanel.tileSize)
             {
@@ -926,6 +946,20 @@ public class UI {
                     currentDialogue = "You don't have enough coin!";
                     drawDialogueScreen();
                 }
+                else {
+                    if(gamepanel.player.canObtainItem(npc.inventory.get(itemIndex)))
+                    {
+                        gamepanel.player.coin -= npc.inventory.get(itemIndex).price;
+                        //gamepanel.player.inventory.add(npc.inventory.get(itemIndex));
+                    }
+                    else
+                    {
+                        subState = 0;
+                        currentDialogue = "Your inventory is full!\n Free up some space!";
+                        drawDialogueScreen();
+                    }
+                }
+                /*
                 else if(gamepanel.player.inventory.size() == gamepanel.player.maxInventorySize)
                 {
                     subState = 0;
@@ -938,6 +972,7 @@ public class UI {
                     gamepanel.player.inventory.add(npc.inventory.get(itemIndex));
                     //System.out.println(gamepanel.player.inventory.size());
                 }
+                 */
             }
         }
 
@@ -990,8 +1025,14 @@ public class UI {
                 }
                 else
                 {
+                    if(gamepanel.player.inventory.get(itemIndex).quantity > 1)
+                    {
+                        gamepanel.player.inventory.get(itemIndex).quantity--;
+                    }
+                    else {
+                        gamepanel.player.inventory.remove(itemIndex);
+                    }
                     gamepanel.player.coin += price;
-                    gamepanel.player.inventory.remove(itemIndex);
                 }
             }
         }

@@ -499,14 +499,20 @@ public class Player extends Entity{
             else
             {
                 String text;
-                if(inventory.size() != maxInventorySize)
+                if(canObtainItem(gamepanel.objects[gamepanel.currentMap][objectIndex]))
                 {
-                    inventory.add(gamepanel.objects[gamepanel.currentMap][objectIndex]); //fixed
+                    //inventory.add(gamepanel.objects[gamepanel.currentMap][objectIndex]); //fixed
                     gamepanel.playSoundEffect(7);
                     text = "Picked up " + gamepanel.objects[gamepanel.currentMap][objectIndex].name; //fixed
+                    /*
                     gamepanel.ui.addMessage(text);
+                     */
                     gamepanel.objects[gamepanel.currentMap][objectIndex] = null; //fixed || REMEMBER THIS LINE!!!
                 }
+                else {
+                    text = "Cannot carry any more items.";
+                }
+                gamepanel.ui.addMessage(text);
             }
         }
     }
@@ -647,7 +653,6 @@ public class Player extends Entity{
     // Select or using items from inventory
     public void selectItem(){
         int itemIndex = gamepanel.ui.getItemIndexOnSlot(gamepanel.ui.playerSlotCol, gamepanel.ui.playerSlotRow);
-
         if(itemIndex < inventory.size())
         {
             Entity selectedItem = inventory.get(itemIndex);
@@ -666,11 +671,59 @@ public class Player extends Entity{
             if(selectedItem.type == type_consumable)
             {
                 if(selectedItem.use(this, gamepanel))
-                    inventory.remove(itemIndex);
+                    if(selectedItem.quantity > 1)
+                    {
+                        selectedItem.quantity--;
+                    }
+                    else {
+                        inventory.remove(itemIndex);
+                    }
             }
         }
     }
-
+    public int searchItemInInventory(String itemName)
+    {
+        int itemIndex = 999;
+        for(int i = 0; i < inventory.size(); i++)
+        {
+            if(inventory.get(i).name.equals(itemName))
+            {
+                itemIndex = i;
+                break;
+            }
+        }
+        return itemIndex;
+    }
+    public boolean canObtainItem(Entity item)
+    {
+        boolean canObtain = false;
+        if(item.stackable)
+        {
+            int index = searchItemInInventory(item.name);
+            if(index != 999)
+            {
+                inventory.get(index).quantity ++;
+                canObtain = true;
+            }
+            else // New item so need to check vacant space
+            {
+                if(inventory.size() != maxInventorySize)
+                {
+                    inventory.add(item);
+                    canObtain = true;
+                }
+            }
+        }
+        else  // Not stackable
+        {
+            if(inventory.size() != maxInventorySize)
+            {
+                inventory.add(item);
+                canObtain = true;
+            }
+        }
+        return canObtain;
+    }
     public void draw_player(Graphics2D g2)
     {
         BufferedImage image = null;

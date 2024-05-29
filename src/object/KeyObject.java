@@ -20,7 +20,7 @@ public class KeyObject extends Entity {
         //collision = false;
         image = setup_entity_1("/objects/key_01a");
         description = "[" + name + "]" + " A key to unlock the door.";
-
+        stackable = true;
     }
     public boolean use(Entity entity, GamePanel gamepanel)
     {
