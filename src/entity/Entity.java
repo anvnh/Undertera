@@ -109,6 +109,7 @@ public class Entity {
     public int knockBackPower = 0;
     public boolean stackable = false;
     public int quantity = 1;
+    public int lightRadius;
 
     //==========================================================================================//
 
@@ -123,6 +124,7 @@ public class Entity {
     public final int type_consumable = 6;
     public final int type_pickuponly = 7;
     public final int type_obstacle = 8;
+    public final int type_light = 9;
     //==========================================================================================//
 
     //==========================================================================================//
@@ -168,6 +170,7 @@ public class Entity {
     public double life;
     public Entity currentWeapon;
     public Entity currentArmor;
+    public Entity currentLight;
     public Projectile projectile;
     //==========================================================================================//
 

@@ -13,60 +13,51 @@ public class Lightning {
     GamePanel gamepanel;
     BufferedImage darknessFilter;
 
-    public Lightning(GamePanel gamepanel, int circleSize)
+    public Lightning(GamePanel gamepanel)
+    {
+        this.gamepanel = gamepanel;
+        setLightSource();
+    }
+    public void setLightSource()
     {
         // Create a buffered image
         darknessFilter = new BufferedImage(gamepanel.screenWidth, gamepanel.screenHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) darknessFilter.getGraphics();
 
-        // Created a darkened screen-sized rectangle
-        Area screenArea = new Area(new Rectangle2D.Double(0, 0, gamepanel.screenWidth, gamepanel.screenHeight));
-
-        // Get center of the x and y of the circle
-        int centerX = gamepanel.player.screenX + gamepanel.tileSize - 14;
-        int centerY = gamepanel.player.screenY + gamepanel.tileSize / 2;
-
-        // Get the top left x and y of the light circle
-        double x = centerX - (double) circleSize / 2;
-        double y = centerY - (double) circleSize / 2;
-
-        // Create a light circle shape
-        Shape circleShape = new Ellipse2D.Double(x, y, circleSize, circleSize);
-
-        // Create a light circle area
-        Area lightArea = new Area(circleShape);
-
-        // Subtract the light circle area from the screen area
-        screenArea.subtract(lightArea);
-
-
-        // Create a gradation effect within the light circle
-        Color[] color = new Color[20];
-        float[] fraction = new float[20];
-
-        // Set the color and fraction data
-        for (int i = 0; i < 20; i++) {
-            color[i] = new Color(0, 0, 0, (float) (i / (20 + 0.5)));
-            fraction[i] = (float) i / 20;
+        if(gamepanel.player.currentLight == null)
+        {
+            g2.setColor(new Color(0, 0, 0, 0.95f));
         }
+        else {
+            // Get center of the x and y of the circle
+            int centerX = gamepanel.player.screenX + gamepanel.tileSize - 14;
+            int centerY = gamepanel.player.screenY + gamepanel.tileSize / 2;
 
-        // Create a gradation paint settings for the light circle
-        RadialGradientPaint gradientPaint = new RadialGradientPaint(centerX, centerY, (float) circleSize / 2, fraction, color);
+            // Create a gradation effect within the light circle
+            Color[] color = new Color[20];
+            float[] fraction = new float[20];
 
-        // Set the gradient data on g2
-        g2.setPaint(gradientPaint);
+            // Set the color and fraction data
+            for (int i = 0; i < 20; i++) {
+                color[i] = new Color(0, 0, 0, (float) (i / (20 + 0.5)));
+                fraction[i] = (float) i / 20;
+            }
 
-        // Draw the light circle
-        g2.fill(lightArea);
+            // Create a gradation paint settings for the light circle
+            RadialGradientPaint gradientPaint = new RadialGradientPaint(centerX, centerY, (float) gamepanel.player.currentLight.lightRadius, fraction, color);
 
-        /* Set color to draw the rectangle
-        g2.setColor(new Color(0, 0, 0, 0.91f));
-         */
-
-        // Draw the screen rectangle without the light circle area
-        g2.fill(screenArea);
-
+            // Set the gradient data on g2
+            g2.setPaint(gradientPaint);
+        }
+        g2.fillRect(0, 0, gamepanel.screenWidth, gamepanel.screenHeight);
         g2.dispose();
+    }
+    public void update()
+    {
+        if(gamepanel.player.lightUpdate){
+            setLightSource();
+            gamepanel.player.lightUpdate = false;
+        }
     }
     public void draw(Graphics2D g2)
     {

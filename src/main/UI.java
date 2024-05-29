@@ -498,8 +498,11 @@ public class UI {
         for(int i = 0; i < entity.inventory.size(); i++)
         {
             //Equipped cursor color
-            if(entity.inventory.get(i) == entity.currentWeapon
-                    || entity.inventory.get(i) == entity.currentArmor ) // Check if the item is equipped
+            if(
+                    entity.inventory.get(i) == entity.currentWeapon
+                    || entity.inventory.get(i) == entity.currentArmor
+                    || entity.inventory.get(i) == entity.currentLight
+            ) // Check if the item is equipped
             {
                 g2.setColor(new Color(241, 229, 63));
                 g2.fillRoundRect(slotX, slotY, gamepanel.tileSize, gamepanel.tileSize, 10, 10);

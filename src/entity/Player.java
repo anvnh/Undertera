@@ -20,6 +20,7 @@ public class Player extends Entity{
     public int hasKey = 0;
     public final int maxInventorySize = 144;
     public boolean dashSound = false;
+    public boolean lightUpdate = false;
 
     public Player(GamePanel gp, KeyboardHandler kh){
         super(gp);
@@ -667,6 +668,17 @@ public class Player extends Entity{
             {
                 currentArmor = selectedItem;
                 defense = getDefense();
+            }
+            if(selectedItem.type == type_light)
+            {
+                if(currentLight == selectedItem)
+                {
+                    currentLight = null;
+                }
+                else {
+                    currentLight = selectedItem;
+                }
+                lightUpdate = true;
             }
             if(selectedItem.type == type_consumable)
             {

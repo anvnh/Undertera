@@ -14,7 +14,10 @@ public class EnvironmentManager {
     }
     public void setup()
     {
-        lightning = new Lightning(gamepanel, 350);
+        lightning = new Lightning(gamepanel);
+    }
+    public void update() {
+        lightning.update();
     }
     public void draw(Graphics2D g2)
     {
