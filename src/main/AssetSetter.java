@@ -23,7 +23,7 @@ public class AssetSetter {
         gamepanel.objects[mapNum][i].worldY = gamepanel.tileSize * 19;
         i++;
 
-        gamepanel.objects[mapNum][i] = new Potion_RedObject(gamepanel);
+        gamepanel.objects[mapNum][i] = new BedObject(gamepanel);
         gamepanel.objects[mapNum][i].worldX = gamepanel.tileSize * 22;
         gamepanel.objects[mapNum][i].worldY = gamepanel.tileSize * 19;
         i++;

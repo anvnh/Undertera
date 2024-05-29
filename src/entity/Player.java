@@ -143,6 +143,16 @@ public class Player extends Entity{
             go_right[i] = setup_player("/player/go_right_" + (i + 1));
         }
     }
+    public void getSleepingImage(BufferedImage image1)
+    {
+        for(int i = 0; i < 6; i++)
+        {
+            stand_down[i] = image1;
+            stand_up[i] = image1;
+            stand_left[i] = image1;
+            stand_right[i] = image1;
+        }
+    }
     public void getPlayerAttackImage()
     {
         if(currentWeapon.type == type_sword)
@@ -682,14 +692,13 @@ public class Player extends Entity{
             }
             if(selectedItem.type == type_consumable)
             {
-                if(selectedItem.use(this, gamepanel))
-                    if(selectedItem.quantity > 1)
-                    {
+                if(selectedItem.use(this, gamepanel)) {
+                    if (selectedItem.quantity > 1) {
                         selectedItem.quantity--;
-                    }
-                    else {
+                    } else {
                         inventory.remove(itemIndex);
                     }
+                }
             }
         }
     }

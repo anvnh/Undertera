@@ -59,7 +59,7 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter assetSetter = new AssetSetter(this);
     Config config = new Config(this);
     public PathFinder pathFinder = new PathFinder(this);
-    EnvironmentManager environmentManager = new EnvironmentManager(this);
+    public EnvironmentManager environmentManager = new EnvironmentManager(this);
 
     // Entity and Object
     public Player player = new Player(this, Key);
@@ -81,6 +81,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int characterState = 3;
     public final int optionsState = 4;
     public final int tradeState = 5;
+    public final int sleepState = 6;
     public final int gameOverState = 999;
     //==========================================================================================//
 

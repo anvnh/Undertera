@@ -31,6 +31,7 @@ public class UI {
     public int npcSlotCol = 0, npcSlotRow = 0;
     int subState = 0;
     public Entity npc;
+    int counter = 0;
     public UI(GamePanel gp)
     {
         this.gamepanel = gp;
@@ -128,6 +129,12 @@ public class UI {
         if(gamepanel.gameState == gamepanel.tradeState)
         {
             drawTradeScreen();
+        }
+
+        // Sleep State
+        if(gamepanel.gameState == gamepanel.sleepState)
+        {
+            drawSleepScreen();
         }
     }
     public void drawPlayerMana()
@@ -1037,6 +1044,29 @@ public class UI {
                     }
                     gamepanel.player.coin += price;
                 }
+            }
+        }
+    }
+
+    public void drawSleepScreen()
+    {
+        counter++;
+        if(counter < 360) {
+            gamepanel.environmentManager.lightning.filterAlpha += 0.01f;
+            if(gamepanel.environmentManager.lightning.filterAlpha > 1f)
+            {
+                gamepanel.environmentManager.lightning.filterAlpha = 1f;
+            }
+        }
+        if(counter >= 360) { // approximately 3 sec
+            gamepanel.environmentManager.lightning.filterAlpha -= 0.01f;
+            if(gamepanel.environmentManager.lightning.filterAlpha < 0f)
+            {
+                gamepanel.environmentManager.lightning.filterAlpha = 0f;
+                counter = 0;
+                gamepanel.environmentManager.lightning.dayState = gamepanel.environmentManager.lightning.day;
+                gamepanel.gameState = gamepanel.playState;
+                gamepanel.player.getPlayerImage();
             }
         }
     }

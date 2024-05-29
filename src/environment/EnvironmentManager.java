@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class EnvironmentManager {
     GamePanel gamepanel;
-    Lightning lightning;
+    public Lightning lightning;
 
     public EnvironmentManager(GamePanel gamepanel)
     {
