@@ -52,15 +52,14 @@ public class EventHandler {
 
         if(canTouchEvent)
         {
-            if(hit(0, 23, 12, "up"))
+            if(hit(0, 20, 12, "up"))
             {
-                healingPool(gamepanel.dialogueState);
                 resetMons(gamepanel.dialogueState);
             }
-            else if(hit(0, 31, 13, "any")) {
+            if(hit(0, 31, 12, "any")) {
                 teleport(1, 12, 12);
             }
-            else if(hit(1, 12, 12, "any")) {
+            if(hit(1, 12, 12, "any")) {
                 teleport(0, 31, 12);
             }
         }
@@ -69,7 +68,6 @@ public class EventHandler {
     public boolean hit(int map, int col, int row, String requestDirection)
     {
         boolean hit = false;
-
         if(map == gamepanel.currentMap) {
             gamepanel.player.solidArea.x = gamepanel.player.solidAreaDefaultX + gamepanel.player.worldX;
             gamepanel.player.solidArea.y = gamepanel.player.solidAreaDefaultY + gamepanel.player.worldY;

@@ -57,6 +57,10 @@ public class Player extends Entity{
     {
         worldX = gamepanel.tileSize * 22;
         worldY = gamepanel.tileSize * 20;
+        /*
+        worldX = gamepanel.tileSize * 58;
+        worldY = gamepanel.tileSize * 47;
+         */
         speed = 3;
         originalSpeed = 3;
         dashSpeed = speed * 4;
