@@ -269,7 +269,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             //player.draw_player(g2);
 
-            //adding npc's
+            //adding npc
             for(int i = 0; i < npc[1].length; i++)
             {
                 if(npc[currentMap][i] != null)

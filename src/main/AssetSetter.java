@@ -17,6 +17,16 @@ public class AssetSetter {
         gamepanel.objects[mapNum][i].worldX = gamepanel.tileSize * 24;
         gamepanel.objects[mapNum][i].worldY = gamepanel.tileSize * 19;
         i++;
+
+        gamepanel.objects[mapNum][i] = new DoorObject(gamepanel);
+        gamepanel.objects[mapNum][i].worldX = gamepanel.tileSize * 11;
+        gamepanel.objects[mapNum][i].worldY = gamepanel.tileSize * 21;
+        i++;
+
+        gamepanel.objects[mapNum][i] = new ChestObject(gamepanel, new KeyObject(gamepanel));
+        gamepanel.objects[mapNum][i].worldX = gamepanel.tileSize * 12;
+        gamepanel.objects[mapNum][i].worldY = gamepanel.tileSize * 20;
+        i++;
     }
 
     public void setNPC() {

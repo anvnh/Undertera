@@ -5,6 +5,7 @@ import main.UtilityTools;
 import object.*;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -217,7 +218,6 @@ public class Player extends Entity{
             contactMonster(monsterIndex);
 
 
-
             // Check Interactive Tile Collision
             gamepanel.collisionCheck.checkEntity(this, gamepanel.interactiveTile);  // check player collision with interactive tiles
 
@@ -310,9 +310,16 @@ public class Player extends Entity{
 
             gamepanel.Key.communicateWithNPC = false;
 
+            //Counter for running sounds
+            runningSoundCounter++;
+            if(runningSoundCounter == 45) {
+                gamepanel.playSoundEffect(16);
+                runningSoundCounter = 0;
+            }
+
             runCount++; // Counter for switching running animation
             if (runCount > 15) {
-                runAnimation = runAnimation == 6 ? 1 : runAnimation + 1;
+                runAnimation = (runAnimation == 6) ? (1) : (runAnimation + 1);
                 runCount = 0;
             }
         }
@@ -482,7 +489,15 @@ public class Player extends Entity{
                 gamepanel.objects[gamepanel.currentMap][objectIndex].use(this, gamepanel); //fixed
                 gamepanel.objects[gamepanel.currentMap][objectIndex] = null; //fixed
             }
-            else {
+            else if(gamepanel.objects[gamepanel.currentMap][objectIndex].type == type_obstacle)
+            {
+                if(Key.enterPressed)
+                {
+                    gamepanel.objects[gamepanel.currentMap][objectIndex].interact();
+                }
+            }
+            else
+            {
                 String text;
                 if(inventory.size() != maxInventorySize)
                 {
@@ -629,6 +644,7 @@ public class Player extends Entity{
         }
     }
 
+    // Select or using items from inventory
     public void selectItem(){
         int itemIndex = gamepanel.ui.getItemIndexOnSlot(gamepanel.ui.playerSlotCol, gamepanel.ui.playerSlotRow);
 
@@ -649,8 +665,8 @@ public class Player extends Entity{
             }
             if(selectedItem.type == type_consumable)
             {
-                selectedItem.use(this, gamepanel);
-                inventory.remove(itemIndex);
+                if(selectedItem.use(this, gamepanel))
+                    inventory.remove(itemIndex);
             }
         }
     }

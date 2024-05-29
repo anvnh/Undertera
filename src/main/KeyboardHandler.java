@@ -172,6 +172,10 @@ public class KeyboardHandler implements KeyListener {
             gamepanel.ui.subState = 0;
             Options_Pressed = true;
         }
+        if(code == KeyEvent.VK_ENTER)
+        {
+            enterPressed = true;
+        }
     }
     public void pauseState(int code) {
         if(code == KeyEvent.VK_P && !pausePress)
@@ -457,6 +461,10 @@ public class KeyboardHandler implements KeyListener {
         }
         if(code == KeyEvent.VK_ESCAPE){
             Options_Pressed = false;
+        }
+        if(code == KeyEvent.VK_ENTER)
+        {
+            enterPressed = false;
         }
     }
 }

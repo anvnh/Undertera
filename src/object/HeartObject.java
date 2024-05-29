@@ -29,10 +29,11 @@ public class HeartObject extends Entity {
         }
 
     }
-    public void use(Entity entity, GamePanel gamepanel)
+    public boolean use(Entity entity, GamePanel gamepanel)
     {
         gamepanel.playSoundEffect(7);
         gamepanel.ui.addMessage("Healed " + value + " HP.");
         entity.life += value;
+        return true;
     }
 }

@@ -19,7 +19,7 @@ public class Potion_RedObject extends Entity{
         description = "[" + name + "]" + " A potion that can be \n used to restore health. \n Restores " + value + " HP.";
         price = 5;
     }
-    public void use(Entity entity, GamePanel gamepanel)
+    public boolean use(Entity entity, GamePanel gamepanel)
     {
         entity.life += value;
         if(entity.life > entity.maxLife)
@@ -27,5 +27,6 @@ public class Potion_RedObject extends Entity{
             entity.life = entity.maxLife;
         }
         gamepanel.ui.addMessage("You used a Red Potion to restore " + value + " HP.");
+        return true;
     }
 }

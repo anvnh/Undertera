@@ -16,11 +16,12 @@ public class Entity {
     public int worldX, worldY;
     //========================================= Speed =============================================//
     public int speed;
-    public int originalSpeed = speed;
+    public int originalSpeed;
     public int dashSpeed;
     //=============================================================================================//
 
     //========================================= Counter ===========================================//
+
     public int runCount = 0;
     public int runAnimation = 1;
     public int standCount = 0;
@@ -28,18 +29,17 @@ public class Entity {
     public int attackCount = 0;
     public int attackAnimation = 1;
     public int shotAvailableCounter = 0;
+    public int runningSoundCounter = 0;
     public int manaRegenCounter = 0;
-
     public int actionLockCounter = 0;
     public int invincibleCounter = 0;
     public int dyingCounter = 0;
     public int dyingAnimation = 1;
     int HPBarCounter = 0;
-
     public int knockBackCounter = 0;
 
 
-    //========================================--------============================================//
+    //============================================================================================//
 
     //========================================= State ============================================//
 
@@ -118,8 +118,29 @@ public class Entity {
     public final int type_armor = 5;
     public final int type_consumable = 6;
     public final int type_pickuponly = 7;
+    public final int type_obstacle = 8;
     //==========================================================================================//
 
+    //==========================================================================================//
+    public int getLeftX() {
+        return worldX + solidArea.x;
+    }
+    public int getRightX() {
+        return worldX + solidArea.x + solidArea.width;
+    }
+    public int getTopY() {
+        return worldY + solidArea.y;
+    }
+    public int getBottomY() {
+        return worldY + solidArea.y + solidArea.height;
+    }
+    public int getCol() {
+        return (worldX + solidArea.x) / gamepanel.tileSize;
+    }
+    public int getRow() {
+        return (worldY + solidArea.y) / gamepanel.tileSize;
+    }
+    //==========================================================================================//
 
     //===================================== For advanced alg ====================================//
     public String objectType = "";
@@ -183,7 +204,10 @@ public class Entity {
         else if(Objects.equals(gamepanel.player.direction, "right"))
             direction = "left";
     }
-    public void use(Entity entity, GamePanel gamepanel){}
+    public void interact() { }
+    public boolean use(Entity entity, GamePanel gamepanel){
+        return false;
+    }
     public void checkDrop(){}
     public void dropItem(Entity drpItem){ // item dropped from killing monster
         for(int i = 0; i < gamepanel.objects[1].length; i++)
@@ -195,10 +219,6 @@ public class Entity {
                 gamepanel.objects[gamepanel.currentMap][i].worldY = worldY;
                 // Check if the dropped item is on the same tile
                 // If is in the same tile, we move it a little bit, in this case, is 15 pixel
-                if(gamepanel.objects[gamepanel.currentMap][i].worldX == gamepanel.objects[gamepanel.currentMap][i - 1].worldX){
-                    gamepanel.objects[gamepanel.currentMap][i].worldX += 10;
-                    gamepanel.objects[gamepanel.currentMap][i].worldY += 10;
-                }
                 break;
             }
         }
@@ -273,10 +293,9 @@ public class Entity {
 
             knockBackCounter++;
             // the more knockBackCounter is, the more distance object will be knock back
-            // Could be implemented knock back stat in future
             if(knockBackCounter == 20)
             {
-                    knockBackCounter = 0;
+                knockBackCounter = 0;
                 knockBack = false;
                 speed = originalSpeed;
             }
@@ -632,4 +651,38 @@ public class Entity {
              */
         }
     }
+    public int getDetected(Entity entity, Entity[][] target, String targetName)
+    {
+        int index = 999;
+
+        // check surrounding object
+        int nextWorldX = entity.getLeftX();
+        int nextWorldY = entity.getTopY();
+        switch (entity.direction)
+        {
+            case "up": nextWorldY = entity.getTopY() - 1; break;
+            case "down": nextWorldY = entity.getBottomY() + 1; break;
+            case "left": nextWorldX = entity.getLeftX() - 1; break;
+            case "right": nextWorldX = entity.getRightX() + 1; break;
+        }
+        int col = nextWorldX / gamepanel.tileSize;
+        int row = nextWorldY / gamepanel.tileSize;
+
+        for(int i = 0; i < target[1].length; i++)
+        {
+            if(target[gamepanel.currentMap][i] != null)
+            {
+                if(target[gamepanel.currentMap][i].getCol() == col
+                && target[gamepanel.currentMap][i].getRow() == row
+                && target[gamepanel.currentMap][i].name.equals(targetName) )
+                {
+                    index = i;
+                    break;
+                }
+            }
+        }
+        return index;
+    }
 }
+
+
