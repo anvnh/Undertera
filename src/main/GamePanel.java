@@ -5,6 +5,7 @@ import entity.Entity;
 import entity.Player;
 import tile.TileManager;
 import tile_interactive.InteractiveTile;
+import environment.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,6 +59,7 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter assetSetter = new AssetSetter(this);
     Config config = new Config(this);
     public PathFinder pathFinder = new PathFinder(this);
+    EnvironmentManager environmentManager = new EnvironmentManager(this);
 
     // Entity and Object
     public Player player = new Player(this, Key);
@@ -99,6 +101,7 @@ public class GamePanel extends JPanel implements Runnable {
         assetSetter.setNPC();
         assetSetter.setMonster();
         assetSetter.setInteractiveTile();
+        environmentManager.setup();
         playMusic(0);
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
@@ -342,6 +345,9 @@ public class GamePanel extends JPanel implements Runnable {
             }
             //Remove entities
             entityArrayList.clear();
+
+            // Environment
+            environmentManager.draw(g2);
 
             //UI
             ui.draw(g2);

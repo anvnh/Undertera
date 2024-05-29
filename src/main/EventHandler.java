@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.*;
+
 public class EventHandler {
     GamePanel gamepanel;
     EventRectangle[][][] eventRect;
