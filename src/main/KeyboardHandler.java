@@ -11,7 +11,7 @@ public class KeyboardHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, communicateWithNPC, F_Pressed,
             attack_Pressed, Projectile_Pressed, pausePress, characterScreenPressed, dashPressed,
-            enterPressed, Options_Pressed;
+            enterPressed, Options_Pressed, mapPressed, miniMapPressed;
     boolean checkDrawTime = false;
     GamePanel gamepanel;
 
@@ -73,9 +73,15 @@ public class KeyboardHandler implements KeyListener {
         {
             gameOverState(code);
         }
+        // Trade State
         if(gamepanel.gameState == gamepanel.tradeState)
         {
             tradeState(code);
+        }
+        // Map State
+        if(gamepanel.gameState == gamepanel.mapState)
+        {
+            mapState(code);
         }
     }
     public void titleState(int code) {
@@ -145,18 +151,12 @@ public class KeyboardHandler implements KeyListener {
         {
             attack_Pressed = true;
         }
+        // Pause game
         if(code == KeyEvent.VK_P)
         {
             gamepanel.gameState = gamepanel.pauseState;
             pausePress = true;
         }
-        // For fast reloading the map
-        /*
-        if(code == KeyEvent.VK_BACK_SLASH)
-        {
-            gamepanel.tileM.loadmap("/maps/worldV4.txt", );
-        }
-         */
         // Shoot the projectile
         if(code == KeyEvent.VK_I)
         {
@@ -165,6 +165,13 @@ public class KeyboardHandler implements KeyListener {
         }
         if(code == KeyEvent.VK_K) {
             dashPressed = true;
+        }
+        if(code == KeyEvent.VK_M && !mapPressed){
+            mapPressed = true;
+            gamepanel.gameState = gamepanel.mapState;
+        }
+        if(code == KeyEvent.VK_BACK_SLASH && !miniMapPressed){
+            gamepanel.map.miniMapOn = !gamepanel.map.miniMapOn;
         }
         if(code == KeyEvent.VK_ESCAPE)
         {
@@ -339,12 +346,18 @@ public class KeyboardHandler implements KeyListener {
 
         }
     }
+    public void mapState(int code) {
+        if(code == KeyEvent.VK_M && !mapPressed)
+        {
+            gamepanel.gameState = gamepanel.playState;
+        }
+    }
     public void playerInventory(int code)
     {
         if(code == KeyEvent.VK_J || code == KeyEvent.VK_DOWN)
         {
             gamepanel.playSoundEffect(6);
-            if(gamepanel.ui.playerSlotRow < 7)
+            if(gamepanel.ui.playerSlotRow < 9)
                 gamepanel.ui.playerSlotRow++;
         }
         if(code == KeyEvent.VK_K || code == KeyEvent.VK_UP)
@@ -356,11 +369,11 @@ public class KeyboardHandler implements KeyListener {
         if(code == KeyEvent.VK_L || code == KeyEvent.VK_RIGHT)
         {
             gamepanel.playSoundEffect(6);
-            if(gamepanel.ui.playerSlotCol <= 17){
+            if(gamepanel.ui.playerSlotCol <= 18){
                 gamepanel.ui.playerSlotCol++;
-                if(gamepanel.ui.playerSlotCol == 18) {
+                if(gamepanel.ui.playerSlotCol == 19) {
                     gamepanel.ui.playerSlotCol = 0;
-                    if(gamepanel.ui.playerSlotRow < 7)
+                    if(gamepanel.ui.playerSlotRow < 9)
                         gamepanel.ui.playerSlotRow++;
                     else gamepanel.ui.playerSlotRow = 0;
                 }
@@ -372,10 +385,10 @@ public class KeyboardHandler implements KeyListener {
             if(gamepanel.ui.playerSlotCol >= 0){
                 gamepanel.ui.playerSlotCol--;
                 if(gamepanel.ui.playerSlotCol == -1) {
-                    gamepanel.ui.playerSlotCol = 17;
+                    gamepanel.ui.playerSlotCol = 18;
                     if(gamepanel.ui.playerSlotRow > 0)
                         gamepanel.ui.playerSlotRow--;
-                    else gamepanel.ui.playerSlotRow = 7;
+                    else gamepanel.ui.playerSlotRow = 9;
                 }
             }
         }
@@ -465,6 +478,14 @@ public class KeyboardHandler implements KeyListener {
         if(code == KeyEvent.VK_ENTER)
         {
             enterPressed = false;
+        }
+        if(code == KeyEvent.VK_M)
+        {
+            mapPressed = false;
+        }
+        if(code == KeyEvent.VK_BACK_SLASH)
+        {
+            miniMapPressed = false;
         }
     }
 }

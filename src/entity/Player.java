@@ -18,7 +18,7 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
     public int hasKey = 0;
-    public final int maxInventorySize = 144;
+    public final int maxInventorySize = 190;
     public boolean dashSound = false;
     public boolean lightUpdate = false;
 
@@ -55,6 +55,7 @@ public class Player extends Entity{
     }
     public void setDefaultValues()
     {
+        image = setup_player("/player/go_down_1");
         worldX = gamepanel.tileSize * 22;
         worldY = gamepanel.tileSize * 20;
         /*
@@ -421,7 +422,8 @@ public class Player extends Entity{
     public double calculateDamageDeal(Entity entity)
     {
         attack = getAttack();
-        return attack * ((double) 110 / (110 + entity.defense));
+        double damage = attack * ((double) 110 / (110 + entity.defense));
+        return Math.round(damage * 100.0) / 100.0; // round up the damage
         // 110 is defense constant, defined as C, but I personally like to write it all down than use variables
     }
     public double calculateDamageDealwithProjectile(Entity entity, int Attack)
@@ -727,7 +729,7 @@ public class Player extends Entity{
             int index = searchItemInInventory(item.name);
             if(index != 999)
             {
-                inventory.get(index).quantity ++;
+                inventory.get(index).quantity++;
                 canObtain = true;
             }
             else // New item so need to check vacant space
@@ -741,7 +743,7 @@ public class Player extends Entity{
         }
         else  // Not stackable
         {
-            if(inventory.size() != maxInventorySize)
+            if(inventory.size() < maxInventorySize)
             {
                 inventory.add(item);
                 canObtain = true;

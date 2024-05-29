@@ -19,7 +19,7 @@ public class UI {
     GamePanel gamepanel;
     Graphics2D g2;
     public String currentDialogue;
-    Font CCRedAlert;
+    public Font CCRedAlert;
     public int commandNumber = 0;
     BufferedImage   heart_full, heart_quarter, heart_half, heart_threequarter, heart_empty,
                     mana_full, mana_half, mana_blank,
@@ -916,8 +916,8 @@ public class UI {
         drawInventory(npc, true);
 
         // Draw hint window
-        int x = gamepanel.tileSize * 19;
-        int y = gamepanel.tileSize * 10;
+        int x = gamepanel.screenWidth - gamepanel.tileSize * 11;
+        int y = gamepanel.screenHeight - gamepanel.tileSize * 5;
         int width = gamepanel.tileSize * 9 + gamepanel.tileSize / 2 + 13;
         int height = gamepanel.tileSize * 4 + gamepanel.tileSize / 2;
         drawSubWindow(x, y, width, height);
@@ -925,8 +925,8 @@ public class UI {
         g2.drawRoundRect(x + width - 175, y + height - 50, 170, 43, 30, 30);
 
         // Draw player coin
-        int coinX = gamepanel.tileSize * 24 + gamepanel.tileSize / 2;
-        int coinY = gamepanel.tileSize * 9 + gamepanel.tileSize / 4;
+        int coinX = gamepanel.tileSize * 25 + gamepanel.tileSize / 2;
+        int coinY = gamepanel.screenHeight - gamepanel.tileSize * 5 - gamepanel.tileSize / 2 - 10;
         int coinWidth = 200;
         int coinHeight = 44;
         drawSubWindow(coinX, coinY, coinWidth, coinHeight);
@@ -937,8 +937,8 @@ public class UI {
         int itemIndex = getItemIndexOnSlot(npcSlotCol, npcSlotRow);
         if(itemIndex < npc.inventory.size())
         {
-            int priceX = gamepanel.tileSize * 7 + gamepanel.tileSize / 2;
-            int priceY = gamepanel.tileSize * 9 + gamepanel.tileSize / 4;
+            int priceX = gamepanel.tileSize * 7;
+            int priceY = gamepanel.screenHeight - gamepanel.tileSize * 5 - gamepanel.tileSize / 2 - 10;
             int priceWidth = 108;
             int priceHeight = 43;
             drawSubWindow(priceX, priceY, priceWidth, priceHeight);
@@ -993,8 +993,8 @@ public class UI {
         drawInventory(gamepanel.player, true);
 
         // Draw hint window
-        int x = gamepanel.tileSize;
-        int y = gamepanel.tileSize * 10;
+        int x = gamepanel.tileSize - 10;
+        int y = gamepanel.screenHeight - gamepanel.tileSize * 5;
         int width = gamepanel.tileSize * 9 - gamepanel.tileSize / 2 + 15;
         int height = gamepanel.tileSize * 4 + gamepanel.tileSize / 2;
         drawSubWindow(x, y, width, height);
@@ -1002,8 +1002,8 @@ public class UI {
         g2.drawRoundRect(x + 6, y + height - 50, 150, 43, 30, 30);
 
         // Draw player coin
-        int coinX = gamepanel.tileSize * 24 + gamepanel.tileSize / 2;
-        int coinY = gamepanel.tileSize * 9 + gamepanel.tileSize / 4;
+        int coinX = gamepanel.tileSize * 25 + gamepanel.tileSize / 2;
+        int coinY = gamepanel.screenHeight - gamepanel.tileSize * 5 - gamepanel.tileSize / 2 - 10;
         int coinWidth = 200;
         int coinHeight = 44;
         drawSubWindow(coinX, coinY, coinWidth, coinHeight);
@@ -1015,7 +1015,7 @@ public class UI {
         if(itemIndex < gamepanel.player.inventory.size())
         {
             int priceX = gamepanel.tileSize * 10;
-            int priceY = gamepanel.tileSize * 9 + gamepanel.tileSize / 4;
+            int priceY = gamepanel.screenHeight - gamepanel.tileSize * 5 - gamepanel.tileSize / 2 - 10;
             int priceWidth = 108;
             int priceHeight = 43;
             drawSubWindow(priceX, priceY, priceWidth, priceHeight);

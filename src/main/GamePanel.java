@@ -3,6 +3,7 @@ package main;
 import ai.PathFinder;
 import entity.Entity;
 import entity.Player;
+import tile.Map;
 import tile.TileManager;
 import tile_interactive.InteractiveTile;
 import environment.*;
@@ -23,8 +24,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int weapSize = originalTileSize * (scale + 1);
     public final int tileSize = originalTileSize * scale;
     public final int monsterSize = originalTileSize * (scale + 2);
-    public final int maxScreenCol = 30;
-    public final int maxScreenRow = 15;
+    public final int maxScreenCol = 31;
+    public final int maxScreenRow = 17;
     public final int screenWidth = tileSize * maxScreenCol; //30 * 48 = 1440
     public final int screenHeight = tileSize * maxScreenRow; //15 * 48 = 720
 
@@ -60,6 +61,7 @@ public class GamePanel extends JPanel implements Runnable {
     Config config = new Config(this);
     public PathFinder pathFinder = new PathFinder(this);
     public EnvironmentManager environmentManager = new EnvironmentManager(this);
+    Map map = new Map(this);
 
     // Entity and Object
     public Player player = new Player(this, Key);
@@ -82,6 +84,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int optionsState = 4;
     public final int tradeState = 5;
     public final int sleepState = 6;
+    public final int mapState = 7;
     public final int gameOverState = 999;
     //==========================================================================================//
 
@@ -259,6 +262,10 @@ public class GamePanel extends JPanel implements Runnable {
         {
             ui.draw(g2);
         }
+        else if(gameState == mapState)
+        {
+            map.drawFullMapScreen(g2);
+        }
         else {
 
             //Tile
@@ -354,6 +361,9 @@ public class GamePanel extends JPanel implements Runnable {
 
             // Environment
             environmentManager.draw(g2);
+
+            // Mini map
+            map.drawMiniMap(g2);
 
             //UI
             ui.draw(g2);

@@ -12,7 +12,6 @@ public class ChestObject extends Entity {
     GamePanel gamepanel;
     Entity loot;
     boolean opened = false;
-    private int chestAnimationCounter = 0;
 
     public ChestObject(GamePanel gamepanel, Entity loot) // loot will be more randomly than specific an loot item like this in future
     {
@@ -48,16 +47,16 @@ public class ChestObject extends Entity {
             StringBuilder sb = new StringBuilder();
             sb.append("You open the chest and found a " + loot.name + ".");
 
-            if(gamepanel.player.inventory.size() == gamepanel.player.maxInventorySize)
+            if(gamepanel.player.canObtainItem(loot))
             {
-                sb.append("\n...But you cannot carry any more.");
+                opened = true;
+                image = image3;
             }
             else
             {
-                sb.append("\nYou obtain the " + loot.name + ".");
-                gamepanel.player.inventory.add(loot);
-                image = image3;
+                sb.append(" But you can't carry anymore items.");
             }
+
             gamepanel.ui.currentDialogue = sb.toString();
         }
         else {
