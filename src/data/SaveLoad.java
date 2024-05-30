@@ -13,21 +13,7 @@ public class SaveLoad {
     {
         this.gamepanel = gamepanel;
     }
-    public Entity getObject(String itemName)
-    {
-        return switch (itemName) {
-            case "Axe" -> new AxeObject(gamepanel);
-            case "Bed" -> new BedObject(gamepanel);
-            case "Sword" -> new SwordObject(gamepanel);
-            case "Door" -> new DoorObject(gamepanel);
-            case "Key" -> new KeyObject(gamepanel);
-            case "Red Potion" -> new Potion_RedObject(gamepanel);
-            case "Shield" -> new ShieldObject(gamepanel);
-            case "Lantern" -> new LanternObject(gamepanel);
-            case "Chest" -> new ChestObject(gamepanel);
-            default -> null;
-        };
-    }
+
     public void save()
     {
         try {
@@ -107,7 +93,7 @@ public class SaveLoad {
             gamepanel.player.inventory.clear();
             for(int i = 0; i < ds.itemNames.size(); i++)
             {
-                gamepanel.player.inventory.add(getObject(ds.itemNames.get(i)));
+                gamepanel.player.inventory.add(gamepanel.entityGenerator.getObject(ds.itemNames.get(i)));
                 gamepanel.player.inventory.get(i).quantity = ds.itemQuantity.get(i);
             }
 
@@ -127,7 +113,7 @@ public class SaveLoad {
                         gamepanel.objects[mapNum][i] = null;
                     }
                     else {
-                        gamepanel.objects[mapNum][i] = getObject(ds.mapObjectName[mapNum][i]);
+                        gamepanel.objects[mapNum][i] = gamepanel.entityGenerator.getObject(ds.mapObjectName[mapNum][i]);
                         gamepanel.objects[mapNum][i].worldX = ds.mapObjectWorldX[mapNum][i];
                         gamepanel.objects[mapNum][i].worldY = ds.mapObjectWorldY[mapNum][i];
                         gamepanel.objects[mapNum][i].opened = ds.mapObjectOpened[mapNum][i];

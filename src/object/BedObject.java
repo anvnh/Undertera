@@ -5,12 +5,13 @@ import main.GamePanel;
 
 public class BedObject extends Entity {
     GamePanel gamepanel;
+    public static final String objName="Bed";
     public BedObject(GamePanel gamepanel)
     {
         super(gamepanel);
         this.gamepanel = gamepanel;
 
-        name = "Bed";
+        name = objName;
         image = setup_entity("/objects/bed/bed", gamepanel.tileSize, gamepanel.tileSize); // default
 
         collision = true;
@@ -18,11 +19,17 @@ public class BedObject extends Entity {
         type = type_consumable;
         description = "You know what to do with this.";
     }
+    public void setDialogue()
+    {
+        dialogue[0][0] = "You can only sleep at night.";
+    }
+
     public boolean use(Entity entity, GamePanel gamepanel)
     {
+        setDialogue();
         if(gamepanel.environmentManager.lightning.dayState != gamepanel.environmentManager.lightning.night)
         {
-            gamepanel.ui.currentDialogue = "You can only sleep at night.";
+            startDialogue(this, 0);
             gamepanel.gameState = gamepanel.dialogueState;
             return false;
         }

@@ -9,10 +9,11 @@ import java.util.Objects;
 
 public class KeyObject extends Entity {
     GamePanel gamepanel;
+    public static final String objName = "Key";
     public KeyObject(GamePanel gamepanel){
         super(gamepanel);
 
-        name = "Key";
+        name = objName;
         direction = "down";
         objectType = "object";
         price = 2;
@@ -30,6 +31,7 @@ public class KeyObject extends Entity {
 
     public boolean use(Entity entity, GamePanel gamepanel)
     {
+        setDialogue();
         int objectIndex = getDetected(entity, gamepanel.objects, "Door");
         if(objectIndex != 999)
         {

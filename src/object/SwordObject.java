@@ -5,9 +5,11 @@ import main.GamePanel;
 
 public class SwordObject extends Entity {
 
+    public static final String objName = "Sword";
+
     public SwordObject(GamePanel gamePanel) {
         super(gamePanel);
-        name = "Sword";
+        name = objName;
         type = type_sword;
         image = setup_entity("/objects/weapons/tier_0/sword", gamePanel.tileSize, gamePanel.tileSize);
 

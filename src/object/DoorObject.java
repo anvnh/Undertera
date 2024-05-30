@@ -7,12 +7,13 @@ import javax.imageio.ImageIO;
 public class DoorObject extends Entity
 {
     GamePanel gamepanel;
+    public static final String objName = "Door";
     public DoorObject(GamePanel gamepanel)
     {
         super(gamepanel);
         this.gamepanel = gamepanel;
 
-        name = "Door";
+        name = objName;
         direction = "down";
         objectType = "object";
         type = type_obstacle;
@@ -25,9 +26,11 @@ public class DoorObject extends Entity
     public void setDialogue()
     {
         dialogue[0][0] = "You need a key to open this";
+        dialogue[0][1] = "Can you find a key anywhere ?";
     }
     public void interact()
     {
+        setDialogue();
         startDialogue(this, 0);
     }
 }

@@ -7,11 +7,12 @@ import entity.*;
 
 public class Potion_RedObject extends Entity{
     GamePanel gamepanel;
+    public static final String objName = "Red Potion";
     public Potion_RedObject(GamePanel gamepanel){
         super(gamepanel);
 
         value = 10;
-        name = "Red Potion";
+        name = objName;
         //type = type_potion;
         image = setup_entity("/objects/potion_red", 32, 32);
         objectType = "object";

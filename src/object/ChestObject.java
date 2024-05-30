@@ -10,13 +10,14 @@ import java.util.Objects;
 public class ChestObject extends Entity {
 
     GamePanel gamepanel;
+    public static final String objName = "Chest";
 
     public ChestObject(GamePanel gamepanel) // loot will be more randomly than specific an loot item like this in future
     {
         super(gamepanel);
         this.gamepanel = gamepanel;
 
-        name = "Chest";
+        name = objName;
         image = setup_entity("/objects/chests/wooden_chest_0", gamepanel.tileSize, gamepanel.tileSize); // default
 
         image1 = setup_entity("/objects/chests/wooden_chest_0", gamepanel.tileSize, gamepanel.tileSize); // opened animation 1

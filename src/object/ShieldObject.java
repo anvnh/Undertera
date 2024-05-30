@@ -5,9 +5,11 @@ import main.GamePanel;
 
 public class ShieldObject extends Entity {
 
+    public static final String objName = "Shield";
+
     public ShieldObject(GamePanel gamePanel) {
         super(gamePanel);
-        name = "Shield";
+        name = objName;
         type = type_armor;
         image = setup_entity("/objects/weapons/tier_0/shield", gamePanel.tileSize, gamePanel.tileSize);
         defenseValue = 10;

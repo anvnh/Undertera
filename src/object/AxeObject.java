@@ -4,10 +4,12 @@ import entity.Entity;
 import main.GamePanel;
 
 public class AxeObject extends Entity {
-    GamePanel gamePanel;
+
+    public static final String objName="Axe";
+
     public AxeObject(GamePanel gamePanel) {
         super(gamePanel);
-        name = "Axe";
+        name = objName;
         image = setup_weap("/objects/weapons/tier_0/axe");
         objectType = "object";
         type = type_axe;

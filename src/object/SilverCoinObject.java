@@ -8,12 +8,14 @@ import javax.imageio.ImageIO;
 public class SilverCoinObject extends Entity {
     GamePanel gamepanel;
 
+    public static final String objName = "Silver Coin";
+
     public SilverCoinObject(GamePanel gamepanel) {
         super(gamepanel);
         this.gamepanel = gamepanel;
 
         type = type_pickuponly;
-        name = "Silver Coin";
+        name = objName;
         value = 2;
         objectType = "object";
         image = setup_entity("/objects/coins/silver_coin", 32, 32);

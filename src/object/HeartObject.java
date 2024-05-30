@@ -9,11 +9,12 @@ import java.util.Objects;
 
 public class HeartObject extends Entity {
     GamePanel gamepanel;
+    public static final String objName = "Heart";
     public HeartObject(GamePanel gp)
     {
         super(gp);
         this.gamepanel = gp;
-        name = "Heart";
+        name = objName;
         value = 2;
         objectType = "object";
         type = type_pickuponly;
