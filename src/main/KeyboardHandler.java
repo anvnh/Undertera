@@ -102,10 +102,11 @@ public class KeyboardHandler implements KeyListener {
             if(gamepanel.ui.commandNumber == 0)
             {
                 gamepanel.gameState = gamepanel.playState;
-                gamepanel.restart();
             }
             if(gamepanel.ui.commandNumber == 1)
             {
+                gamepanel.saveLoad.load();
+                gamepanel.gameState = gamepanel.playState;
             }
             if(gamepanel.ui.commandNumber == 2)
             {
@@ -304,10 +305,11 @@ public class KeyboardHandler implements KeyListener {
         if(code == KeyEvent.VK_ENTER) {
             if(gamepanel.ui.commandNum == 0) {
                 gamepanel.gameState = gamepanel.playState;
-                gamepanel.retry();
+                gamepanel.resetGame(false);
             }
             if(gamepanel.ui.commandNum == 1) {
                 gamepanel.gameState = gamepanel.titleState;
+                gamepanel.resetGame(true);
             }
         }
     }

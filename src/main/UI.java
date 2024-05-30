@@ -824,6 +824,7 @@ public class UI {
             if(gamepanel.Key.enterPressed) {
                 gamepanel.gameState = gamepanel.titleState;
                 gamepanel.Key.enterPressed = false;
+                gamepanel.resetGame(true);
             }
         }
 

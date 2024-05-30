@@ -7,7 +7,7 @@ public class ShieldObject extends Entity {
 
     public ShieldObject(GamePanel gamePanel) {
         super(gamePanel);
-        name = "Armor";
+        name = "Shield";
         type = type_armor;
         image = setup_entity("/objects/weapons/tier_0/shield", gamePanel.tileSize, gamePanel.tileSize);
         defenseValue = 10;

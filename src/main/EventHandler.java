@@ -55,6 +55,7 @@ public class EventHandler {
             if(hit(0, 20, 12, "up"))
             {
                 resetMons(gamepanel.dialogueState);
+                healingPool(gamepanel.dialogueState);
             }
             if(hit(0, 31, 12, "any")) {
                 teleport(1, 12, 12);
@@ -102,9 +103,11 @@ public class EventHandler {
     public void healingPool(int gameState)
     {
         gamepanel.gameState = gameState;
-        gamepanel.ui.currentDialogue = "The healing pool's gentle embrace replenishes your vitality, restoring \nyour health with each passing moment.";
+        gamepanel.ui.currentDialogue = "The healing pool's gentle embrace replenishes your vitality, restoring \nyour health with each passing moment." +
+                "\nThe process has been saved.";
         gamepanel.player.life = gamepanel.player.maxLife;
-        gamepanel.assetSetter.setMonster();
+        gamepanel.player.mana = gamepanel.player.maxMana;
+        gamepanel.saveLoad.save();
     }
     public void resetMons(int gameState)
     {

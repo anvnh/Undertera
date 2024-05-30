@@ -33,7 +33,8 @@ public class AssetSetter {
         gamepanel.objects[mapNum][i].worldY = gamepanel.tileSize * 21;
         i++;
 
-        gamepanel.objects[mapNum][i] = new ChestObject(gamepanel, new KeyObject(gamepanel));
+        gamepanel.objects[mapNum][i] = new ChestObject(gamepanel);
+        gamepanel.objects[mapNum][i].setLoot(new KeyObject(gamepanel));
         gamepanel.objects[mapNum][i].worldX = gamepanel.tileSize * 16;
         gamepanel.objects[mapNum][i].worldY = gamepanel.tileSize * 20;
         i++;

@@ -70,6 +70,9 @@ public class Entity {
     public boolean shielding = false;
     public boolean offBalance = false;
 
+    public Entity loot;
+    public boolean opened = false;
+
     //==========================================================================================//
 
     //=========================== Buffered animation for player ===============================//
@@ -241,6 +244,7 @@ public class Entity {
         this.gamepanel = gamePanel;
     }
 
+    public void setLoot(Entity loot){}
     public void setAction(){}
     public void damageReaction(){}
     public void speak() {
@@ -987,10 +991,10 @@ public class Entity {
         int nextWorldY = entity.getTopY();
         switch (entity.direction)
         {
-            case "up": nextWorldY = entity.getTopY() - 1; break;
-            case "down": nextWorldY = entity.getBottomY() + 1; break;
-            case "left": nextWorldX = entity.getLeftX() - 1; break;
-            case "right": nextWorldX = entity.getRightX() + 1; break;
+            case "up": nextWorldY = entity.getTopY() - gamepanel.player.speed; break;
+            case "down": nextWorldY = entity.getBottomY() + gamepanel.player.speed; break;
+            case "left": nextWorldX = entity.getLeftX() - gamepanel.player.speed; break;
+            case "right": nextWorldX = entity.getRightX() + gamepanel.player.speed; break;
         }
         int col = nextWorldX / gamepanel.tileSize;
         int row = nextWorldY / gamepanel.tileSize;

@@ -10,19 +10,16 @@ import java.util.Objects;
 public class ChestObject extends Entity {
 
     GamePanel gamepanel;
-    Entity loot;
-    boolean opened = false;
 
-    public ChestObject(GamePanel gamepanel, Entity loot) // loot will be more randomly than specific an loot item like this in future
+    public ChestObject(GamePanel gamepanel) // loot will be more randomly than specific an loot item like this in future
     {
         super(gamepanel);
         this.gamepanel = gamepanel;
-        this.loot = loot;
 
         name = "Chest";
         image = setup_entity("/objects/chests/wooden_chest_0", gamepanel.tileSize, gamepanel.tileSize); // default
 
-        image1 = setup_entity("/objects/chests/wooden_chest_1", gamepanel.tileSize, gamepanel.tileSize); // opened animation 1
+        image1 = setup_entity("/objects/chests/wooden_chest_0", gamepanel.tileSize, gamepanel.tileSize); // opened animation 1
         image2 = setup_entity("/objects/chests/wooden_chest_2", gamepanel.tileSize, gamepanel.tileSize); // opened animation 2
         image3 = setup_entity("/objects/chests/wooden_chest_3", gamepanel.tileSize, gamepanel.tileSize); // opened animation 3
 
@@ -37,6 +34,9 @@ public class ChestObject extends Entity {
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
 
+    }
+    public void setLoot(Entity loot) {
+        this.loot = loot;
     }
     public void interact()
     {

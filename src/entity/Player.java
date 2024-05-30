@@ -81,6 +81,7 @@ public class Player extends Entity{
         ///
         currentWeapon = new SwordObject(gamepanel);
         currentShield = new ShieldObject(gamepanel);
+        currentLight = null;
         projectile = new FireballObject(gamepanel);
         attack = getAttack(); // total attack
         defense = getDefense(); // total defense
@@ -90,10 +91,14 @@ public class Player extends Entity{
         worldY = gamepanel.tileSize * 20;
         direction = "down";
     }
-    public void restoreLifeAndMana() {
+    public void restoreStatus() {
         life = maxLife;
         mana = maxMana;
         invincible = false;
+        attacking = false;
+        shielding = false;
+        knockBack = false;
+        lightUpdate = true;
     }
     public void setItems(){
         inventory.clear();
@@ -111,6 +116,33 @@ public class Player extends Entity{
     public int getDefense()
     {
         return defense = dexterity * currentShield.defenseValue;
+    }
+
+    public int getCurrentWeaponSlot()
+    {
+        int currentSlot = 0;
+        for(int i = 0; i < inventory.size(); i++)
+        {
+            if(inventory.get(i) == currentWeapon)
+            {
+                currentSlot = i;
+                break;
+            }
+        }
+        return currentSlot;
+    }
+    public int getCurrentShieldSlot()
+    {
+        int currentSlot = 0;
+        for(int i = 0; i < inventory.size(); i++)
+        {
+            if(inventory.get(i) == currentShield)
+            {
+                currentSlot = i;
+                break;
+            }
+        }
+        return currentSlot;
     }
 
     public void getPlayerImage()
@@ -197,7 +229,6 @@ public class Player extends Entity{
 
     public void update()
     {
-        System.out.println(parryCounter);
         if(knockBack)
         {
             collisionOn = false;

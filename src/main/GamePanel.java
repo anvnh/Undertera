@@ -1,6 +1,7 @@
 package main;
 
 import ai.PathFinder;
+import data.SaveLoad;
 import entity.Entity;
 import entity.Player;
 import tile.Map;
@@ -61,6 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
     Config config = new Config(this);
     public PathFinder pathFinder = new PathFinder(this);
     public EnvironmentManager environmentManager = new EnvironmentManager(this);
+    SaveLoad saveLoad = new SaveLoad(this);
     Map map = new Map(this);
 
     // Entity and Object
@@ -110,6 +112,23 @@ public class GamePanel extends JPanel implements Runnable {
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
     }
+    public void resetGame(boolean restart)
+    {
+        player.setDefaultPosition();
+        player.restoreStatus();
+        assetSetter.setNPC();
+        assetSetter.setMonster();
+
+        if(restart)
+        {
+            player.setDefaultValues();
+            player.setItems();
+            assetSetter.setObject();
+            assetSetter.setInteractiveTile();
+            environmentManager.lightning.resetDay();
+        }
+    }
+    /*
     public void retry() {
         player.setDefaultPosition();
         player.restoreLifeAndMana();
@@ -127,6 +146,7 @@ public class GamePanel extends JPanel implements Runnable {
         assetSetter.setInteractiveTile();
         currentMap = 0;
     }
+     */
     public void setFullScreen() {
         // get local screen device
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

@@ -76,6 +76,11 @@ public class Lightning {
         g2.fillRect(0, 0, gamepanel.screenWidth, gamepanel.screenHeight);
         g2.dispose();
     }
+    public void resetDay()
+    {
+        dayState = day;
+        filterAlpha = 0f;
+    }
     public void update()
     {
         if(gamepanel.player.lightUpdate){
@@ -94,7 +99,7 @@ public class Lightning {
             //      => 1 min = 120 * 60 = 7200 frames
             // So, 7200 frames is equivalent to 1 minutes
             // Yet, if we change the dayCounter to 7200, it will be 1 minute to change the day state
-            if(dayCounter > 7200 * 5) {
+            if(dayCounter > 7200 / 60) {
                 dayState = dusk;
                 dayCounter = 0;
             }
@@ -110,7 +115,7 @@ public class Lightning {
         if(dayState == night)
         {
             dayCounter++;
-            if(dayCounter > 7200 * 5) {
+            if(dayCounter > 7200 / 60) {
                 dayState = dawn;
                 dayCounter = 0;
             }
