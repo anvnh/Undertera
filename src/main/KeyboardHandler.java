@@ -196,7 +196,8 @@ public class KeyboardHandler implements KeyListener {
     }
     public void dialogueState(int code) {
         if(code == KeyEvent.VK_ENTER){
-            gamepanel.gameState = gamepanel.playState;
+            enterPressed = true;
+            //gamepanel.gameState = gamepanel.playState;
         }
     }
     public void characterState(int code) {

@@ -29,9 +29,11 @@ public class NPC_Merchant extends Entity {
         go_down[7] = setup_entity("/npc/merchant/stand_down_7", 48, 48);
     }
     public void setDialogue() {
-        dialogue[0] = "I have many wares for sale.";
-        dialogue[1] = "Would you like to buy something?";
-        dialogue[2] = "I have the finest goods in all the land.";
+        dialogue[0][0] = "I have many wares for sale.";
+        dialogue[1][0] = "Come back anytime";
+        dialogue[2][0] = "You don't have enough coin.";
+        dialogue[3][0] = "Your inventory is full. Free up some space.";
+        dialogue[4][0] = "You can't sell equipped items.";
     }
     public void setAction() {
     }
@@ -43,7 +45,7 @@ public class NPC_Merchant extends Entity {
 
     }
     public void speak() {
-        super.speak();
+        facePlayer();
         gamepanel.gameState = gamepanel.tradeState;
         gamepanel.ui.npc = this;
     }

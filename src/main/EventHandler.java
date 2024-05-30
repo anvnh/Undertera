@@ -1,16 +1,21 @@
 package main;
 
+import entity.Entity;
+
 import java.awt.*;
 
 public class EventHandler {
     GamePanel gamepanel;
     EventRectangle[][][] eventRect;
+    Entity eventMaster;
 
     int previousEventX, previousEventY;
     boolean canTouchEvent = true;
 
     public EventHandler(GamePanel gamePanel) {
         this.gamepanel = gamePanel;
+
+        eventMaster = new Entity(gamePanel);
 
         eventRect = new EventRectangle[gamepanel.maxMap][gamepanel.maxWorldCol][gamepanel.maxWorldRow];
         int map = 0;
@@ -37,8 +42,18 @@ public class EventHandler {
                 }
             }
         }
-
+        setDialogue();
     }
+
+    public void setDialogue()
+    {
+        assert eventMaster != null;
+        eventMaster.dialogue[0][0] = "You fall into a pit";
+        eventMaster.dialogue[1][0] = "The healing pool's gentle embrace replenishes your vitality, restoring \nyour health with each passing moment." +
+                "\nThe process has been saved.";
+        eventMaster.dialogue[2][0] = "The monsters have been reset.";
+    }
+
 
     public void checkEvent() {
         //Check if player is more than 1 tiles away from the latest event
@@ -96,23 +111,22 @@ public class EventHandler {
     public void damagePit(int gameState)
     {
         gamepanel.gameState = gameState;
-        gamepanel.ui.currentDialogue = "Ouch! I fell into a pit!";
         gamepanel.player.life -= 9.5;
+        eventMaster.startDialogue(eventMaster, 0);
         canTouchEvent = false;
     }
     public void healingPool(int gameState)
     {
         gamepanel.gameState = gameState;
-        gamepanel.ui.currentDialogue = "The healing pool's gentle embrace replenishes your vitality, restoring \nyour health with each passing moment." +
-                "\nThe process has been saved.";
         gamepanel.player.life = gamepanel.player.maxLife;
         gamepanel.player.mana = gamepanel.player.maxMana;
+        eventMaster.startDialogue(eventMaster, 1);
         gamepanel.saveLoad.save();
     }
     public void resetMons(int gameState)
     {
         gamepanel.gameState = gameState;
-        gamepanel.ui.currentDialogue = "The monsters have returned!";
+        eventMaster.startDialogue(eventMaster, 2);
         gamepanel.assetSetter.setMonster();
     }
     public void teleport(int map, int col, int row) {

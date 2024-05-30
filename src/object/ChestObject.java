@@ -37,6 +37,13 @@ public class ChestObject extends Entity {
     }
     public void setLoot(Entity loot) {
         this.loot = loot;
+
+        setDialogue();
+    }
+    public void setDialogue() {
+        dialogue[0][0] = "You open the chest and found a " + loot.name + ".\nBut you can't carry anymore items.";
+        dialogue[1][0] = "You open the chest and found a " + loot.name + ".\nYou obtained a " + loot.name + ".";
+        dialogue[2][0] = "The chest is empty.";
     }
     public void interact()
     {
@@ -44,23 +51,19 @@ public class ChestObject extends Entity {
         if(!opened) {
             gamepanel.playSoundEffect(17);
 
-            StringBuilder sb = new StringBuilder();
-            sb.append("You open the chest and found a " + loot.name + ".");
-
             if(gamepanel.player.canObtainItem(loot))
             {
+                startDialogue(this, 1);
                 opened = true;
                 image = image3;
             }
             else
             {
-                sb.append(" But you can't carry anymore items.");
+                startDialogue(this, 0);
             }
-
-            gamepanel.ui.currentDialogue = sb.toString();
         }
         else {
-            gamepanel.ui.currentDialogue = "The chest is empty.";
+            startDialogue(this, 2);
         }
     }
 }

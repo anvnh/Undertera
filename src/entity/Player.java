@@ -570,7 +570,7 @@ public class Player extends Entity{
         {
             if(gamepanel.Key.communicateWithNPC)
             {
-                gamepanel.gameState = gamepanel.dialogueState;
+                //gamepanel.gameState = gamepanel.dialogueState;
                 gamepanel.npc[gamepanel.currentMap][npcIndex].speak(); //fixed
             }
         }

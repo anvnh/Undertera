@@ -339,6 +339,26 @@ public class UI {
 
         x += gamepanel.tileSize;
         y += gamepanel.tileSize;
+
+        if(npc.dialogue[npc.dialogueSet][npc.dialogueIndex] != null) {
+            currentDialogue = npc.dialogue[npc.dialogueSet][npc.dialogueIndex];
+
+            if(gamepanel.Key.enterPressed)
+            {
+                if(gamepanel.gameState == gamepanel.dialogueState) {
+                    npc.dialogueIndex++;
+                    gamepanel.Key.enterPressed = false;
+                }
+            }
+        }
+        else { // If no text
+            npc.dialogueIndex = 0;
+            if(gamepanel.gameState == gamepanel.dialogueState)
+            {
+                gamepanel.gameState = gamepanel.playState;
+            }
+        }
+
         for (String line : currentDialogue.split("\n"))
         {
             g2.drawString(line, x, y);
@@ -858,7 +878,11 @@ public class UI {
     }
     public void trade_select()
     {
+
+        npc.dialogueSet = 0;
         drawDialogueScreen();
+
+
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30f));
 
         //Draw window
@@ -903,10 +927,12 @@ public class UI {
             g2.drawString(">", x - 50, y);
             if(gamepanel.Key.enterPressed)
             {
-                gamepanel.gameState = gamepanel.dialogueState;
-                currentDialogue = "Come back anytime!";
+                npc.startDialogue(npc, 1);
                 commandNum = 0;
+                /*
+                currentDialogue = "Come back anytime!";
                 gamepanel.Key.enterPressed = false;
+                 */
             }
         }
     }
@@ -954,8 +980,8 @@ public class UI {
                 if(gamepanel.player.coin < npc.inventory.get(itemIndex).price)
                 {
                     subState = 0;
-                    currentDialogue = "You don't have enough coin!";
-                    drawDialogueScreen();
+                    npc.startDialogue(npc, 2);
+                    //drawDialogueScreen();
                 }
                 else {
                     if(gamepanel.player.canObtainItem(npc.inventory.get(itemIndex)))
@@ -966,24 +992,10 @@ public class UI {
                     else
                     {
                         subState = 0;
-                        currentDialogue = "Your inventory is full!\n Free up some space!";
-                        drawDialogueScreen();
+                        npc.startDialogue(npc, 3);
+                        //drawDialogueScreen();
                     }
                 }
-                /*
-                else if(gamepanel.player.inventory.size() == gamepanel.player.maxInventorySize)
-                {
-                    subState = 0;
-                    currentDialogue = "Your inventory is full!\n Free up some space!";
-                    drawDialogueScreen();
-                }
-                else
-                {
-                    gamepanel.player.coin -= npc.inventory.get(itemIndex).price;
-                    gamepanel.player.inventory.add(npc.inventory.get(itemIndex));
-                    //System.out.println(gamepanel.player.inventory.size());
-                }
-                 */
             }
         }
 
@@ -1031,8 +1043,8 @@ public class UI {
                         || gamepanel.player.inventory.get(itemIndex) == gamepanel.player.currentShield)
                 {
                     subState = 0;
-                    currentDialogue = "You can't sell equipped items!";
-                    drawDialogueScreen();
+                    npc.startDialogue(npc, 4);
+                    //drawDialogueScreen();
                 }
                 else
                 {

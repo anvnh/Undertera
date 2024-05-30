@@ -22,13 +22,18 @@ public class KeyObject extends Entity {
         description = "[" + name + "]" + " A key to unlock the door.";
         stackable = true;
     }
+    public void setDialogue()
+    {
+        dialogue[0][0] = "You have unlocked the door.";
+        dialogue[1][0] = "There is no door to unlock.";
+    }
+
     public boolean use(Entity entity, GamePanel gamepanel)
     {
-        gamepanel.gameState = gamepanel.dialogueState;
         int objectIndex = getDetected(entity, gamepanel.objects, "Door");
         if(objectIndex != 999)
         {
-            gamepanel.ui.currentDialogue = "You have unlocked the door.";
+            startDialogue(this, 0);
             gamepanel.playSoundEffect(14);
             // Sound effect
             gamepanel.objects[gamepanel.currentMap][objectIndex] = null;
@@ -36,7 +41,7 @@ public class KeyObject extends Entity {
         }
         else
         {
-            gamepanel.ui.currentDialogue = "There is no door to unlock.";
+            startDialogue(this, 1);
             return false;
         }
     }

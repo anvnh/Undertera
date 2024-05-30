@@ -60,7 +60,12 @@ public class Entity {
     public boolean alive = true;
     public boolean dying = false;
     boolean HPBarOn = false;
-    int dialogueIndex = 0;
+
+
+    public int dialogueIndex = 0;
+    public int dialogueSet = 0;
+
+
     public boolean collision = false;
     public boolean collisionOn = false;
     public boolean invincible = false;
@@ -196,7 +201,7 @@ public class Entity {
     //==========================================================================================//
 
     //====================================== Dialogues =========================================//
-    public String[] dialogue = new String[20];
+    public String[][] dialogue = new String[20][20];
     //==========================================================================================//
 
     //==========================================================================================//
@@ -248,13 +253,21 @@ public class Entity {
     public void setAction(){}
     public void damageReaction(){}
     public void speak() {
-
         // Check if the dialogue is at the end
+        /*
         long nonNullCount = Arrays.stream(dialogue).filter(Objects::nonNull).count();
         if(dialogueIndex == nonNullCount) dialogueIndex = 0;
         gamepanel.ui.currentDialogue = dialogue[dialogueIndex];
         dialogueIndex++;
-
+         */
+    }
+    public void startDialogue(Entity entity, int setNum){
+        gamepanel.gameState = gamepanel.dialogueState;
+        gamepanel.ui.npc = entity;
+        dialogueSet = setNum;
+        gamepanel.Key.enterPressed = false;
+    }
+    public void facePlayer() {
         if(Objects.equals(gamepanel.player.direction, "up"))
             direction = "down";
         else if(Objects.equals(gamepanel.player.direction, "down"))

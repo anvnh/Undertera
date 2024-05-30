@@ -22,9 +22,12 @@ public class DoorObject extends Entity
         image = setup_entity("/objects/doors/wooden_door_close", gamepanel.tileSize, gamepanel.tileSize);
         collision = true;
     }
+    public void setDialogue()
+    {
+        dialogue[0][0] = "You need a key to open this";
+    }
     public void interact()
     {
-        gamepanel.gameState = gamepanel.dialogueState;
-        gamepanel.ui.currentDialogue = "You need a key to open this";
+        startDialogue(this, 0);
     }
 }
