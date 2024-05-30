@@ -493,6 +493,7 @@ public class KeyboardHandler implements KeyListener {
         if(code == KeyEvent.VK_SPACE)
         {
             shieldPressed = false;
+            gamepanel.player.parryCounter = 0; // Reset the parry counter after releasing the shield
         }
     }
 }

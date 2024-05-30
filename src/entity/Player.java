@@ -197,12 +197,61 @@ public class Player extends Entity{
 
     public void update()
     {
+        System.out.println(parryCounter);
+        if(knockBack)
+        {
+            collisionOn = false;
+            //Check tile collision
+            gamepanel.collisionCheck.checkTile(this); // Check player collision with tile
+
+            // Check object collision
+            int objectIndex = gamepanel.collisionCheck.checkObject(this, true); // check player collision with object
+            pickUpObject(objectIndex);
+
+            // Check NPC Collision
+            int npcIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.npc); // check NPC collision with player
+            interactNPC(npcIndex);
+
+            // Check Monster's Collision
+            int monsterIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.monster); // check monster collision with player
+            contactMonster(monsterIndex);
+
+            // Check Interactive Tile Collision
+            gamepanel.collisionCheck.checkEntity(this, gamepanel.interactiveTile);  // check player collision with interactive tiles
+
+            if(collisionOn)
+            {
+                knockBackCounter = 0;
+                knockBack = false;
+                speed = originalSpeed;
+            }
+            else
+            {
+                switch(knockBackDirection)
+                {
+                    case "up": worldY -= speed; break;
+                    case "down": worldY += speed; break;
+                    case "left": worldX -= speed; break;
+                    case "right": worldX += speed; break;
+                }
+            }
+
+            knockBackCounter++;
+            // the more knockBackCounter is, the more distance object will be knock back
+            if(knockBackCounter == 20)
+            {
+                knockBackCounter = 0;
+                knockBack = false;
+                speed = originalSpeed;
+            }
+        }
         if(attacking)
         {
             attack();
         }
         if(Key.shieldPressed) {
             shielding = true;
+            parryCounter++;
         }
         if(Key.upPressed || Key.downPressed || Key.leftPressed || Key.rightPressed || Key.communicateWithNPC)
         {
@@ -218,6 +267,9 @@ public class Player extends Entity{
 
             collisionOn = false;
 
+            //Check tile collision
+            gamepanel.collisionCheck.checkTile(this); // Check player collision with tile
+
             // Check object collision
             int objectIndex = gamepanel.collisionCheck.checkObject(this, true); // check player collision with object
             pickUpObject(objectIndex);
@@ -230,7 +282,6 @@ public class Player extends Entity{
             int monsterIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.monster); // check monster collision with player
             contactMonster(monsterIndex);
 
-
             // Check Interactive Tile Collision
             gamepanel.collisionCheck.checkEntity(this, gamepanel.interactiveTile);  // check player collision with interactive tiles
 
@@ -241,9 +292,6 @@ public class Player extends Entity{
 
             // Check event
             gamepanel.eventHandler.checkEvent(); // Check if player is in the event area
-
-            //Check tile collision
-            gamepanel.collisionCheck.checkTile(this); // Check player collision with tile
 
             // Check attacking
             if(gamepanel.Key.attack_Pressed)

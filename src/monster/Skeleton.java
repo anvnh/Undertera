@@ -24,6 +24,8 @@ public class Skeleton extends Entity {
         exp = 25;
         projectile = new RockObject(gamepanel);
 
+        knockBackPower = 5;
+
         solidArea.x = 30;
         solidArea.y = 35;
         solidArea.width = 20;

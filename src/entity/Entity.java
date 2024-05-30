@@ -35,6 +35,10 @@ public class Entity {
     public int shieldCount = 0;
     public int shieldAnimation = 1;
 
+    public int offBalanceCounter = 0;
+
+    public int parryCounter = 0;
+
     public int shotAvailableCounter = 0;
     public int runningSoundCounter = 0;
     public int manaRegenCounter = 0;
@@ -64,6 +68,7 @@ public class Entity {
     public boolean knockBack = false;
     public String knockBackDirection;
     public boolean shielding = false;
+    public boolean offBalance = false;
 
     //==========================================================================================//
 
@@ -395,6 +400,16 @@ public class Entity {
         if(shotAvailableCounter < 60)
         {
             shotAvailableCounter++;
+        }
+
+        if(offBalance)
+        {
+            offBalanceCounter++;
+            if(offBalanceCounter == 120)
+            {
+                offBalance = false;
+                offBalanceCounter = 0;
+            }
         }
 
     }
@@ -736,13 +751,23 @@ public class Entity {
             // If player is facing the opposite direction of the monster, player will receive less damage
             if(gamepanel.player.shielding &&gamepanel.player.direction.equals(oppositeDirection))
             {
-                gamepanel.playSoundEffect(18);
-                damage *= 0.75;
+                // If player can parry the attack within 10 frames before the attack, player will receive less damage: 75%
+                // Or else player just bring the shield on, damage will only be reduced by 25%
+                if(gamepanel.player.parryCounter < 10)
+                {
+                    gamepanel.playSoundEffect(19);
+                    damage *= 0.25; // Damage will be reduced by 75%
+                }
+                else
+                {
+                    gamepanel.playSoundEffect(18);
+                    damage *= 0.75;  // Damage will be reduced by 25%
+                }
             }
             else {
                 gamepanel.playSoundEffect(4);
+                setKnockBack(gamepanel.player, this, knockBackPower);
             }
-
             gamepanel.player.life -= damage;
             gamepanel.player.invincible = true;
         }
