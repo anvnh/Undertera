@@ -26,12 +26,15 @@ public class Skeleton extends Entity {
 
         solidArea.x = 10;
         solidArea.y = 10;
-        solidArea.width = 40;
-        solidArea.height = 44;
+        solidArea.width = 30;
+        solidArea.height = 35;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         attackArea.width = 48;
         attackArea.height = 48;
+
+        motion_duration_1 = 10;
+        motion_duration_2 = 30;
 
         getImage();
         getAttackImage();
@@ -101,7 +104,7 @@ public class Skeleton extends Entity {
         // check if it's time to attack
         if(!attacking)
         {
-            checkAttackAggro(100, gamepanel.tileSize, gamepanel.tileSize);
+            checkAttackAggro(100, 55, 55);
         }
     }
     public void damageReaction()

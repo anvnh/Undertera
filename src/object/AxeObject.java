@@ -18,6 +18,8 @@ public class AxeObject extends Entity {
 
         price = 50;
         knockBackPower = 3;
+        motion_duration_1 = 20;
+        motion_duration_2 = 40;
 
         description = "[" + name + "] \nBasic axe that can be used to \nattack enemies.";
     }

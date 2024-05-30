@@ -17,6 +17,8 @@ public class SwordObject extends Entity {
         price = 10;
 
         knockBackPower = 5;
+        motion_duration_1 = 5;
+        motion_duration_2 = 15;
 
         description = "[" + name + "] \nBasic sword that can be used\nto attack enemies.";
 

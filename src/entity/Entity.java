@@ -193,6 +193,10 @@ public class Entity {
     public int coin;
     public double maxLife;
     public double life;
+
+    public int motion_duration_1;
+    public int motion_duration_2;
+
     public Entity currentWeapon;
     public Entity currentArmor;
     public Entity currentLight;
@@ -333,7 +337,12 @@ public class Entity {
             }
         }
         else if(attacking) {
-            attack();
+            if(type == type_monster) {
+                attack_at_last_animation();
+            }
+            else {
+                attack();
+            }
         }
         else
         {
@@ -531,13 +540,88 @@ public class Entity {
     //=========================================================================================//
 
     //=========================================================================================//
+    public void attack_at_last_animation()
+    {
+        attackCount++;
+        if(attackCount <= motion_duration_1) {
+            attackAnimation = 1;
+        }
+        if(attackCount > motion_duration_1 && attackCount <= motion_duration_2) {
+            attackAnimation = 2;
+        }
+        if(attackCount > motion_duration_2 + 15 && attackCount <= motion_duration_2 + 30) {
+            attackAnimation = 3;
+        }
+        if(attackCount > motion_duration_2 + 30 && attackCount <= motion_duration_2 + 50) {
+            attackAnimation = 4;
+        }
+        if(attackCount > motion_duration_2 + 50) {
+            //Current world x, world y, solid area
+            int currentWorldX = worldX;
+            int currentWorldY = worldY;
+            int solidAreaWidth = solidArea.width;
+            int solidAreaHeight = solidArea.height;
+
+            if(direction.equals("up"))
+            {
+                worldY -= attackArea.height;
+            }
+            if(direction.equals("down"))
+            {
+                worldY += attackArea.height;
+            }
+            if(direction.equals("left"))
+            {
+                worldX -= attackArea.width;
+            }
+            if(direction.equals("right"))
+            {
+                worldX += attackArea.width;
+            }
+
+            solidArea.width = attackArea.width;
+            solidArea.height = attackArea.height;
+
+            if(type == type_monster)
+            {
+                if(gamepanel.collisionCheck.checkPlayer(this))
+                {
+                    damagePlayer();
+                }
+            }
+            else
+            {   // Player
+                // Check monster collision
+                int monsterIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.monster);
+                gamepanel.player.damageMonster(monsterIndex, this, currentWeapon.knockBackPower);
+
+                // Check interactive collision
+                int interactiveIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.interactiveTile);
+                gamepanel.player.damageInteractiveTile(interactiveIndex);
+
+                // Check projectile collision
+                int projectileIndex = gamepanel.collisionCheck.checkEntity(this, gamepanel.projectile);
+                gamepanel.player.damageProjectile(projectileIndex);
+            }
+
+            worldX = currentWorldX;
+            worldY = currentWorldY;
+            solidArea.width = solidAreaWidth;
+            solidArea.height = solidAreaHeight;
+
+            // Reset attack animation
+            attackCount = 0;
+            attackAnimation = 1;
+            attacking = false;
+        }
+    }
     public void attack()
     {
         attackCount++;
-        if(attackCount <= 3) {
+        if(attackCount <= motion_duration_1) {
             attackAnimation = 1;
         }
-        if(attackCount > 3 && attackCount <= 10) {
+        if(attackCount > motion_duration_1 && attackCount <= motion_duration_2) {
             attackAnimation = 2;
 
             //Current world x, world y, solid area
@@ -594,9 +678,9 @@ public class Entity {
             solidArea.height = solidAreaHeight;
 
         }
-        if(attackCount > 10 && attackCount <= 20) attackAnimation = 3;
-        if(attackCount > 20 && attackCount <= 35) attackAnimation = 4;
-        if(attackCount > 35)
+        if(attackCount > motion_duration_2 + 15 && attackCount <= motion_duration_2 + 30) attackAnimation = 3;
+        if(attackCount > motion_duration_2 + 30 && attackCount <= motion_duration_2 + 50) attackAnimation = 4;
+        if(attackCount > motion_duration_2 + 50)
         {
             attackCount = 0;
             attackAnimation = 1;

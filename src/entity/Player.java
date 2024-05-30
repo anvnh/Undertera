@@ -103,6 +103,8 @@ public class Player extends Entity{
     }
     public int getAttack(){
         attackArea = currentWeapon.attackArea;
+        motion_duration_1 = currentWeapon.motion_duration_1;
+        motion_duration_2 = currentWeapon.motion_duration_2;
         return attack = strength * currentWeapon.attackValue;
     }
     public int getDefense()
