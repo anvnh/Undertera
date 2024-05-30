@@ -159,6 +159,7 @@ public class TileManager {
             }
         }
         // Draw the path that the entity is following
+        /*
         if(drawPath)
         {
             g2.setColor(new Color(255, 0, 0, 70));
@@ -169,9 +170,12 @@ public class TileManager {
                 int screenX = worldX - gamepanel.player.worldX + gamepanel.player.screenX;
                 int screenY = worldY - gamepanel.player.worldY + gamepanel.player.screenY;
 
+
+
                 g2.fillRect(screenX, screenY, gamepanel.tileSize, gamepanel.tileSize);
 
             }
         }
+         */
     }
 }

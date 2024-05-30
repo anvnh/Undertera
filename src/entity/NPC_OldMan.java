@@ -12,6 +12,9 @@ public class NPC_OldMan extends Entity {
         name = "old_man";
         solidArea.width = 40;
         solidArea.height = 40;
+
+        dialogueIndex = 0;
+
         getNPC_IMG();
         setDialogue();
     }
@@ -93,6 +96,13 @@ public class NPC_OldMan extends Entity {
         // Do this character specific stuff
         facePlayer();
         startDialogue(this, dialogueSet);
+
+        dialogueSet++;
+
+        // Can change to specific dialogues when the player is at a specific health
+        if(dialogue[dialogueSet][0] == null) {
+            dialogueSet = 0;
+        }
     }
 
 }

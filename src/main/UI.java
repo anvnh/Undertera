@@ -32,6 +32,9 @@ public class UI {
     int subState = 0;
     public Entity npc;
     int counter = 0;
+    int charIndex = 0;
+    String combinedText = "";
+
     public UI(GamePanel gp)
     {
         this.gamepanel = gp;
@@ -341,10 +344,23 @@ public class UI {
         y += gamepanel.tileSize;
 
         if(npc.dialogue[npc.dialogueSet][npc.dialogueIndex] != null) {
-            currentDialogue = npc.dialogue[npc.dialogueSet][npc.dialogueIndex];
+            //currentDialogue = npc.dialogue[npc.dialogueSet][npc.dialogueIndex];
+
+            char characters[] = npc.dialogue[npc.dialogueSet][npc.dialogueIndex].toCharArray();
+
+            if(charIndex < characters.length) {
+                gamepanel.playSoundEffect(20);
+                String s = String.valueOf(characters[charIndex]);
+                combinedText += s;
+                currentDialogue = combinedText;
+                charIndex++;
+            }
 
             if(gamepanel.Key.enterPressed)
             {
+                charIndex = 0;
+                combinedText = "";
+
                 if(gamepanel.gameState == gamepanel.dialogueState) {
                     npc.dialogueIndex++;
                     gamepanel.Key.enterPressed = false;

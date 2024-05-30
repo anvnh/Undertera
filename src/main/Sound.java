@@ -50,6 +50,10 @@ public class Sound {
         soundURL[18] = getClass().getResource("/sounds/block_with_shield.wav");
         soundURL[19] = getClass().getResource("/sounds/parry_sound.wav");
         //===========================================================================================//
+
+        //===========================================================================================//
+        soundURL[20] = getClass().getResource("/sounds/dialogue.wav");
+        //===========================================================================================//
     }
 
     public void setFile(int i) {
