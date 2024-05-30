@@ -458,7 +458,7 @@ public class UI {
         g2.drawImage(imageEquip, tailX + 70, textY + 10, null);
         textY += lineHeight + 10;
 
-        imageEquip = gamepanel.player.currentArmor.image;
+        imageEquip = gamepanel.player.currentShield.image;
         g2.drawImage(imageEquip, tailX + 70, textY, null);
 
     }
@@ -507,7 +507,7 @@ public class UI {
             //Equipped cursor color
             if(
                     entity.inventory.get(i) == entity.currentWeapon
-                    || entity.inventory.get(i) == entity.currentArmor
+                    || entity.inventory.get(i) == entity.currentShield
                     || entity.inventory.get(i) == entity.currentLight
             ) // Check if the item is equipped
             {
@@ -1027,7 +1027,7 @@ public class UI {
             if(gamepanel.Key.enterPressed)
             {
                 if(gamepanel.player.inventory.get(itemIndex) == gamepanel.player.currentWeapon
-                        || gamepanel.player.inventory.get(itemIndex) == gamepanel.player.currentArmor)
+                        || gamepanel.player.inventory.get(itemIndex) == gamepanel.player.currentShield)
                 {
                     subState = 0;
                     currentDialogue = "You can't sell equipped items!";

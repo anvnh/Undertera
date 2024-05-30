@@ -9,7 +9,7 @@ public class SwordObject extends Entity {
         super(gamePanel);
         name = "Sword";
         type = type_sword;
-        image = setup_entity("/objects/sword_tier_0", gamePanel.tileSize, gamePanel.tileSize);
+        image = setup_entity("/objects/weapons/tier_0/sword", gamePanel.tileSize, gamePanel.tileSize);
 
         attackValue = 3;
         attackArea.width = 48;

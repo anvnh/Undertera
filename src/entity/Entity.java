@@ -25,10 +25,16 @@ public class Entity {
 
     public int runCount = 0;
     public int runAnimation = 1;
+
     public int standCount = 0;
     public int standAnimation = 1;
+
     public int attackCount = 0;
     public int attackAnimation = 1;
+
+    public int shieldCount = 0;
+    public int shieldAnimation = 1;
+
     public int shotAvailableCounter = 0;
     public int runningSoundCounter = 0;
     public int manaRegenCounter = 0;
@@ -57,10 +63,12 @@ public class Entity {
     public boolean onPath = false;
     public boolean knockBack = false;
     public String knockBackDirection;
+    public boolean shielding = false;
 
     //==========================================================================================//
 
     //=========================== Buffered animation for player ===============================//
+
     //Buffered image standing
     public BufferedImage[] stand_down = new BufferedImage[6];
     public BufferedImage[] stand_up = new BufferedImage[6];
@@ -75,6 +83,13 @@ public class Entity {
     public BufferedImage[] attack_left = new BufferedImage[10];
     public BufferedImage[] attack_up = new BufferedImage[10];
     public BufferedImage[] attack_down = new BufferedImage[10];
+
+    // Buffered shield
+    public BufferedImage[] shield_down = new BufferedImage[10];
+    public BufferedImage[] shield_up = new BufferedImage[10];
+    public BufferedImage[] shield_left = new BufferedImage[10];
+    public BufferedImage[] shield_right = new BufferedImage[10];
+
     //==========================================================================================//
 
 
@@ -198,7 +213,7 @@ public class Entity {
     public int motion_duration_2;
 
     public Entity currentWeapon;
-    public Entity currentArmor;
+    public Entity currentShield;
     public Entity currentLight;
     public Projectile projectile;
     //==========================================================================================//
@@ -439,6 +454,19 @@ public class Entity {
         image = attack[attackAnimation - 1];
         return image;
     }
+    public BufferedImage getShieldAnimate(BufferedImage image, BufferedImage[] shield)
+    {
+        if(shield[shieldAnimation - 1] != null)
+        {
+            image = shield[shieldAnimation - 1];
+        }
+        else
+        {
+            image = shield[0];
+            shielding = false;
+        }
+        return image;
+    }
     public void setDyingAnimate() {
         for(int i = 0; i < 8; i++)
         {
@@ -554,8 +582,6 @@ public class Entity {
         }
         if(attackCount > motion_duration_2 + 30 && attackCount <= motion_duration_2 + 50) {
             attackAnimation = 4;
-        }
-        if(attackCount > motion_duration_2 + 50) {
             //Current world x, world y, solid area
             int currentWorldX = worldX;
             int currentWorldY = worldY;
@@ -608,12 +634,23 @@ public class Entity {
             worldY = currentWorldY;
             solidArea.width = solidAreaWidth;
             solidArea.height = solidAreaHeight;
-
+        }
+        if(attackCount > motion_duration_2 + 50) {
             // Reset attack animation
             attackCount = 0;
             attackAnimation = 1;
             attacking = false;
         }
+    }
+    public String getOppositeDirection(String direction)
+    {
+        return switch (direction) {
+            case "up" -> "down";
+            case "down" -> "up";
+            case "left" -> "right";
+            case "right" -> "left";
+            default -> "";
+        };
     }
     public void attack()
     {
@@ -693,8 +730,20 @@ public class Entity {
     {
         if(!gamepanel.player.invincible)
         {
-            gamepanel.playSoundEffect(4);
-            gamepanel.player.life -= ((double) (this.attack * 110) / (110 + gamepanel.player.defense));
+            double damage = ((double) (this.attack * 110) / (110 + gamepanel.player.defense));
+            // Get opposite direction of this attacker (specifically for monster)
+            String oppositeDirection = getOppositeDirection(direction);
+            // If player is facing the opposite direction of the monster, player will receive less damage
+            if(gamepanel.player.shielding &&gamepanel.player.direction.equals(oppositeDirection))
+            {
+                gamepanel.playSoundEffect(18);
+                damage *= 0.75;
+            }
+            else {
+                gamepanel.playSoundEffect(4);
+            }
+
+            gamepanel.player.life -= damage;
             gamepanel.player.invincible = true;
         }
     }

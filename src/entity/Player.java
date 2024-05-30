@@ -39,7 +39,7 @@ public class Player extends Entity{
 
 
         solidArea.width = 20;
-        solidArea.height = 25;
+        solidArea.height = 30;
         name = "player";
 
         /*
@@ -51,6 +51,7 @@ public class Player extends Entity{
         setDefaultValues();
         getPlayerImage();
         getPlayerAttackImage();
+        getShieldImage();
         setItems();
     }
     public void setDefaultValues()
@@ -79,7 +80,7 @@ public class Player extends Entity{
         coin = 1000;
         ///
         currentWeapon = new SwordObject(gamepanel);
-        currentArmor = new ArmorObject(gamepanel);
+        currentShield = new ShieldObject(gamepanel);
         projectile = new FireballObject(gamepanel);
         attack = getAttack(); // total attack
         defense = getDefense(); // total defense
@@ -97,7 +98,7 @@ public class Player extends Entity{
     public void setItems(){
         inventory.clear();
         inventory.add(currentWeapon);
-        inventory.add(currentArmor);
+        inventory.add(currentShield);
         inventory.add(new AxeObject(gamepanel));
         inventory.add(new KeyObject(gamepanel));
     }
@@ -109,7 +110,7 @@ public class Player extends Entity{
     }
     public int getDefense()
     {
-        return defense = dexterity * currentArmor.defenseValue;
+        return defense = dexterity * currentShield.defenseValue;
     }
 
     public void getPlayerImage()
@@ -167,17 +168,8 @@ public class Player extends Entity{
             for(int i = 0; i < 4; i++)
             {
                 attack_down[i] = setup_player("/player/attack/sword/attack_down_" + (i));
-            }
-            for(int i = 0; i < 4; i++)
-            {
                 attack_up[i] = setup_player("/player/attack/sword/attack_up_" + (i));
-            }
-            for(int i = 0; i < 4; i++)
-            {
                 attack_right[i] = setup_player("/player/attack/sword/attack_right_" + (i));
-            }
-            for(int i = 0; i < 4; i++)
-            {
                 attack_left[i] = setup_player("/player/attack/sword/attack_left_" + (i));
             }
         }
@@ -186,20 +178,20 @@ public class Player extends Entity{
             for(int i = 0; i < 4; i++)
             {
                 attack_down[i] = setup_player("/player/attack/axe/attack_down_axe_" + (i));
-            }
-            for(int i = 0; i < 4; i++)
-            {
                 attack_up[i] = setup_player("/player/attack/axe/attack_up_axe_" + (i));
-            }
-            for(int i = 0; i < 4; i++)
-            {
                 attack_right[i] = setup_player("/player/attack/axe/attack_right_axe_" + (i));
-            }
-            for(int i = 0; i < 4; i++)
-            {
                 attack_left[i] = setup_player("/player/attack/axe/attack_left_axe_" + (i));
             }
-
+        }
+    }
+    public void getShieldImage()
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            shield_down[i] = setup_player("/player/shield/shield_down_" + (i));
+            shield_up[i] = setup_player("/player/shield/shield_up_" + (i));
+            shield_right[i] = setup_player("/player/shield/shield_right_" + (i));
+            shield_left[i] = setup_player("/player/shield/shield_left_" + (i));
         }
     }
 
@@ -208,6 +200,9 @@ public class Player extends Entity{
         if(attacking)
         {
             attack();
+        }
+        if(Key.shieldPressed) {
+            shielding = true;
         }
         if(Key.upPressed || Key.downPressed || Key.leftPressed || Key.rightPressed || Key.communicateWithNPC)
         {
@@ -328,6 +323,8 @@ public class Player extends Entity{
 
             gamepanel.Key.communicateWithNPC = false;
 
+            shielding = false;
+
             //Counter for running sounds
             runningSoundCounter++;
             if(runningSoundCounter == 45) {
@@ -340,13 +337,28 @@ public class Player extends Entity{
                 runAnimation = (runAnimation == 6) ? (1) : (runAnimation + 1);
                 runCount = 0;
             }
+
+            shieldCount++;
+            if(shieldCount > 15)
+            {
+                shieldAnimation = shieldAnimation == 4 ? 4 : shieldAnimation + 1;
+                shieldCount = 0;
+            }
         }
         else {
+            shieldCount++;
+            if(shieldCount > 15)
+            {
+                shieldAnimation = shieldAnimation == 4 ? 4 : shieldAnimation + 1;
+                shieldCount = 0;
+            }
+
             standCount++; // Counter for switching standing animation
             if (standCount > 15) {
                 standAnimation = standAnimation == 6 ? 1 : standAnimation + 1;
                 standCount = 0;
             }
+
         }
 
         // Shooting projectile
@@ -616,7 +628,7 @@ public class Player extends Entity{
             }
             if(selectedItem.type == type_armor)
             {
-                currentArmor = selectedItem;
+                currentShield = selectedItem;
                 defense = getDefense();
             }
             if(selectedItem.type == type_light)
@@ -695,41 +707,99 @@ public class Player extends Entity{
             {
                 if(!attacking)
                 {
-                    image = getStandAnimate(image, stand_down);
+                    if(!shielding){
+                        image = getStandAnimate(image, stand_down);
+                    }
+                    else {
+                        image = getShieldAnimate(image, shield_down);
+                        shielding = false;
+                    }
                 }
                 else
                 {
-                    image = getAttackAnimate(image, attack_down);
+                    if(!shielding)
+                    {
+                        image = getAttackAnimate(image, attack_down);
+                    }
+                    else
+                    {
+                        image = getShieldAnimate(image, shield_down);
+                    }
                 }
             }
             else if(direction.equals("up"))
             {
                 if(!attacking)
                 {
-                    image = getStandAnimate(image, stand_up);
+                    if(!shielding)
+                    {
+                        image = getStandAnimate(image, stand_up);
+                    }
+                    else
+                    {
+                        image = getShieldAnimate(image, shield_up);
+                        shielding = false;
+                    }
                 }
                 else {
-                    image = getAttackAnimate(image, attack_up);
+                    if(!shielding)
+                    {
+                        image = getAttackAnimate(image, attack_up);
+                    }
+                    else
+                    {
+                        image = getShieldAnimate(image, shield_up);
+                    }
                 }
             }
             else if(direction.equals("left"))
             {
                 if(!attacking)
                 {
-                    image = getStandAnimate(image, stand_left);
+                    if(!shielding)
+                    {
+                        image = getStandAnimate(image, stand_left);
+                    }
+                    else
+                    {
+                        image = getShieldAnimate(image, shield_left);
+                        shielding = false;
+                    }
                 }
                 else {
-                    image = getAttackAnimate(image, attack_left);
+                    if(!shielding)
+                    {
+                        image = getAttackAnimate(image, attack_left);
+                    }
+                    else
+                    {
+                        image = getShieldAnimate(image, shield_left);
+                    }
                 }
             }
             else if(direction.equals("right"))
             {
                 if(!attacking)
                 {
-                    image = getStandAnimate(image, stand_right);
+                    if(!shielding)
+                    {
+                        image = getStandAnimate(image, stand_right);
+                    }
+                    else
+                    {
+                        image = getShieldAnimate(image, shield_right);
+                        shielding = false;
+                    }
                 }
                 else {
-                    image = getAttackAnimate(image, attack_right);
+                    if(!shielding)
+                    {
+                        image = getAttackAnimate(image, attack_right);
+                    }
+                    else
+                    {
+                        image = getShieldAnimate(image, shield_right);
+                    }
                 }
             }
             if(invincible)

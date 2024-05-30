@@ -24,17 +24,17 @@ public class Skeleton extends Entity {
         exp = 25;
         projectile = new RockObject(gamepanel);
 
-        solidArea.x = 10;
-        solidArea.y = 10;
-        solidArea.width = 30;
-        solidArea.height = 35;
+        solidArea.x = 30;
+        solidArea.y = 35;
+        solidArea.width = 20;
+        solidArea.height = 30;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         attackArea.width = 48;
         attackArea.height = 48;
 
         motion_duration_1 = 10;
-        motion_duration_2 = 30;
+        motion_duration_2 = 20;
 
         getImage();
         getAttackImage();

@@ -33,7 +33,7 @@ public class ChestObject extends Entity {
         solidArea.x = 4;
         solidArea.y = 16;
         solidArea.width = 40;
-        solidArea.height = 32;
+        solidArea.height = 48;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
 

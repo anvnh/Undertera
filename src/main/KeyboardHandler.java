@@ -11,7 +11,7 @@ public class KeyboardHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, communicateWithNPC, F_Pressed,
             attack_Pressed, Projectile_Pressed, pausePress, characterScreenPressed, dashPressed,
-            enterPressed, Options_Pressed, mapPressed, miniMapPressed;
+            enterPressed, Options_Pressed, mapPressed, miniMapPressed, parryPressed, shieldPressed;
     boolean checkDrawTime = false;
     GamePanel gamepanel;
 
@@ -172,6 +172,9 @@ public class KeyboardHandler implements KeyListener {
         }
         if(code == KeyEvent.VK_BACK_SLASH && !miniMapPressed){
             gamepanel.map.miniMapOn = !gamepanel.map.miniMapOn;
+        }
+        if(code == KeyEvent.VK_SPACE){
+            shieldPressed = true;
         }
         if(code == KeyEvent.VK_ESCAPE)
         {
@@ -486,6 +489,10 @@ public class KeyboardHandler implements KeyListener {
         if(code == KeyEvent.VK_BACK_SLASH)
         {
             miniMapPressed = false;
+        }
+        if(code == KeyEvent.VK_SPACE)
+        {
+            shieldPressed = false;
         }
     }
 }
