@@ -39,6 +39,15 @@ public class AssetSetter {
         gamepanel.objects[mapNum][i].worldY = gamepanel.tileSize * 20;
         i++;
 
+        /*
+        gamepanel.objects[mapNum][i] = new ChestObject(gamepanel);
+        gamepanel.objects[mapNum][i].setLoot(new BedObject(gamepanel));
+        gamepanel.objects[mapNum][i].worldX = gamepanel.tileSize * 14;
+        gamepanel.objects[mapNum][i].worldY = gamepanel.tileSize * 20;
+        i++;
+         */
+        mapNum = 2;
+        i = 0;
     }
 
     public void setNPC() {
@@ -82,8 +91,31 @@ public class AssetSetter {
         gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 31;
         gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 22;
         i++;
-        gamepanel.monster[mapNum][i] = new BlueSlime(gamepanel);
+        gamepanel.monster[mapNum][i] = new RedSlime(gamepanel);
         gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 33;
+        gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 22;
+        i++;
+
+        mapNum = 2;
+        i = 0;
+        gamepanel.monster[mapNum][i] = new Bat(gamepanel);
+        gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 22;
+        gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 22;
+
+        i++;
+        gamepanel.monster[mapNum][i] = new Bat(gamepanel);
+        gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 36;
+        gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 26;
+
+        i++;
+        gamepanel.monster[mapNum][i] = new Bat(gamepanel);
+        gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 35;
+        gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 26;
+
+        mapNum = 3;
+        i = 0;
+        gamepanel.monster[mapNum][i] = new AngelOfDeath(gamepanel);
+        gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 26;
         gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 22;
     }
     public void setInteractiveTile() {

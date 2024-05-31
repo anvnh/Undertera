@@ -47,6 +47,7 @@ public class SaveLoad {
             ds.mapObjectName = new String[gamepanel.maxMap][gamepanel.objects[1].length];
             ds.mapObjectWorldX = new int[gamepanel.maxMap][gamepanel.objects[1].length];
             ds.mapObjectWorldY = new int[gamepanel.maxMap][gamepanel.objects[1].length];
+            ds.mapObjectLootNames = new String[gamepanel.maxMap][gamepanel.objects[1].length];
             ds.mapObjectOpened = new boolean[gamepanel.maxMap][gamepanel.objects[1].length];
 
             for(int mapNum = 0; mapNum < gamepanel.maxMap; mapNum++) {
@@ -58,6 +59,9 @@ public class SaveLoad {
                         ds.mapObjectName[mapNum][i] = gamepanel.objects[mapNum][i].name;
                         ds.mapObjectWorldX[mapNum][i] = gamepanel.objects[mapNum][i].worldX;
                         ds.mapObjectWorldY[mapNum][i] = gamepanel.objects[mapNum][i].worldY;
+                        if(gamepanel.objects[mapNum][i].loot != null) {
+                            ds.mapObjectLootNames[mapNum][i] = gamepanel.objects[mapNum][i].loot.name;
+                        }
                         ds.mapObjectOpened[mapNum][i] = gamepanel.objects[mapNum][i].opened;
                     }
                 }
@@ -67,7 +71,7 @@ public class SaveLoad {
             oos.writeObject(ds);
 
         } catch (Exception e) {
-            System.out.println("Save Exception!");
+            e.printStackTrace();
         }
     }
     public void load()
@@ -116,6 +120,9 @@ public class SaveLoad {
                         gamepanel.objects[mapNum][i] = gamepanel.entityGenerator.getObject(ds.mapObjectName[mapNum][i]);
                         gamepanel.objects[mapNum][i].worldX = ds.mapObjectWorldX[mapNum][i];
                         gamepanel.objects[mapNum][i].worldY = ds.mapObjectWorldY[mapNum][i];
+                        if(gamepanel.objects[mapNum][i].loot != null) {
+                            gamepanel.objects[mapNum][i].setLoot(gamepanel.entityGenerator.getObject(ds.mapObjectLootNames[mapNum][i]));
+                        }
                         gamepanel.objects[mapNum][i].opened = ds.mapObjectOpened[mapNum][i];
                         if(gamepanel.objects[mapNum][i].opened)
                         {

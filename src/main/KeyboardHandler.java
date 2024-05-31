@@ -11,7 +11,7 @@ public class KeyboardHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, communicateWithNPC, F_Pressed,
             attack_Pressed, Projectile_Pressed, pausePress, characterScreenPressed, dashPressed,
-            enterPressed, Options_Pressed, mapPressed, miniMapPressed, parryPressed, shieldPressed;
+            enterPressed, Options_Pressed, mapPressed, miniMapPressed, parryPressed, shieldPressed, testPressed;
     boolean checkDrawTime = false;
     GamePanel gamepanel;
 
@@ -103,15 +103,15 @@ public class KeyboardHandler implements KeyListener {
             {
                 gamepanel.gameState = gamepanel.playState;
             }
-            if(gamepanel.ui.commandNumber == 1)
+            else if(gamepanel.ui.commandNumber == 1)
             {
                 gamepanel.saveLoad.load();
                 gamepanel.gameState = gamepanel.playState;
             }
-            if(gamepanel.ui.commandNumber == 2)
+            else if(gamepanel.ui.commandNumber == 2)
             {
             }
-            if(gamepanel.ui.commandNumber == 3)
+            else if(gamepanel.ui.commandNumber == 3)
             {
                 System.exit(0);
             }
@@ -157,6 +157,7 @@ public class KeyboardHandler implements KeyListener {
         {
             gamepanel.gameState = gamepanel.pauseState;
             pausePress = true;
+            //gamepanel.stopMusic();
         }
         // Shoot the projectile
         if(code == KeyEvent.VK_I)
@@ -213,8 +214,7 @@ public class KeyboardHandler implements KeyListener {
         }
         playerInventory(code);
     }
-    public void optionState(int code)
-    {
+    public void optionState(int code) {
         if(code == KeyEvent.VK_ESCAPE && !Options_Pressed)
         {
             gamepanel.gameState = gamepanel.playState;

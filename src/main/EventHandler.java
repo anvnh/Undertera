@@ -12,10 +12,10 @@ public class EventHandler {
     int previousEventX, previousEventY;
     boolean canTouchEvent = true;
 
-    public EventHandler(GamePanel gamePanel) {
-        this.gamepanel = gamePanel;
+    public EventHandler(GamePanel gamepanel) {
+        this.gamepanel = gamepanel;
 
-        eventMaster = new Entity(gamePanel);
+        eventMaster = new Entity(gamepanel);
 
         eventRect = new EventRectangle[gamepanel.maxMap][gamepanel.maxWorldCol][gamepanel.maxWorldRow];
         int map = 0;
@@ -73,10 +73,22 @@ public class EventHandler {
                 healingPool(gamepanel.dialogueState);
             }
             if(hit(0, 31, 12, "any")) {
-                teleport(1, 12, 12);
+                teleport(1, 12, 12, gamepanel.inDoor); // from world to merchant
             }
             if(hit(1, 12, 12, "any")) {
-                teleport(0, 31, 12);
+                teleport(0, 31, 12, gamepanel.outSide); // from merchant to world
+            }
+            if(hit(0, 12, 9, "any")) {
+                teleport(2, 9, 41, gamepanel.dungeon); // from world map to dungeon 1
+            }
+            if(hit(2, 8, 7, "any")) {
+                teleport(3, 26, 41, gamepanel.dungeon); // from dungeon 1 to dungeon 2
+            }
+            if(hit(3, 26, 41, "any")) {
+                teleport(2, 8, 8, gamepanel.dungeon); // from dungeon 2 to dungeon 1
+            }
+            if(hit(2, 9, 41, "any")) {
+                teleport(0, 12, 9, gamepanel.outSide); // from dungeon 1 to world map
             }
         }
     }
@@ -129,13 +141,21 @@ public class EventHandler {
         eventMaster.startDialogue(eventMaster, 2);
         gamepanel.assetSetter.setMonster();
     }
-    public void teleport(int map, int col, int row) {
+    public void teleport(int map, int col, int row, int area) {
+        if(area != gamepanel.currentArea) {
+            gamepanel.stopMusic();
+        }
         gamepanel.playSoundEffect(11);
+
         gamepanel.currentMap = map;
+        gamepanel.currentArea = area;
+
         gamepanel.player.worldX = gamepanel.tileSize * col;
         gamepanel.player.worldY = gamepanel.tileSize * row;
+
         previousEventX = gamepanel.player.worldX;
         previousEventY = gamepanel.player.worldY;
+
         canTouchEvent = false;
     }
 }

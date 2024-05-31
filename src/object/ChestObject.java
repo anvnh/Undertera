@@ -50,6 +50,7 @@ public class ChestObject extends Entity {
     {
         gamepanel.gameState = gamepanel.dialogueState;
         if(!opened) {
+
             gamepanel.playSoundEffect(17);
 
             if(gamepanel.player.canObtainItem(loot))

@@ -86,7 +86,7 @@ public class BlueSlime extends Entity {
             searchPath(getGoalCol(gamepanel.player), getGoalRow(gamepanel.player));
 
             // Randomly shoot projectile
-            checkShootingAggro(1000, 60);
+            //checkShootingAggro(1000, 60);
         }
         else
         {
@@ -94,7 +94,7 @@ public class BlueSlime extends Entity {
             checkStartAggro(gamepanel.player, 5, 100);
 
             //Get random direction
-            getRandomDirection();
+            getRandomDirection(100);
         }
     }
     public void damageReaction()

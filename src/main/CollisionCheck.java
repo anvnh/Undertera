@@ -80,6 +80,14 @@ public class CollisionCheck {
     public int checkObject(Entity entity, boolean player)
     {
         int index = 999;
+
+        // Use a temporal direction when it's being knocked back
+        String direction = entity.direction;
+        if(entity.knockBack)
+        {
+            direction = entity.knockBackDirection;
+        }
+
         for(int i = 0; i < gamepanel.objects[1].length; i++)
         {
             if(gamepanel.objects[gamepanel.currentMap][i] != null)
@@ -92,7 +100,14 @@ public class CollisionCheck {
                 gamepanel.objects[gamepanel.currentMap][i].solidArea.x = gamepanel.objects[gamepanel.currentMap][i].worldX + gamepanel.objects[gamepanel.currentMap][i].solidArea.x;
                 gamepanel.objects[gamepanel.currentMap][i].solidArea.y = gamepanel.objects[gamepanel.currentMap][i].worldY + gamepanel.objects[gamepanel.currentMap][i].solidArea.y;
 
-                switch(entity.direction)
+                // Check if player is dash or not
+                if(entity == gamepanel.player)
+                {
+                    if(gamepanel.Key.dashPressed) entity.speed = entity.dashSpeed;
+                    else entity.speed = entity.originalSpeed;
+                }
+
+                switch(direction)
                 {
                     case "up":
                         entity.solidArea.y -= entity.speed;

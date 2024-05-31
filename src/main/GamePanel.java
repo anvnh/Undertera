@@ -91,6 +91,13 @@ public class GamePanel extends JPanel implements Runnable {
     public final int gameOverState = 999;
     //==========================================================================================//
 
+    //======================================= Area =============================================//
+    public int currentArea;
+    public int nextArea;
+    public final int outSide = 50;
+    public final int inDoor = 51;
+    public final int dungeon = 52;
+    //==========================================================================================//
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -104,17 +111,24 @@ public class GamePanel extends JPanel implements Runnable {
     {
         //Initial for game
         gameState = titleState;
+
+        currentArea = outSide;
+
+        playMusic(0);
+
         assetSetter.setObject();
         assetSetter.setNPC();
         assetSetter.setMonster();
         assetSetter.setInteractiveTile();
         environmentManager.setup();
-        playMusic(0);
-        tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
-        g2 = (Graphics2D) tempScreen.getGraphics();
+
+        //tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+        //g2 = (Graphics2D) tempScreen.getGraphics();
     }
     public void resetGame(boolean restart)
     {
+        currentArea = outSide;
+        currentMap = 0;
         player.setDefaultPosition();
         player.restoreStatus();
         assetSetter.setNPC();
@@ -127,6 +141,7 @@ public class GamePanel extends JPanel implements Runnable {
             assetSetter.setObject();
             assetSetter.setInteractiveTile();
             environmentManager.lightning.resetDay();
+            currentMap = 0;
         }
     }
     /*
@@ -145,7 +160,6 @@ public class GamePanel extends JPanel implements Runnable {
         assetSetter.setMonster();
         assetSetter.setObject();
         assetSetter.setInteractiveTile();
-        currentMap = 0;
     }
      */
     public void setFullScreen() {

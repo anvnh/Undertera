@@ -61,10 +61,8 @@ public class Entity {
     public boolean dying = false;
     boolean HPBarOn = false;
 
-
     public int dialogueIndex = 0;
     public int dialogueSet = 0;
-
 
     public boolean collision = false;
     public boolean collisionOn = false;
@@ -91,6 +89,7 @@ public class Entity {
     public BufferedImage[] go_up = new BufferedImage[10];
     public BufferedImage[] go_left = new BufferedImage[10];
     public BufferedImage[] go_right = new BufferedImage[10];
+
     // Buffered attack
     public BufferedImage[] attack_right = new BufferedImage[10];
     public BufferedImage[] attack_left = new BufferedImage[10];
@@ -177,11 +176,17 @@ public class Entity {
         return (worldY + solidArea.y) / gamepanel.tileSize;
     }
     //==========================================================================================//
+    public int getCenterX() {
+        return worldX + go_left[0].getWidth() / 2;
+    }
+    public int getCenterY() {
+        return worldY + go_up[0].getHeight() / 2;
+    }
     public int getXDistance(Entity target) {
-        return Math.abs(worldX - target.worldX);
+        return Math.abs(getCenterX() - target.getCenterX());
     }
     public int getYDistance(Entity target) {
-        return Math.abs(worldY - target.worldY);
+        return Math.abs(getCenterY()- target.getCenterY());
     }
     public int getTileDistance(Entity target) {
         return (int)Math.sqrt(Math.pow(getXDistance(target), 2) + Math.pow(getYDistance(target), 2)) / gamepanel.tileSize;
@@ -515,25 +520,25 @@ public class Entity {
         switch (direction)
         {
             case "up":
-                if(gamepanel.player.worldY < worldY && yDistance < vertical && xDistance < horizontal)
+                if(gamepanel.player.getCenterY() < getCenterY() && yDistance < vertical && xDistance < horizontal)
                 {
                     targetInRange = true;
                 }
                 break;
             case "down":
-                if(gamepanel.player.worldY > worldY && yDistance < vertical && xDistance < horizontal)
+                if(gamepanel.player.getCenterY() > getCenterY() && yDistance < vertical && xDistance < horizontal)
                 {
                     targetInRange = true;
                 }
                 break;
             case "left":
-                if(gamepanel.player.worldX < worldX && xDistance < vertical && yDistance < horizontal)
+                if(gamepanel.player.getCenterX() < getCenterX() && xDistance < vertical && yDistance < horizontal)
                 {
                     targetInRange = true;
                 }
                 break;
             case "right":
-                if(gamepanel.player.worldX > worldX && xDistance < vertical && yDistance < horizontal)
+                if(gamepanel.player.getCenterX() > getCenterX() && xDistance < vertical && yDistance < horizontal)
                 {
                     targetInRange = true;
                 }
@@ -583,10 +588,10 @@ public class Entity {
             }
         }
     }
-    public void getRandomDirection()
+    public void getRandomDirection(int interval)
     {
         actionLockCounter ++;
-        if(actionLockCounter == 120)
+        if(actionLockCounter == interval)
         {
             Random random = new Random();
             int i = random.nextInt(100) + 1;
@@ -672,6 +677,38 @@ public class Entity {
             attackCount = 0;
             attackAnimation = 1;
             attacking = false;
+        }
+    }
+    public void moveTowardPlayer(int interval)
+    {
+        actionLockCounter++;
+        if(actionLockCounter == interval)
+        {
+            int xDistance = getXDistance(gamepanel.player);
+            int yDistance = getYDistance(gamepanel.player);
+            if(xDistance > yDistance)
+            {
+                if(gamepanel.player.getCenterX() < getCenterX())
+                {
+                    direction = "left";
+                }
+                else
+                {
+                    direction = "right";
+                }
+            }
+            else if(xDistance < yDistance)
+            {
+                if(gamepanel.player.getCenterY() < getCenterY())
+                {
+                    direction = "up";
+                }
+                else
+                {
+                    direction = "down";
+                }
+            }
+            actionLockCounter = 0;
         }
     }
     public String getOppositeDirection(String direction)

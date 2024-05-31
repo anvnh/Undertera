@@ -132,8 +132,12 @@ public class Lightning {
     }
     public void draw(Graphics2D g2)
     {
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, filterAlpha));
-        g2.drawImage(darknessFilter, 0, 0, null);
+        if(gamepanel.currentArea == gamepanel.outSide) {
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, filterAlpha));
+        }
+        if(gamepanel.currentArea == gamepanel.dungeon || gamepanel.currentArea == gamepanel.outSide) {
+            g2.drawImage(darknessFilter, 0, 0, null);
+        }
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
         g2.setFont(CCRedAlert);

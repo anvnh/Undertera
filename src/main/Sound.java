@@ -1,13 +1,11 @@
 package main;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 import javax.sound.sampled.FloatControl;
 import java.net.URL;
 
 public class Sound {
     Clip clip;
-    URL[] soundURL = new URL[30];
+    URL[] soundURL = new URL[40];
     FloatControl floatControl;
     int soundEffect = 6;
     int musicVolume = 10;
@@ -53,6 +51,11 @@ public class Sound {
 
         //===========================================================================================//
         soundURL[20] = getClass().getResource("/sounds/dialogue.wav");
+        //===========================================================================================//
+
+        //===========================================================================================//
+        soundURL[21] = getClass().getResource("/sounds/Underground_Music.wav");
+        soundURL[22] = getClass().getResource("/sounds/Day_Music.wav");
         //===========================================================================================//
     }
 

@@ -100,7 +100,7 @@ public class Skeleton extends Entity {
             checkStartAggro(gamepanel.player, 20, 100);
 
             //Get random direction
-            getRandomDirection();
+            getRandomDirection(100);
         }
 
         // check if it's time to attack

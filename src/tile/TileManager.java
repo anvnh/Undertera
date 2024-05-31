@@ -65,6 +65,8 @@ public class TileManager {
         }
         loadmap("/maps/worldmap.txt", 0);
         loadmap("/maps/indoor01.txt", 1);
+        loadmap("/maps/dungeon01.txt", 2);
+        loadmap("/maps/dungeon02.txt", 3);
         //System.out.println(gamepanel.maxWorldCol + " " + gamepanel.maxWorldRow);
     }
 
@@ -159,7 +161,6 @@ public class TileManager {
             }
         }
         // Draw the path that the entity is following
-        /*
         if(drawPath)
         {
             g2.setColor(new Color(255, 0, 0, 70));
@@ -176,6 +177,5 @@ public class TileManager {
 
             }
         }
-         */
     }
 }
