@@ -111,7 +111,6 @@ public class GamePanel extends JPanel implements Runnable {
     {
         //Initial for game
         gameState = titleState;
-
         currentArea = outSide;
 
         playMusic(0);
@@ -418,6 +417,7 @@ public class GamePanel extends JPanel implements Runnable {
             g2.drawString("X: " + (player.worldX + player.solidArea.x) / tileSize, x + 1, y + lineHeight * 2 + 1);
             g2.drawString("Y: " + (player.worldY + player.solidArea.y) / tileSize, x + 1, y + lineHeight * 3 + 1);
             g2.drawString("Curr Map: " + currentMap, x + 1, y + lineHeight * 4 + 1);
+            g2.drawString("Current Area: " + currentArea, x + 1, y + lineHeight * 5 + 1);
 
             g2.setColor(Color.WHITE);
             g2.drawString("World X: " + player.worldX, x, y);
@@ -425,6 +425,7 @@ public class GamePanel extends JPanel implements Runnable {
             g2.drawString("X: " + (player.worldX + player.solidArea.x) / tileSize, x, y + lineHeight * 2);
             g2.drawString("Y: " + (player.worldY + player.solidArea.y) / tileSize, x, y + lineHeight * 3);
             g2.drawString("Curr Map: " + currentMap, x, y + lineHeight * 4);
+            g2.drawString("Current Area: " + currentArea, x, y + lineHeight * 5);
         }
         g2.dispose();
     }

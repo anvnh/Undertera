@@ -46,7 +46,7 @@ public class Entity {
     public int invincibleCounter = 0;
     public int dyingCounter = 0;
     public int dyingAnimation = 1;
-    int HPBarCounter = 0;
+    public int HPBarCounter = 0;
     public int knockBackCounter = 0;
 
 
@@ -59,7 +59,7 @@ public class Entity {
     boolean dashing = false;
     public boolean alive = true;
     public boolean dying = false;
-    boolean HPBarOn = false;
+    public boolean HPBarOn = false;
 
     public int dialogueIndex = 0;
     public int dialogueSet = 0;
@@ -75,6 +75,9 @@ public class Entity {
 
     public Entity loot;
     public boolean opened = false;
+        //======================================== For boss==========================================//
+        public boolean inRage = false;
+        //==========================================================================================//
 
     //==========================================================================================//
 
@@ -157,6 +160,12 @@ public class Entity {
     //==========================================================================================//
 
     //==========================================================================================//
+    public int getScreenX() {
+        return worldX - gamepanel.player.worldX + gamepanel.player.screenX;
+    }
+    public int getScreenY() {
+        return worldY - gamepanel.player.worldY + gamepanel.player.screenY;
+    }
     public int getLeftX() {
         return worldX + solidArea.x;
     }
@@ -234,6 +243,9 @@ public class Entity {
     public Entity currentShield;
     public Entity currentLight;
     public Projectile projectile;
+
+    public boolean boss;
+
     //==========================================================================================//
 
 
@@ -682,7 +694,7 @@ public class Entity {
     public void moveTowardPlayer(int interval)
     {
         actionLockCounter++;
-        if(actionLockCounter == interval)
+        if(actionLockCounter > interval)
         {
             int xDistance = getXDistance(gamepanel.player);
             int yDistance = getYDistance(gamepanel.player);
@@ -861,6 +873,20 @@ public class Entity {
     {
         g2.drawImage(image, worldX - gamepanel.player.worldX + gamepanel.player.screenX, worldY - gamepanel.player.worldY + gamepanel.player.screenY, null);
     }
+    public boolean isInCamera()
+    {
+        boolean ok = false;
+        if(
+                worldX + gamepanel.tileSize * 10 > gamepanel.player.worldX - gamepanel.player.screenX
+                && worldX - gamepanel.tileSize < gamepanel.player.worldX - gamepanel.player.screenX
+                && worldY + gamepanel.tileSize * 10 > gamepanel.player.worldY - gamepanel.player.screenY
+                && worldY - gamepanel.tileSize < gamepanel.player.worldY - gamepanel.player.screenY
+        )
+        {
+            ok = true;
+        }
+        return ok;
+    }
     public void draw_entity(Graphics2D g2)
     {
         BufferedImage image = null;
@@ -907,25 +933,7 @@ public class Entity {
             }
         }
 
-        //HP Bar of the monster
-        if(type == 2 && HPBarOn)
-        {
-            double scale = (double) gamepanel.tileSize/ maxLife;
-            double HPBar = life * scale;
 
-            g2.setColor(new Color(0, 0, 0));
-            g2.fillRect(screenX - 1, screenY - 10, gamepanel.tileSize + 2, 7);
-
-            g2.setColor(new Color(255, 0, 30));
-            g2.fillRect(screenX, screenY - 10, Math.max((int)HPBar, 0), 5);
-
-            HPBarCounter++;
-            if(HPBarCounter == 600)
-            {
-                HPBarOn = false;
-                HPBarCounter = 0;
-            }
-        }
 
 
         if(invincible) {

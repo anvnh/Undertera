@@ -13,7 +13,7 @@ public class SwordObject extends Entity {
         type = type_sword;
         image = setup_entity("/objects/weapons/tier_0/sword", gamePanel.tileSize, gamePanel.tileSize);
 
-        attackValue = 3;
+        attackValue = 50;
         attackArea.width = 48;
         attackArea.height = 48;
         price = 10;

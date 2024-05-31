@@ -681,15 +681,25 @@ public class Player extends Entity{
         if(exp >= nextLevelExp)
         {
             gamepanel.playSoundEffect(5);
-            level++;
-            exp = 0;
-            nextLevelExp = (int) (nextLevelExp * 2.5);
+            calculateExp();
             life = maxLife;
             mana = maxMana;
-            strength += 5;
-            dexterity += 5;
             gamepanel.ui.addMessage("Level Up!");
         }
+    }
+    public void calculateExp()
+    {
+        int remainder = exp;
+        exp = 0;
+        while(remainder >= nextLevelExp)
+        {
+            strength += (int)(strength * 0.75);
+            dexterity += (int)(dexterity * 0.5);
+            level++;
+            remainder -= nextLevelExp;
+            nextLevelExp = (int) (nextLevelExp * 2.5);
+        }
+        exp = remainder;
     }
 
     // Select or using items from inventory

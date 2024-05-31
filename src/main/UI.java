@@ -90,6 +90,7 @@ public class UI {
         {
             drawPlayerLife();
             drawPlayerMana();
+            drawMonsterLife();
             drawMessage();
         }
 
@@ -210,7 +211,58 @@ public class UI {
             g2.drawImage(heart_threequarter, x, y, null);
         }
     }
-    public void drawMessage(){
+    public void drawMonsterLife()
+    {
+        //HP Bar of the monster
+
+        for(int i = 0; i < gamepanel.monster[1].length; i++)
+        {
+            Entity monster = gamepanel.monster[gamepanel.currentMap][i];
+            if(monster != null)
+            {
+                if(!monster.boss)
+                {
+                    if(monster.HPBarOn)
+                    {
+                        double scale = (double) gamepanel.tileSize / monster.maxLife;
+                        double HPBar = monster.life * scale;
+
+                        g2.setColor(new Color(0, 0, 0));
+                        g2.fillRect(monster.getScreenX() - 1, monster.getScreenY() - 10, gamepanel.tileSize + 2, 7);
+
+                        g2.setColor(new Color(255, 0, 30));
+                        g2.fillRect(monster.getScreenX(), monster.getScreenY() - 10, Math.max((int) HPBar, 0), 5);
+
+                        monster.HPBarCounter++;
+                        if (monster.HPBarCounter == 600) {
+                            monster.HPBarOn = false;
+                            monster.HPBarCounter = 0;
+                        }
+                    }
+                }
+                else {
+                    double scale = (double) gamepanel.tileSize * 14 / monster.maxLife;
+                    double HPBar = monster.life * scale;
+
+                    int x = gamepanel.screenWidth / 2 - gamepanel.tileSize * 7;
+                    int y = gamepanel.tileSize + gamepanel.tileSize / 2;
+
+                    g2.setColor(new Color(0, 0, 0));
+                    g2.fillRect(x - 1, y - 1, gamepanel.tileSize * 14 + 2, 25);
+
+                    g2.setColor(new Color(255, 0, 30));
+                    g2.fillRect(x, y, (int)HPBar, 20);
+
+                    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
+                    String text = monster.name;
+                    g2.setColor(new Color(255, 255, 255));
+                    g2.drawString(text, x + gamepanel.tileSize * 7 + gamepanel.tileSize / 2 - g2.getFontMetrics().stringWidth(text) / 2, y - 20);
+                }
+            }
+        }
+    }
+    public void drawMessage()
+    {
         int messageX = gamepanel.tileSize;
         int messageY = gamepanel.screenHeight - gamepanel.tileSize * 2;
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30f));

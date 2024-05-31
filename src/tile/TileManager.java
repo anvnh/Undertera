@@ -161,6 +161,7 @@ public class TileManager {
             }
         }
         // Draw the path that the entity is following
+        /*
         if(drawPath)
         {
             g2.setColor(new Color(255, 0, 0, 70));
@@ -177,5 +178,6 @@ public class TileManager {
 
             }
         }
+         */
     }
 }
