@@ -51,13 +51,9 @@ public class NPC_OldMan extends Entity {
     public void setDialogue() {
         dialogue[0][0] = "I'm just an old man";
         dialogue[0][1] = "Ah, young one. I've seen many winters come and go.";
-        dialogue[0][2] = "Listen closely, for I have tales that will make your ears tingle.";
-        dialogue[0][3] = "The world has changed much since I was a lad, but one thing remains the \nsame: the importance of kindness.";
 
         dialogue[1][0] = "I've witnessed the rise and fall of empires, and the birth and death of \ncountless souls.";
         dialogue[1][1] = "The past is a book that is always open, but it is up to us to choose \nwhat lessons we learn from it.";
-        dialogue[1][2] = "Remember, young one, that even the smallest actions can have \nripple effects that shape the destiny of the world.";
-        dialogue[1][3] = "The true measure of a person is not their wealth or power, but the \ncontent of their heart.";
 
         dialogue[2][0] = "The world has changed much since I was a lad, but one thing remains the \nsame: the importance of kindness.";
         dialogue[2][1] = "I wonder how to open that door";

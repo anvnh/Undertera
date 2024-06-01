@@ -64,6 +64,7 @@ public class GamePanel extends JPanel implements Runnable {
     public EnvironmentManager environmentManager = new EnvironmentManager(this);
     SaveLoad saveLoad = new SaveLoad(this);
     public EntityGenerator entityGenerator = new EntityGenerator(this);
+    public CutsceneManager cutsceneManager = new CutsceneManager(this);
     Map map = new Map(this);
 
     // Entity and Object
@@ -88,7 +89,12 @@ public class GamePanel extends JPanel implements Runnable {
     public final int tradeState = 5;
     public final int sleepState = 6;
     public final int mapState = 7;
+    public final int cutSceneState = 8;
     public final int gameOverState = 999;
+    //==========================================================================================//
+
+    //==========================================================================================//
+    public boolean bossBattleOn=  false;
     //==========================================================================================//
 
     //======================================= Area =============================================//
@@ -128,6 +134,10 @@ public class GamePanel extends JPanel implements Runnable {
     {
         currentArea = outSide;
         currentMap = 0;
+
+        removeTempEntity();
+        bossBattleOn = false;
+
         player.setDefaultPosition();
         player.restoreStatus();
         assetSetter.setNPC();
@@ -399,6 +409,9 @@ public class GamePanel extends JPanel implements Runnable {
             // Mini map
             map.drawMiniMap(g2);
 
+            //cut scene
+            cutsceneManager.draw(g2);
+
             //UI
             ui.draw(g2);
         }
@@ -449,4 +462,18 @@ public class GamePanel extends JPanel implements Runnable {
         sound.setFile(i);
         sound.play();
     }
+    public void removeTempEntity()
+    {
+        for(int mapNum = 0; mapNum < maxMap; mapNum++)
+        {
+            for(int i = 0; i < objects[1].length; i++)
+            {
+                if(objects[mapNum][i] != null && objects[mapNum][i].temp)
+                {
+                    objects[mapNum][i] = null;
+                }
+            }
+        }
+    }
 }
+

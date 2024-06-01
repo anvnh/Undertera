@@ -900,7 +900,10 @@ public class Player extends Entity{
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
             }
             //
-            g2.drawImage(image, screenX, screenY, null);
+            if(drawing)
+            {
+                g2.drawImage(image, screenX, screenY, null);
+            }
 
             //Reset alpha
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
@@ -998,7 +1001,10 @@ public class Player extends Entity{
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
             }
             //
-            g2.drawImage(image, screenX, screenY, null);
+            if(drawing)
+            {
+                g2.drawImage(image, screenX, screenY, null);
+            }
 
             //Reset alpha
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));

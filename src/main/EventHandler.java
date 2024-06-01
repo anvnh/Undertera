@@ -1,5 +1,6 @@
 package main;
 
+import data.Progress;
 import entity.Entity;
 
 import java.awt.*;
@@ -90,6 +91,9 @@ public class EventHandler {
             if(hit(2, 9, 41, "any")) {
                 teleport(0, 12, 9, gamepanel.outSide); // from dungeon 1 to world map
             }
+            if(hit(3, 25, 27, "any")) {
+                Angel_Of_Death(); // Meet the Angel of Death
+            }
         }
     }
 
@@ -157,5 +161,12 @@ public class EventHandler {
         previousEventY = gamepanel.player.worldY;
 
         canTouchEvent = false;
+    }
+    public void Angel_Of_Death() {
+        if (!gamepanel.bossBattleOn && !Progress.angleofdeathDefeated)
+        {
+            gamepanel.gameState = gamepanel.cutSceneState;
+            gamepanel.cutsceneManager.sceneNumber = gamepanel.cutsceneManager._Angel_Of_Death;
+        }
     }
 }

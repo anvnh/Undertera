@@ -1,5 +1,6 @@
 package monster;
 
+import data.Progress;
 import entity.Entity;
 import main.GamePanel;
 import object.*;
@@ -40,6 +41,7 @@ public class AngelOfDeath extends Entity {
 
         boss = true;
         sleep = true;
+        dialogueIndex = 0;
 
         getImage();
         getAttackImage();
@@ -133,15 +135,18 @@ public class AngelOfDeath extends Entity {
     }
     public void setDialogue() {
         dialogue[0][0] = "I am the Angel of Death.";
-        dialogue[0][1] = "...";
+        dialogue[0][1] = "...                      ";
         dialogue[0][2] = "Prepare yourself, for I am the one who will take your everything.";
         //dialogue[0][4] = "I am the one who will take your everything.";
+        dialogue[1][0] = "Impressive.";
+        dialogue[1][1] = "But, are you sure it finishes here ?";
+        dialogue[1][2] = "Let's see if you can handle this.";
 
     }
     public void setAction()
     {
-        if(!inRage && life <= maxLife / 10) {
-            startDialogue(this, 0);
+        if(!inRage && life <= maxLife * 3 / 10) {
+            startDialogue(this, 1);
             invincible = true;
             maxLife *= 2;
             life = maxLife;
@@ -178,6 +183,18 @@ public class AngelOfDeath extends Entity {
     }
     public void checkDrop()
     {
+        gamepanel.bossBattleOn = false;
+        Progress.angleofdeathDefeated = true;
+        // Remove the iron door
+        for(int i = 0; i < gamepanel.objects[1].length; i++)
+        {
+            if(gamepanel.objects[gamepanel.currentMap][i] != null && gamepanel.objects[gamepanel.currentMap][i].name.equals(IronDoorObject.objName))
+            {
+                gamepanel.objects[gamepanel.currentMap][i] = null;
+                break;
+            }
+        }
+
         int i = new Random().nextInt(1000) + 1;
         if(i <= 800){
             dropItem(new BronzeCoinObject(gamepanel));

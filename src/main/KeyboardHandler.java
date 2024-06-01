@@ -54,7 +54,7 @@ public class KeyboardHandler implements KeyListener {
             pauseState(code);
         }
         //Dialogue State
-        if(gamepanel.gameState == gamepanel.dialogueState)
+        if(gamepanel.gameState == gamepanel.dialogueState || gamepanel.gameState == gamepanel.cutSceneState)
         {
             dialogueState(code);
         }

@@ -34,6 +34,7 @@ public class UI {
     int counter = 0;
     int charIndex = 0;
     String combinedText = "";
+    int Prev_State;
 
     public UI(GamePanel gp)
     {
@@ -105,8 +106,11 @@ public class UI {
         //Dialogue State
         if(gamepanel.gameState == gamepanel.dialogueState)
         {
-            drawPlayerLife();
-            drawPlayerMana();
+            if(Prev_State != gamepanel.cutSceneState)
+            {
+                drawPlayerLife();
+                drawPlayerMana();
+            }
             drawDialogueScreen();
         }
 
@@ -385,6 +389,57 @@ public class UI {
         int y = gamepanel.screenHeight / 2 - 190;
         g2.drawString(text, x, y);
     }
+    public void drawBossDialogueScreen(Entity entity)
+    {
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30f));
+        int x = gamepanel.tileSize * 2;
+        int y = gamepanel.tileSize / 2;
+        int width = gamepanel.screenWidth - gamepanel.tileSize * 4;
+        int height = gamepanel.tileSize * 4;
+        drawSubWindow(x, y, width, height);
+
+        x += gamepanel.tileSize;
+        y += gamepanel.tileSize;
+
+        if(entity.dialogue[0][entity.dialogueIndex] != null) {
+            //currentDialogue = npc.dialogue[npc.dialogueSet][npc.dialogueIndex];
+
+            char[] characters = npc.dialogue[npc.dialogueSet][npc.dialogueIndex].toCharArray();
+
+            if(charIndex < characters.length) {
+                gamepanel.playSoundEffect(20);
+                String s = String.valueOf(characters[charIndex]);
+                combinedText += s;
+                currentDialogue = combinedText;
+                charIndex++;
+            }
+
+            if(gamepanel.Key.enterPressed)
+            {
+                charIndex = 0;
+                combinedText = "";
+
+                if(gamepanel.gameState == gamepanel.cutSceneState)
+                {
+                    npc.dialogueIndex++;
+                    gamepanel.Key.enterPressed = false;
+                }
+            }
+        }
+        else { // If no text
+            npc.dialogueIndex = 0;
+            if(gamepanel.gameState == gamepanel.cutSceneState)
+            {
+                gamepanel.cutsceneManager.scenePhase++;
+            }
+        }
+
+        for (String line : currentDialogue.split("\n"))
+        {
+            g2.drawString(line, x, y);
+            y += 40;
+        }
+    }
     public void drawDialogueScreen()
     {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30f));
@@ -415,7 +470,8 @@ public class UI {
                 charIndex = 0;
                 combinedText = "";
 
-                if(gamepanel.gameState == gamepanel.dialogueState) {
+                if(gamepanel.gameState == gamepanel.dialogueState || Prev_State == gamepanel.cutSceneState)
+                {
                     npc.dialogueIndex++;
                     gamepanel.Key.enterPressed = false;
                 }
@@ -426,6 +482,10 @@ public class UI {
             if(gamepanel.gameState == gamepanel.dialogueState)
             {
                 gamepanel.gameState = gamepanel.playState;
+            }
+            if(Prev_State == gamepanel.cutSceneState)
+            {
+                gamepanel.cutsceneManager.scenePhase++;
             }
         }
 

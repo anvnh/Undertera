@@ -121,7 +121,7 @@ public class AssetSetter {
         mapNum = 3;
         i = 0;
         gamepanel.monster[mapNum][i] = new AngelOfDeath(gamepanel);
-        gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 25;
+        gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 24;
         gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 17;
         // ======================================================================================================== //
     }
