@@ -77,6 +77,7 @@ public class Entity {
     public boolean opened = false;
         //======================================== For boss==========================================//
         public boolean inRage = false;
+        public boolean sleep = false;
         //==========================================================================================//
 
     //==========================================================================================//
@@ -361,91 +362,93 @@ public class Entity {
     }
 
     public void update(){
-        if(knockBack)
+        if(!sleep)
         {
-            checkCollision();
-            if(collisionOn)
+            if(knockBack)
             {
-                knockBackCounter = 0;
-                knockBack = false;
-                speed = originalSpeed;
+                checkCollision();
+                if(collisionOn)
+                {
+                    knockBackCounter = 0;
+                    knockBack = false;
+                    speed = originalSpeed;
+                }
+                else
+                {
+                    switch(knockBackDirection)
+                    {
+                        case "up": worldY -= speed; break;
+                        case "down": worldY += speed; break;
+                        case "left": worldX -= speed; break;
+                        case "right": worldX += speed; break;
+                    }
+                }
+
+                knockBackCounter++;
+                // the more knockBackCounter is, the more distance object will be knock back
+                if(knockBackCounter == 20)
+                {
+                    knockBackCounter = 0;
+                    knockBack = false;
+                    speed = originalSpeed;
+                }
+            }
+            else if(attacking) {
+                if(type == type_monster) {
+                    attack_at_last_animation();
+                }
+                else {
+                    attack();
+                }
             }
             else
             {
-                switch(knockBackDirection)
+                setAction();
+                checkCollision();
+
+                //if collision is false, player can move
+                if(!collisionOn)
                 {
-                    case "up": worldY -= speed; break;
-                    case "down": worldY += speed; break;
-                    case "left": worldX -= speed; break;
-                    case "right": worldX += speed; break;
+                    switch (direction){
+                        case "up": worldY -= speed; break;
+                        case "down": worldY += speed; break;
+                        case "left": worldX -= speed; break;
+                        case "right": worldX += speed; break;
+                    }
                 }
             }
 
-            knockBackCounter++;
-            // the more knockBackCounter is, the more distance object will be knock back
-            if(knockBackCounter == 20)
-            {
-                knockBackCounter = 0;
-                knockBack = false;
-                speed = originalSpeed;
+            runCount++;
+            if (runCount > 15) {
+                runAnimation = runAnimation == 8 ? 1 : runAnimation + 1;
+                runCount = 0;
             }
-        }
-        else if(attacking) {
-            if(type == type_monster) {
-                attack_at_last_animation();
-            }
-            else {
-                attack();
-            }
-        }
-        else
-        {
-            setAction();
-            checkCollision();
 
-            //if collision is false, player can move
-            if(!collisionOn)
+
+            if(invincible)
             {
-                switch (direction){
-                    case "up": worldY -= speed; break;
-                    case "down": worldY += speed; break;
-                    case "left": worldX -= speed; break;
-                    case "right": worldX += speed; break;
+                invincibleCounter++;
+                if(invincibleCounter == 30) {
+                    invincible = false;
+                    invincibleCounter = 0;
+                }
+            }
+
+            if(shotAvailableCounter < 60)
+            {
+                shotAvailableCounter++;
+            }
+
+            if(offBalance)
+            {
+                offBalanceCounter++;
+                if(offBalanceCounter == 120)
+                {
+                    offBalance = false;
+                    offBalanceCounter = 0;
                 }
             }
         }
-
-        runCount++;
-        if (runCount > 15) {
-            runAnimation = runAnimation == 8 ? 1 : runAnimation + 1;
-            runCount = 0;
-        }
-
-
-        if(invincible)
-        {
-            invincibleCounter++;
-            if(invincibleCounter == 30) {
-                invincible = false;
-                invincibleCounter = 0;
-            }
-        }
-
-        if(shotAvailableCounter < 60)
-        {
-            shotAvailableCounter++;
-        }
-
-        if(offBalance)
-        {
-            offBalanceCounter++;
-            if(offBalanceCounter == 120)
-            {
-                offBalance = false;
-                offBalanceCounter = 0;
-            }
-        }
-
     }
     public BufferedImage setup_player(String imgName)
     {
@@ -877,10 +880,10 @@ public class Entity {
     {
         boolean ok = false;
         if(
-                worldX + gamepanel.tileSize * 10 > gamepanel.player.worldX - gamepanel.player.screenX
-                && worldX - gamepanel.tileSize < gamepanel.player.worldX - gamepanel.player.screenX
-                && worldY + gamepanel.tileSize * 10 > gamepanel.player.worldY - gamepanel.player.screenY
-                && worldY - gamepanel.tileSize < gamepanel.player.worldY - gamepanel.player.screenY
+                worldX + solidArea.x + solidArea.width > gamepanel.player.worldX - gamepanel.player.screenX
+                && worldX + solidArea.x < gamepanel.player.worldX - gamepanel.player.screenX + gamepanel.screenWidth
+                && worldY + solidArea.y + solidArea.height > gamepanel.player.worldY - gamepanel.player.screenY
+                && worldY + solidArea.y < gamepanel.player.worldY - gamepanel.player.screenY + gamepanel.screenHeight
         )
         {
             ok = true;

@@ -15,7 +15,7 @@ import java.util.Objects;
 public class TileManager {
     GamePanel gamepanel;
     public Tile[] tile;
-    public int[][][] mapTileNum;
+    public static int[][][] mapTileNum;
     boolean drawPath = true;
     ArrayList<String> fileNames = new ArrayList<String>();
     ArrayList<String> collisionStatus = new ArrayList<String>();

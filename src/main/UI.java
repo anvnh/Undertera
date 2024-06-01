@@ -241,22 +241,24 @@ public class UI {
                     }
                 }
                 else {
-                    double scale = (double) gamepanel.tileSize * 14 / monster.maxLife;
-                    double HPBar = monster.life * scale;
+                    if(monster.isInCamera()) {
+                        double scale = (double) gamepanel.tileSize * 14 / monster.maxLife;
+                        double HPBar = monster.life * scale;
 
-                    int x = gamepanel.screenWidth / 2 - gamepanel.tileSize * 7;
-                    int y = gamepanel.tileSize + gamepanel.tileSize / 2;
+                        int x = gamepanel.screenWidth / 2 - gamepanel.tileSize * 7;
+                        int y = gamepanel.tileSize + gamepanel.tileSize / 2;
 
-                    g2.setColor(new Color(0, 0, 0));
-                    g2.fillRect(x - 1, y - 1, gamepanel.tileSize * 14 + 2, 25);
+                        g2.setColor(new Color(0, 0, 0));
+                        g2.fillRect(x - 1, y - 1, gamepanel.tileSize * 14 + 2, 25);
 
-                    g2.setColor(new Color(255, 0, 30));
-                    g2.fillRect(x, y, (int)HPBar, 20);
+                        g2.setColor(new Color(255, 0, 30));
+                        g2.fillRect(x, y, (int) HPBar, 20);
 
-                    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
-                    String text = monster.name;
-                    g2.setColor(new Color(255, 255, 255));
-                    g2.drawString(text, x + gamepanel.tileSize * 7 + gamepanel.tileSize / 2 - g2.getFontMetrics().stringWidth(text) / 2, y - 20);
+                        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
+                        String text = monster.name;
+                        g2.setColor(new Color(255, 255, 255));
+                        g2.drawString(text, x + gamepanel.tileSize * 7 + gamepanel.tileSize / 2 - g2.getFontMetrics().stringWidth(text) / 2, y - 20);
+                    }
                 }
             }
         }

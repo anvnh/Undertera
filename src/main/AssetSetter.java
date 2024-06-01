@@ -3,7 +3,13 @@ package main;
 import entity.*;
 import object.*;
 import monster.*;
+import tile.TileManager;
 import tile_interactive.DryTree_IT;
+
+import java.awt.*;
+import java.awt.image.ImagingOpException;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class AssetSetter {
     GamePanel gamepanel;
@@ -70,19 +76,63 @@ public class AssetSetter {
         gamepanel.npc[mapNum][i].worldY = gamepanel.tileSize * 7;
     }
 
+
     public void setMonster() {
+        Random random = new Random();
+        ArrayList<Point> availableTiles = new ArrayList<>();
+        // ============================================== For map 0 ============================================== //
         int mapNum = 0;
         int i = 0;
-        /*
-        gamepanel.monster[mapNum][i] = new BlueSlime(gamepanel);
+        // Get all the tiles where a monster can be placed
+        for (int col = 0; col < gamepanel.maxWorldCol; col++) {
+            for (int row = 0; row < gamepanel.maxWorldRow; row++) {
+                if (!gamepanel.tileM.tile[TileManager.mapTileNum[mapNum][col][row]].collision) {
+                    availableTiles.add(new Point(col, row));
+                }
+            }
+        }
+
+        // Generate monsters
+        for (int monsterCount = 0; monsterCount < 5; monsterCount++) { // Change 10 to the number of monsters you want to generate
+            if (!availableTiles.isEmpty()) {
+                // Select a random tile
+                int randomIndex = random.nextInt(availableTiles.size());
+                Point randomTile = availableTiles.get(randomIndex);
+                availableTiles.remove(randomIndex); // Remove the selected tile from the list to avoid placing multiple monsters on the same tile
+
+                // Create a new monster and set its position to the selected tile
+                gamepanel.monster[mapNum][i] = new Skeleton(gamepanel);
+                gamepanel.monster[mapNum][i].worldX = randomTile.x * gamepanel.tileSize;
+                gamepanel.monster[mapNum][i].worldY = randomTile.y * gamepanel.tileSize;
+                i++;
+            }
+        }
+        // ======================================================================================================== //
+
+        // ============================================== For map 2 ============================================== //
+        mapNum = 2;
+        i = 0;
+        gamepanel.monster[mapNum][i] = new Bat(gamepanel);
         gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 22;
         gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 22;
-        i++;
-        gamepanel.monster[mapNum][i] = new BlueSlime(gamepanel);
+        // ======================================================================================================== //
+
+        // ============================================== For map 3 ============================================== //
+        mapNum = 3;
+        i = 0;
+        gamepanel.monster[mapNum][i] = new AngelOfDeath(gamepanel);
         gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 25;
-        gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 22;
-        i++;
-         */
+        gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 17;
+        // ======================================================================================================== //
+    }
+
+    /*
+    public void setMonster() {
+
+        int mapNum = 0;
+        int i = 0;
+        // ================================================================ //
+        // Randomly generate monster
         gamepanel.monster[mapNum][i] = new Skeleton(gamepanel);
         gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 13;
         gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 34;
@@ -95,6 +145,7 @@ public class AssetSetter {
         gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 33;
         gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 22;
         i++;
+        // ================================================================ //
 
         mapNum = 2;
         i = 0;
@@ -118,6 +169,7 @@ public class AssetSetter {
         gamepanel.monster[mapNum][i].worldX = gamepanel.tileSize * 26;
         gamepanel.monster[mapNum][i].worldY = gamepanel.tileSize * 22;
     }
+     */
     public void setInteractiveTile() {
         int mapNum = 0;
         int i = 0;

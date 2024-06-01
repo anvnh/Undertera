@@ -39,10 +39,12 @@ public class AngelOfDeath extends Entity {
         motion_duration_2 = 15;
 
         boss = true;
+        sleep = true;
 
         getImage();
         getAttackImage();
         getStandingImage();
+        setDialogue();
     }
     public void getImage() {
         if(inRage) {
@@ -129,9 +131,18 @@ public class AngelOfDeath extends Entity {
     {
         super.update();
     }
+    public void setDialogue() {
+        dialogue[0][0] = "I am the Angel of Death.";
+        dialogue[0][1] = "...";
+        dialogue[0][2] = "Prepare yourself, for I am the one who will take your everything.";
+        //dialogue[0][4] = "I am the one who will take your everything.";
+
+    }
     public void setAction()
     {
-        if(!inRage && life <= maxLife * 2 / 10) {
+        if(!inRage && life <= maxLife / 10) {
+            startDialogue(this, 0);
+            invincible = true;
             maxLife *= 2;
             life = maxLife;
             inRage = true;

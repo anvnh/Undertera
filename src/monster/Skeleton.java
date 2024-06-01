@@ -28,7 +28,7 @@ public class Skeleton extends Entity {
 
         solidArea.x = 30;
         solidArea.y = 35;
-        solidArea.width = 20;
+        solidArea.width = 30;
         solidArea.height = 30;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
