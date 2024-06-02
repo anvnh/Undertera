@@ -1,14 +1,13 @@
 package data;
 
-import entity.Entity;
 import main.GamePanel;
-import object.*;
 
 import java.io.*;
 
 public class SaveLoad {
     GamePanel gamepanel;
 
+    public boolean success = false;
     public SaveLoad(GamePanel gamepanel)
     {
         this.gamepanel = gamepanel;
@@ -69,6 +68,8 @@ public class SaveLoad {
 
             // Write the DataStorage object to the file
             oos.writeObject(ds);
+
+            success = true;
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -228,7 +228,7 @@ public class KeyboardHandler implements KeyListener {
             gamepanel.playSoundEffect(6);
             if(gamepanel.ui.subState == 0) {
                 gamepanel.ui.commandNum++;
-                if(gamepanel.ui.commandNum > 4)
+                if(gamepanel.ui.commandNum > 5)
                     gamepanel.ui.commandNum = 0;
             }
             else if(gamepanel.ui.subState == 1) {
@@ -247,7 +247,7 @@ public class KeyboardHandler implements KeyListener {
             if(gamepanel.ui.subState == 0) {
                 gamepanel.ui.commandNum--;
                 if(gamepanel.ui.commandNum < 0)
-                    gamepanel.ui.commandNum = 4;
+                    gamepanel.ui.commandNum = 5;
             }
             else if(gamepanel.ui.subState == 1) {
                 gamepanel.ui.commandNum = 0;

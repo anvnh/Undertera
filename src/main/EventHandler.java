@@ -137,7 +137,7 @@ public class EventHandler {
         gamepanel.player.life = gamepanel.player.maxLife;
         gamepanel.player.mana = gamepanel.player.maxMana;
         eventMaster.startDialogue(eventMaster, 1);
-        gamepanel.saveLoad.save();
+        //gamepanel.saveLoad.save();
     }
     public void resetMons(int gameState)
     {

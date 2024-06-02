@@ -843,9 +843,9 @@ public class UI {
             }
         }
 
-        // End game
+        // Back to menu
         textY += gamepanel.tileSize;
-        g2.drawString("End Game", textX, textY);
+        g2.drawString("Back to menu", textX, textY);
         if(commandNum == 3)
         {
             g2.drawString(">", textX - 25, textY);
@@ -857,10 +857,34 @@ public class UI {
             }
         }
 
+        // Save game
+        textY += gamepanel.tileSize;
+        g2.drawString("Save Game", textX, textY);
+        if(commandNum == 4)
+        {
+            g2.drawString(">", textX - 25, textY);
+            if(gamepanel.Key.enterPressed)
+            {
+                gamepanel.saveLoad.save();
+                if(gamepanel.saveLoad.success)
+                {
+                    messages.add("Game saved.");
+                    gamepanel.gameState = gamepanel.playState;
+                    messageCounter.add(0);
+                }
+                else
+                {
+                    messages.add("Failed to save the game.");
+                    messageCounter.add(0);
+                }
+                gamepanel.Key.enterPressed = false;
+            }
+        }
+
         // Back
         textY += gamepanel.tileSize;
         g2.drawString("Back", textX, textY);
-        if(commandNum == 4)
+        if(commandNum == 5)
         {
             g2.drawString(">", textX - 25, textY);
             if(gamepanel.Key.enterPressed)
